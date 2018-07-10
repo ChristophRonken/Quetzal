@@ -9,6 +9,11 @@ class Node:
 class DoublyLinkedChain:
 
     def __init__(self):
+        self.startnode = None
+        self.endnode = None
+        self.size = None
+
+    def createChain(self):
         self.startnode = Node(None)
         self.endnode = Node(None)
         self.startnode.next = self.endnode
@@ -16,9 +21,11 @@ class DoublyLinkedChain:
         self.size = 0
 
     def destroyChain(self):
-        if self.startnode and self.endnode:
-            self.startnode.next = self.endnode
-            self.endnode.prev = self.startnode
+        while self.startnode.next != self.endnode and self.endnode.prev != self.startnode:
+            self.remove(self.startnode.next.data)
+        self.startnode = None
+        self.endnode = None
+        self.size = None
 
     def isEmpty(self):
         if self.startnode and self.endnode:
@@ -87,11 +94,8 @@ class DoublyLinkedChain:
         if self.startnode and self.endnode:
             if self.dataRetrieve(data):
                 deletenode = self.dataRetrieve(data)
-                print("haha")
                 if deletenode.prev is self.startnode and deletenode.next is self.endnode:
-                    print("a")
                     if self.startnode.next == deletenode and self.endnode.prev == deletenode:
-                        print("a")
                         self.startnode.next = self.endnode
                         self.endnode.prev = self.startnode
                         deletenode.next = None
@@ -101,9 +105,7 @@ class DoublyLinkedChain:
                         return True
 
                 elif deletenode.prev is self.startnode and deletenode.next is not None:
-                    print("b")
                     if self.startnode.next == deletenode and deletenode.next.prev == deletenode:
-                        print("b")
                         self.startnode.next = deletenode.next
                         deletenode.next.prev = self.startnode
                         deletenode.next = None
@@ -113,9 +115,7 @@ class DoublyLinkedChain:
                         return True
 
                 elif deletenode.prev is not None and deletenode.next is self.endnode:
-                    print("c")
                     if deletenode.prev.next == deletenode and self.endnode.prev == deletenode:
-                        print("c")
                         deletenode.prev.next = self.endnode
                         self.endnode.prev = deletenode.prev
                         deletenode.next = None
@@ -125,9 +125,7 @@ class DoublyLinkedChain:
                         return True
 
                 elif deletenode.prev is not None and deletenode.next is not None:
-                    print("d")
                     if deletenode.prev.next == deletenode and deletenode.next.prev == deletenode:
-                        print("d")
                         deletenode.prev.next = deletenode.next
                         deletenode.next.prev = deletenode.prev
                         deletenode.next = None
@@ -183,11 +181,12 @@ d = Node(12, b, c)
 e = Node(11, None, b)
 print("c - d - b - e")
 a = DoublyLinkedChain()
+a.createChain()
 print(a.isEmpty())
 a.add(b)
-a.isEmpty()
+print(a.isEmpty())
 a.destroyChain()
-a.isEmpty()
+print(a.isEmpty())
 print(a.add(b))
 print("startnode:", b.prev)
 print("endnode:", b.next)
@@ -196,7 +195,8 @@ print(a.add(d))
 print(a.add(e))
 a.printChain()
 print(a.retrieve(c).data)
-print(a.remove(c))
+print("_________________________________________")
+print(a.remove(9))
 a.printChain()
 print(a.remove(f))
 print(a.isEmpty())
@@ -205,6 +205,7 @@ print("reset")
 print(a.addLast(6))
 print(a.addLast(7))
 print(a.addLast(6))
+a.printChain()
 print(a.remove(6))
 print(a.addLast(6))
 print(a.remove(6))

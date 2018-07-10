@@ -1,12 +1,18 @@
 class Stack:
 
     def __init__(self):
+        self.stack = None
+        self.stacktop = None
+
+    def createStack(self):
         self.stack = []
         self.stacktop = None
 
     def destroyStack(self):
         for i in range(len(self.stack)):
             self.stack.pop()
+        self.stacktop = None
+        self.stack = None
 
     def isEmpty(self):
         return self.stack == []

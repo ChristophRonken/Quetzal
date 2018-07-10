@@ -16,12 +16,19 @@ class Node:
 
 class BinarySearchTree:
     def __init__(self):
+        self.root = None
+
+    def createSearchTree(self):
         self.root = Node(None, None)
+        return
 
     def insert(self, root, searchkey, gegevens):
         if self.root == Node(None, None):
             self.root = Node(searchkey, gegevens)
             return True
+
+        elif self.isInTree(self.root, searchkey):
+            return False
 
         elif root.searchkey < searchkey:
             if not root.rchild:
@@ -41,8 +48,13 @@ class BinarySearchTree:
 
         return False
 
+    def isEmpty(self):
+        return self.root == Node(None, None)
+
     def isInTree(self, root, searchkey):
         if root == Node(None, None):
+            return False
+        if not root:
             return False
         if root.searchkey == searchkey:
             return True
@@ -59,6 +71,7 @@ class BinarySearchTree:
                 rchild = rchild.lchild
             return rchild
 
+    '''
     def predecessor(self, lchild):
         if not lchild:
             return False
@@ -66,6 +79,10 @@ class BinarySearchTree:
             while lchild.rchild:
                 lchild = lchild.rchild
             return lchild
+    '''
+
+    def parent(self, root):
+        return
 
     def findNode(self, root, searchkey):
         if root == Node(None, None):
@@ -82,11 +99,9 @@ class BinarySearchTree:
             return False
 
         else:
-            print("okay")
             if searchkey > root.searchkey:
                 print("groter dan")
-                print(root.rchild.searchkey)
-                print(searchkey)
+
                 if root.rchild.searchkey != searchkey:
                     self.deleteNode(root.rchild, searchkey)
 
@@ -110,7 +125,6 @@ class BinarySearchTree:
                         root.rchild = replacement
                         return True
 
-
                     if not root.rchild.lchild and root.rchild.rchild:
                         print("geval 2R")
                         replacement = root.rchild.rchild
@@ -123,20 +137,18 @@ class BinarySearchTree:
 
                     if root.rchild.lchild and root.rchild.rchild:
                         print("geval 3")
-                        replacement = self.successor(root.rchild.rchild)
-
-                        root.rchild.data = None
-                        root.rchild.searchkey = None
-                        print(replacement.searchkey)
-                        print(root.rchild.rchild.searchkey)
-                        if replacement != root.rchild.rchild:
-                            replacement.rchild = root.rchild.rchild
-                        replacement.lchild = root.rchild.lchild
-                        root.rchild.lchild = None
-                        root.rchild.rchild = None
-                        root.rchild = replacement
-                        print(self.isInTree(replacement.rchild, replacement.searchkey))
-                        self.deleteNode(replacement.rchild, replacement.searchkey)
+                        replacement = Node(None, None)
+                        replacementSearchkey = self.successor(root.rchild.rchild).searchkey
+                        replacementData = self.successor(root.rchild.rchild).data
+                        self.deleteNode(root.rchild.rchild, self.successor(root.rchild.rchild).searchkey)
+                        root.rchild.data = replacementData
+                        root.rchild.searchkey = replacementSearchkey
+                        print("replacement: ", replacement.searchkey)
+                        print("root.rchild.rchild: ", root.rchild.rchild.searchkey)
+                        if root.rchild.rchild != Node(None, None):
+                            root.rchild.rchild = root.rchild.rchild
+                        else:
+                            root.rchild.rchild = None
                         return True
 
             elif searchkey < root.searchkey:
@@ -146,6 +158,7 @@ class BinarySearchTree:
 
                 else:
                     if not root.lchild.rchild and not root.lchild.lchild:
+                        print("geval 1")
                         root.lchild.data = None
                         root.lchild.searchkey = None
                         root.lchild.lchild = None
@@ -154,6 +167,7 @@ class BinarySearchTree:
                         return True
 
                     if not root.lchild.rchild and root.lchild.lchild:
+                        print("geval 2L")
                         replacement = root.lchild.lchild
                         root.lchild.data = None
                         root.lchild.searchkey = None
@@ -163,6 +177,7 @@ class BinarySearchTree:
                         return True
 
                     if not root.lchild.lchild and root.lchild.rchild:
+                        print("geval 2R")
                         replacement = root.lchild.rchild
                         root.lchild.data = None
                         root.lchild.searchkey = None
@@ -172,54 +187,54 @@ class BinarySearchTree:
                         return True
 
                     if root.lchild.lchild and root.lchild.rchild:
-                        replacement = self.successor(root.lchild.rchild)
-                        root.lchild.data = None
-                        root.lchild.searchkey = None
-                        replacement.lchild = root.lchild.lchild
-                        replacement.rchild = root.lchild.rchild
-                        root.lchild.lchild = None
-                        root.lchild.rchild = None
-                        root.lchild = replacement
-                        self.deleteNode(root.lchild.rchild, replacement.searchkey)
+                        print("geval 3")
+                        replacement = Node(None, None)
+                        replacementSearchkey = self.successor(root.lchild.rchild).searchkey
+                        replacementData = self.successor(root.lchild.rchild).data
+                        self.deleteNode(root.lchild.rchild, self.successor(root.lchild.rchild).searchkey)
+                        root.lchild.data = replacementData
+                        root.lchild.searchkey = replacementSearchkey
+                        print("replacement: ", replacement.searchkey)
+                        print("root.rchild.rchild: ", root.lchild.rchild.searchkey)
+                        if root.lchild.rchild != Node(None, None):
+                            root.lchild.rchild = root.lchild.rchild
+                        else:
+                            root.lchild.rchild = None
                         return True
-
             else:
-
+                print("hey")
                 if not root.rchild and not root.lchild:
                     root.data = None
                     root.searchkey = None
                     root.lchild = None
                     root.rchild = None
+                    root = None
                     return True
 
                 if not root.rchild and root.lchild:
-                    replacement = root.lchild
-                    root.data = None
-                    root.searchkey = None
-                    root.lchild = None
-                    root.rchild = None
-                    root = replacement
+                    if root == self.root:
+                        self.root = root.rchild
                     return True
 
                 if not root.lchild and root.rchild:
-                    replacement = root.rchild
-                    root.data = None
-                    root.searchkey = None
-                    root.lchild = None
-                    root.rchild = None
-                    root = replacement
+                    if root == self.root:
+                        self.root = root.rchild
                     return True
 
                 if root.lchild and root.rchild:
-                    replacement = self.successor(root.rchild)
-                    root.data = None
-                    root.searchkey = None
-                    replacement.lchild = root.lchild
-                    replacement.rchild = root.rchild
-                    root.lchild = None
-                    root.rchild = None
-                    root = replacement
-                    self.deleteNode(replacement.rchild, replacement.searchkey)
+                    print("geval 3")
+                    replacement = Node(None, None)
+                    replacementSearchkey = self.successor(root.rchild).searchkey
+                    replacementData = self.successor(root.rchild).data
+                    self.deleteNode(root.rchild, self.successor(root.rchild).searchkey)
+                    root.data = replacementData
+                    root.searchkey = replacementSearchkey
+                    print("replacement: ", replacement.searchkey)
+                    print("root.rchild.rchild: ", root.rchild.searchkey)
+                    if root.rchild != Node(None, None):
+                        root.rchild = root.rchild
+                    else:
+                        root.rchild = None
                     return True
 
     def destroySearchTree(self):
@@ -231,7 +246,8 @@ class BinarySearchTree:
             if not self.root.lchild and not self.root.rchild:
                 self.root.data = None
                 self.root.searchkey = None
-        return True
+        self.root = None
+        return
 
     def preOrder(self, root):
         if self.root != Node(None, None):
@@ -259,25 +275,51 @@ class BinarySearchTree:
 
 
 a = BinarySearchTree()
+a.createSearchTree()
 
 a.insert(a.root, 5, "5")
+a.insert(a.root, 9, "9")
 a.insert(a.root, 9, "9")
 a.insert(a.root, 6, "6")
 a.insert(a.root, 7, "7")
 a.insert(a.root, 8, "8")
-a.insert(a.root, 11, "11")
-a.insert(a.root, 10, "10")
 a.insert(a.root, 12, "12")
+a.insert(a.root, 10, "10")
+a.insert(a.root, 11, "11")
+a.insert(a.root, 13, "13")
 a.insert(a.root, 4, "4")
 a.insert(a.root, 2, "2")
 a.insert(a.root, 3, "3")
 a.insert(a.root, 1, "1")
 
-
-
+a.deleteNode(a.root, 1)
+a.inOrder(a.root)
+a.deleteNode(a.root, 2)
+a.inOrder(a.root)
+a.deleteNode(a.root, 3)
+a.inOrder(a.root)
+a.deleteNode(a.root, 4)
+a.inOrder(a.root)
+print("hey")
+a.deleteNode(a.root, 5)
+a.inOrder(a.root)
+a.deleteNode(a.root, 6)
+a.inOrder(a.root)
+a.deleteNode(a.root, 7)
+a.inOrder(a.root)
+a.deleteNode(a.root, 8)
 a.inOrder(a.root)
 a.deleteNode(a.root, 9)
 a.inOrder(a.root)
+a.deleteNode(a.root, 10)
+a.inOrder(a.root)
+a.deleteNode(a.root, 11)
+a.inOrder(a.root)
+a.deleteNode(a.root, 12)
+a.inOrder(a.root)
+a.deleteNode(a.root, 13)
+a.inOrder(a.root)
+
 '''
 t(a.isInTree(a.root, 5))
 print(a.deleteNode(a.root, 5))

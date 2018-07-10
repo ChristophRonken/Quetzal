@@ -1,0 +1,41 @@
+Quetzal:
+
+Classes
+
+- Winkel:
+    - Stock     (Stock)
+    - Chocolademelk             (DLC)
+    - Gebruikers                (BST)
+    - Werknemers                (BST)
+    - Inkomende bestellingen    (Queue)
+    - Bestellingen              (DLC)
+
+- Chocolademelk:
+    - prijs     (integer)
+    - credits   (integer)
+    - gebruiker (user)
+
+- Stock:
+    - chocoladeshots        (DLC / Queue)
+    - honingshots           (DLC / Queue)
+    - marshmallows          (DLC / Queue)
+    - chillipeperporties    (DLC / Queue)
+
+- Bestelling:
+    - gebruikers-id     (integer)
+    - timestamp         (integer)
+    - chocolademelk-id  (integer)
+    - afgehaald         (boolean)
+
+- Werknemer:
+    - id            (integer)
+    - voornaam      (string)
+    - achternaam    (string)
+    - workload      (integer)
+
+- Gebruiker:
+    - id    (integer)
+    - voornaam      (string)
+    - achternaam    (string)
+    - e-mailadres   (string) -> integer ascii codes
+
