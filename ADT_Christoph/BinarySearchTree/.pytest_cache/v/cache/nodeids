@@ -1,0 +1,7 @@
+[
+  "BinarySearchTreeTest.py::BinarySearchTreeTest::test_createSearchTree",
+  "BinarySearchTreeTest.py::BinarySearchTreeTest::test_exists",
+  "BinarySearchTreeTest.py::BinarySearchTreeTest::test_findNode",
+  "BinarySearchTreeTest.py::BinarySearchTreeTest::test_insert",
+  "BinarySearchTreeTest.py::BinarySearchTreeTest::test_isEmpty"
+]

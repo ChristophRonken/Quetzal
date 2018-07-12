@@ -1,0 +1,57 @@
+
+Quetzal:
+
+createStore()
+// Creates a ChocolateMilk Store
+// precondition: Store doesn't exist
+// postcondition: Store exists
+
+destroyStore()
+// Deletes the whole store
+// precondition:
+// postcondition: Store is deleted
+
+createUser()
+// Registers a new user
+// precondition: user not registered yet
+// postcondition: user is registered
+
+createEmployee()
+// Registers a new employee
+// precondition: employee not registered yet
+// postcondition: employee is registered
+
+makeOrder(orderId: integer, workerId: integer)
+// Prepares the order
+// precondition: order exists
+// postcondition: order is made
+
+createOrder(userId)
+// Creates an order
+// precondition: sufficient ingredients
+// postcondition: order is created
+
+addItemToOrder(newItem: Ingredient, userId: integer)
+// Adds newItem to an order
+// precondition: newItem in stock
+// postcondition: newItem is added to order
+
+enterOrder(userId: integer)
+// Passes through order to be made
+// precondition: order is created
+// postcondition: order is being made
+
+pickup(userId: integer)
+// Picks up an order
+// precondition: order finished
+// postcondition: order picked up
+
+resupply(newItem: Ingredient)
+// Adds newItem to Stock
+// precondition: newItem exists
+// postcondition: stock resupplied
+
+
+
+
+

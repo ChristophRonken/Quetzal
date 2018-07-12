@@ -1,0 +1,36 @@
+
+ADT Stack:
+
+destroyStack()
+// Destroys Stack
+// precondition:
+// postcondition:   Whole stack is deleted
+
+isEmpty(): boolean
+// Checks if Stack is empty
+// precondition:
+// postcondition:   return True: Stack is empty
+                    return False: Stack is not empty
+
+push(newitem: StackItemType):
+// Adds newitem to Stack
+// precondition:
+// postcondition:
+
+pop(): boolean
+// Removes top from Stack
+// precondition:
+// postcondition:   return True: top removed
+                    return False: stack is already empty
+
+popDisplay(): boolean
+// Removes top from Stack and saves value
+// precondition:
+// postcondition:   return True: top removed, self.stacktop holds value of removed item
+                    return False: stack is already empty
+
+getTop(): boolean
+// Saves top value of Stack
+// precondition:
+// postcondition:   return True: top saved
+                    return False: stack is empty

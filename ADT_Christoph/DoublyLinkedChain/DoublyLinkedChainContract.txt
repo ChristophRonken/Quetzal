@@ -1,0 +1,78 @@
+
+ADT Doubly Linked Chain:
+
+createChain(): boolean
+// Creates DLC
+// precondition:    DLC doesn't exist yet
+// postcondition:   return True: DLC created
+                    return False: DLC already existed
+
+destroyChain()
+// Destroys complete DLC
+// precondition:
+// postcondition:   DLC is destroyed
+
+exists(): boolean
+// Checks if DLC exists
+// precondition:
+// postcondition:   return True: DLC exists
+                    return False: DLC doesn't exist
+
+isInChain(searchkey): boolean
+// Checks the searchkey value is used in DLC
+// precondition:
+// postcondition:   return True: searchkey found in DLC
+                    return False: DLC doesn't exist, searchkey not found in DLC
+
+isEmpty(): boolean
+// Checks if DLC is empty
+// precondition:
+// postcondition:   return True: DLC is empty
+                    return False: DLC doesn't exist, DLC is not empty
+
+add(searchKey: integer, newItem: DLCItemType): boolean
+// Adds newItem to DLC at right place
+// precondition:
+// postcondition:   return True: newItem added
+                    return False: DLC doesn't exist
+
+addLast(searchKey: integer, newItem: DLCItemType): boolean
+// Adds newItem to end of DLC
+// precondition:
+// postcondition:   return True: newItem added to end of DLC
+                    return False: DLC doesn't exist
+
+addFirst(searchKey: integer, newItem: DLCItemType): boolean
+// Adds newItem to begin of DLC
+// precondition:
+// postcondition:   return True: newItem added to begin of DLC
+                    return False: DLC doesn't exist
+
+remove(searchKey: integer): boolean
+// Removes item with searchkey
+// precondition:
+// postcondition:   return True: item with searchkey removed
+                    return False: DLC doesn't exist, DLC already empty, item with searchkey not found
+
+removeLast(): boolean
+// Removes last item from DLC
+// precondition:
+// postcondition:   return True: last node removed
+                    return False: DLC doesn't exist, DLC already empty
+
+removeFirst(): boolean
+// Removes first item from DLC
+// precondition:
+// postcondition:   return True: first node removed
+                    return False: DLC doesn't exist, DLC already empty
+
+searchkeyRetrieve(searchkey: integer): Node
+// Returns node with searchkey if found
+// precondition:
+// postcondition:   return Node: node with data returned
+                    return False: node with data not found
+
+printChain():
+// Prints whole DLC
+// precondition:
+// postcondition:
