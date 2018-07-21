@@ -45,8 +45,7 @@ class BinarySearchTreeTest(unittest.TestCase):
         self.assertEqual(self.BST.findNode(self.BST.root, 7), self.BST.root.rchild)
         self.assertEqual(self.BST.findNode(self.BST.root, 4), self.BST.root.lchild)
 
-    def deleteNode(self):
-
+    # def deleteNode(self):
 
 
 if __name__ == '__main__':

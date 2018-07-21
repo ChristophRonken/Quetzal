@@ -44,6 +44,7 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.assertTrue(self.doublyLinkedChain.add(7, "test1"))
         self.assertTrue(self.doublyLinkedChain.add(4, "test2"))
         self.assertTrue(self.doublyLinkedChain.add(5, "test3"))
+        self.assertTrue(self.doublyLinkedChain.add(5, "test4"))
 
     def test_addFirst(self):
         self.assertFalse(self.doublyLinkedChain.addFirst(6, "test0"))
@@ -89,10 +90,13 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.assertTrue(self.doublyLinkedChain.add(7, "test1"))
         self.assertTrue(self.doublyLinkedChain.add(4, "test2"))
         self.assertTrue(self.doublyLinkedChain.add(5, "test3"))
-        self.assertTrue(self.doublyLinkedChain.add(9, "test4"))
-        self.assertTrue(self.doublyLinkedChain.add(6, "test5"))
-        self.assertTrue(self.doublyLinkedChain.add(3, "test6"))
+        self.assertTrue(self.doublyLinkedChain.add(3, "test4"))
+        self.assertTrue(self.doublyLinkedChain.add(9, "test5"))
+        self.assertTrue(self.doublyLinkedChain.add(6, "test6"))
+        self.assertTrue(self.doublyLinkedChain.add(3, "test7"))
         self.assertTrue(self.doublyLinkedChain.remove(3))
+        self.assertTrue(self.doublyLinkedChain.remove(3))
+        self.assertFalse(self.doublyLinkedChain.remove(3))
         self.assertTrue(self.doublyLinkedChain.remove(5))
         self.assertTrue(self.doublyLinkedChain.remove(9))
 
@@ -103,6 +107,7 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.assertTrue(self.doublyLinkedChain.add(7, "test1"))
         self.assertTrue(self.doublyLinkedChain.add(4, "test2"))
         self.assertTrue(self.doublyLinkedChain.add(5, "test3"))
+        self.assertTrue(self.doublyLinkedChain.searchkeyRetrieve(4))
 
 
 if __name__ == '__main__':
