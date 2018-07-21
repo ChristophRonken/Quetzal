@@ -2,7 +2,7 @@
 ADT Queue:
 
 createQueue():
-// Creates Queue
+// Creates an empty Queue
 // precondition:    self.items == None
 // postcondition:   Queue created
 

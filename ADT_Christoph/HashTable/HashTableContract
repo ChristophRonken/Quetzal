@@ -1,0 +1,48 @@
+
+ADT HashTable:
+
+createHashTable()
+// Creates an empty HashTable
+// precondition:    HashTable doesn't exist yet
+// postcondition:   HashTable created
+
+destroyHashTable()
+// Destroys HashTable
+// precondition:    HashTable exists
+// postcondition:   HashTable deleted
+
+isEmpty(): boolean
+// Checks if HashTable is empty
+// precondition:
+// postcondition:   return True: Table is empty
+                    return False: Table is not empty
+
+insert(searchkey: integer, newItem: TableItemType): boolean
+// Inserts an element in the right place
+// precondition:    searchkey is place in Table
+                    searchkey is no duplicate
+// postcondition:   return True: element is added
+                    return False: element isn't added
+
+getLength(): integer
+// Returns the length of a Table
+// precondition:    Table exists
+// postcondition:   return integer: length of Table returned
+
+retrieve(searchkey: integer): TableItemType
+// Returns a node with given searchkey
+// precondition:    searchkey is place in Table
+// postcondition:   return TableItemType: item with searchkey found and returned
+                    return False: TableItemType with searchkey not found
+
+delete(searchkey: integer): boolean
+// Deletes a node with given searchkey
+// precondition:    searchkey is place in BST
+                    Table exists
+// postcondition:   return True: item with searchkey deleted
+                    return False: item with searchkey not deleted
+
+traverse():
+// Prints the items of the Table, sorted by searchkey values
+// precondition:    Table exists
+// postcondition:

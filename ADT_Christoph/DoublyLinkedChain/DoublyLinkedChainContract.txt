@@ -2,7 +2,7 @@
 ADT Doubly Linked Chain:
 
 createChain(): boolean
-// Creates DLC
+// Creates an empty DLC
 // precondition:    DLC doesn't exist yet
 // postcondition:   return True: DLC created
                     return False: DLC already existed

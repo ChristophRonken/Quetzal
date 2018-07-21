@@ -2,7 +2,7 @@
 ADT Binary Search Tree:
 
 createSearchTree()
-// Creates BST with an empty root
+// Creates an empty BST
 // precondition: self.root == None
 // postcondition: creates an empty node as a root for BST
 

@@ -189,13 +189,5 @@ class DoublyLinkedChain:
             searchNode = self.head.next
             while searchNode.searchkey is not searchkey:
                 searchNode = searchNode.next
-                return searchNode
 
-
-a = DoublyLinkedChain()
-a.createChain()
-a.add(5, "test0")
-a.add(4, "test1")
-a.add(7, "test2")
-a.add(9, "test3")
-a.printChain()
+            return searchNode
