@@ -9,7 +9,7 @@ class Stack:
 
     def __init__(self):
         self.top = None
-        self.topData = None
+        self.topItem = None
         return
 
     def isEmpty(self):
@@ -18,7 +18,7 @@ class Stack:
     def destroyStack(self):
         while not self.isEmpty():
             self.pop()
-        self.topData = None
+        self.topItem = None
         return
 
     def push(self, newItem):
@@ -33,7 +33,7 @@ class Stack:
         else:
             deleteNode = self.top
             self.top = self.top.next
-            deleteNode.data = None
+            deleteNode.item = None
             deleteNode.next = None
             return True
 
@@ -49,5 +49,5 @@ class Stack:
         if self.isEmpty():
             return False
         else:
-            self.topData = self.top.data
+            self.topItem = self.top.item
             return True
