@@ -16,7 +16,10 @@ class Queue:
         self.root = Node(None)
 
     def destroyQueue(self):
-        self.root = Node(None)
+        for i in range(self.size - 1):
+            self.deQueue()
+        self.root.item = None
+        self.root.next = None
 
     def enQueue(self, newItem):
         if self.size == 0:
@@ -30,10 +33,9 @@ class Queue:
             self.size += 1
 
     def deQueue(self):
-        searchnode = self.root
-        for i in range(self.size - 1):
-            searchnode = searchnode.next
-        searchnode.next = None
+        new_root = self.root.next
+        self.root = new_root
+        self.size -= 1
 
     def getFront(self):
         print(self.root.item)
