@@ -116,7 +116,7 @@ class BinarySearchTree:
             else:
                 return self.findNode(searchkey, root.rchild)
 
-    def deleteNode(self, searchkey, root=None):
+    def delete(self, searchkey, root=None):
         if not root:
             root = self.root
 
@@ -126,7 +126,7 @@ class BinarySearchTree:
         else:
             if searchkey > root.searchkey:
                 if root.rchild.searchkey != searchkey:
-                    self.deleteNode(searchkey, root.rchild)
+                    self.delete(searchkey, root.rchild)
 
                 else:
                     # enkel element in rchild
@@ -167,12 +167,12 @@ class BinarySearchTree:
                         else:
                             root.rchild.item = successorNode.item
                             root.rchild.searchkey = successorNode.searchkey
-                            self.deleteNode(successorNode.searchkey, root.rchild.rchild)
+                            self.delete(successorNode.searchkey, root.rchild.rchild)
                         return True
 
             elif searchkey < root.searchkey:
                 if root.lchild.searchkey != searchkey:
-                    self.deleteNode(searchkey, root.lchild)
+                    self.delete(searchkey, root.lchild)
 
                 else:
                     # enkel element in lchild
@@ -213,7 +213,7 @@ class BinarySearchTree:
                         else:
                             root.lchild.item = successorNode.item
                             root.lchild.searchkey = successorNode.searchkey
-                            self.deleteNode(successorNode.searchkey, root.lchild.rchild)
+                            self.delete(successorNode.searchkey, root.lchild.rchild)
                         return True
 
             else:
@@ -248,16 +248,16 @@ class BinarySearchTree:
                         else:
                             self.root.item = successorNode.item
                             self.root.searchkey = successorNode.searchkey
-                            self.deleteNode(successorNode.searchkey, self.root.rchild)
+                            self.delete(successorNode.searchkey, self.root.rchild)
                         return True
         return False
 
     def destroySearchTree(self):
         while self.root != Node(None, None):
             if self.root.rchild:
-                self.deleteNode(self.root.rchild.searchkey)
+                self.delete(self.root.rchild.searchkey)
             if self.root.lchild:
-                self.deleteNode(self.root.lchild.searchkey)
+                self.delete(self.root.lchild.searchkey)
             if not self.root.lchild and not self.root.rchild:
                 self.root.item = None
                 self.root.searchkey = None
@@ -320,7 +320,7 @@ for i in range(0, 19):
         a.destroySearchTree()
         print(a.exists())
     else:
-        a.deleteNode(i)
+        a.delete(i)
         a.inOrder()
         print()
 
