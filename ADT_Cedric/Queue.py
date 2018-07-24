@@ -1,9 +1,10 @@
-class Node():
-    def __init__(self, value):
-        self.value = value
+class Node:
+    def __init__(self, item):
+        self.item = item
         self.next = None
 
-class Queue():
+
+class Queue:
     def __init__(self):
         self.size = 0
         self.root = None
@@ -12,20 +13,20 @@ class Queue():
         return self.size == 0
 
     def createQueue(self):
-        self.root = Node(None, None)
+        self.root = Node(None)
 
     def destroyQueue(self):
-        self.root = Node(None, None)
+        self.root = Node(None)
 
-    def enQueue(self, value):
+    def enQueue(self, newItem):
         if self.size == 0:
-            self.root = Node(value)
+            self.root = Node(newItem)
             self.size += 1
         else:
             searchnode = self.root
             while searchnode.next is not None:
                 searchnode = self.root.next
-            searchnode.next = Node(value)
+            searchnode.next = Node(newItem)
             self.size += 1
 
     def deQueue(self):
@@ -35,21 +36,13 @@ class Queue():
         searchnode.next = None
 
     def getFront(self):
-        print(self.root.value)
-        return self.root.value
+        print(self.root.item)
+        return self.root.item
 
     def getBack(self):
         searchnode = self.root
         for i in range(self.size - 1):
             searchnode = searchnode.next
-        print(searchnode.value)
-        return searchnode.value
+        print(searchnode.item)
+        return searchnode.item
 
-
-Remi = Queue()
-print(Remi.isEmpty())
-Remi.enQueue(7)
-Remi.enQueue(8)
-Remi.getFront()
-Remi.getBack()
-print(Remi.isEmpty())
