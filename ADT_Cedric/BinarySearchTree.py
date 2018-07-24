@@ -1,11 +1,11 @@
-class Node():
+class Node:
     def __init__(self, item):
         self.item = item
         self.left_child = None
         self.right_child = None
 
 
-class BinarySearchTree():
+class BinarySearchTree:
     def __init__(self):
         self.size = 0
         self.root = None
