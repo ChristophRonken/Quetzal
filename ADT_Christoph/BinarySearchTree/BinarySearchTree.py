@@ -316,7 +316,11 @@ for i in range(0, 19):
     a.insert(13, "13")
     a.insert(15, "15")
 
-    a.deleteNode(i)
-    a.inOrder()
-    print()
+    if i == 18:
+        a.destroySearchTree()
+        print(a.exists())
+    else:
+        a.deleteNode(i)
+        a.inOrder()
+        print()
 
