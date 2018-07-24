@@ -14,14 +14,21 @@ delete 10
 print
 
 # in 1 script kan je meerdere adts zetten
-type=23
-insert 5
-insert 6
-delete 5
+# type=23
+# insert 5
+# insert 6
+# delete 5
 # dit maakt een bestand 23-1.dot
-print
+# print
 
 type=stack
+insert 5
+insert 6
+delete
+# dit maakt een bestand stack-1.dot
+print
+
+type=queue
 insert 5
 insert 6
 delete
