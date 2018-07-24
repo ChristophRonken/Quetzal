@@ -240,10 +240,10 @@ class HashTable:
                 return self.table[index].item.remove(searchkey)
 
     def print(self):
-        for i in range(0, len(a.table)):
+        for i in range(0, len(self.table)):
             if self.table[i] and self.table[i].item and self.type == HashTableType.Type3:
                 self.table[i].item.printChain()
             else:
-                print(self.table[i].item)
+                print(self.table[i].searchkey)
         return
 

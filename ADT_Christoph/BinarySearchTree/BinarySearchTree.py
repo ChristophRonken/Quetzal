@@ -268,7 +268,7 @@ class BinarySearchTree:
         if not root:
             root = self.root
         if self.root != Node(None, None):
-            print(root.item)
+            print(root.searchkey)
             if root.lchild:
                 self.preOrder(root.lchild)
             if root.rchild:
@@ -280,7 +280,7 @@ class BinarySearchTree:
         if self.root != Node(None, None):
             if root.lchild:
                 self.inOrder(root.lchild)
-            print(root.item)
+            print(root.searchkey)
             if root.rchild:
                 self.inOrder(root.rchild)
 
@@ -292,35 +292,5 @@ class BinarySearchTree:
                 self.postOrder(root.lchild)
             if root.rchild:
                 self.postOrder(root.rchild)
-            print(root.item)
-
-
-for i in range(0, 19):
-    a = BinarySearchTree()
-    a.createSearchTree()
-    a.insert(8, "8")
-
-    a.insert(4, "4")
-    a.insert(6, "6")
-    a.insert(5, "5")
-    a.insert(7, "7")
-    a.insert(2, "2")
-    a.insert(1, "1")
-    a.insert(3, "3")
-
-    a.insert(12, "12")
-    a.insert(10, "10")
-    a.insert(9, "9")
-    a.insert(11, "11")
-    a.insert(14, "14")
-    a.insert(13, "13")
-    a.insert(15, "15")
-
-    if i == 18:
-        a.destroySearchTree()
-        print(a.exists())
-    else:
-        a.delete(i)
-        a.inOrder()
-        print()
+            print(root.searchkey)
 

@@ -24,6 +24,11 @@ print
 type=stack
 insert 5
 insert 6
+insert 5
+insert 6
+insert 5
+insert 6
+print
 delete
 # dit maakt een bestand stack-1.dot
 print
@@ -32,5 +37,33 @@ type=queue
 insert 5
 insert 6
 delete
+# dit maakt een bestand stack-1.dot
+print
+
+type=dll
+insert 5
+insert 6
+delete 5
+# dit maakt een bestand stack-1.dot
+print
+
+type=hlin
+insert 5
+insert 6
+delete 5
+# dit maakt een bestand stack-1.dot
+print
+
+type=hquad
+insert 5
+insert 6
+delete 5
+# dit maakt een bestand stack-1.dot
+print
+
+type=hsep
+insert 5
+insert 6
+delete 5
 # dit maakt een bestand stack-1.dot
 print
