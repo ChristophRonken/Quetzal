@@ -26,39 +26,41 @@ class circular_chain():
             node = node.next
         return node
 
-    def add_node(self, root, item, searchkey):
+    def add_node(self, item, searchkey, root = None):
+        if not root:
+            root = self.root
         if root.next is self.root:
             root.next = Node(item, self.root, searchkey)
             self.size += 1
 
         else:
-            return self.add_node(root.next, item, searchkey)
+            return self.add_node(item, searchkey, root.next)
 
-    def find_node(self, root, searchkey):
-
+    def find_node(self, searchkey):
+        node = self.root
         for i in range(self.size):
-            if root.searchkey == searchkey:
-                return root
+            if node.searchkey == searchkey:
+                return node
             else:
-                root = root.next
+                node = node.next
         return False
 
-    def delete(self, root, searchkey):
-        removed_node = self.find_node(root, searchkey)
+    def delete(self, searchkey):
+        removed_node = self.find_node(searchkey)
         if removed_node != False:
-            removed_node_next = self.find_node(root, searchkey).next
+            removed_node_next = self.find_node(searchkey).next
             last_node = self.to_last_node(removed_node)
             last_node.next = removed_node_next
         else:
             return False
 
 
-    def print_chain(self, root):
-        print(root.searchkey)
-        if root.next is not self.root:
-            return self.print_chain(root.next)
-        else:
-            print(root.next.searchkey)
+    def print_chain(self):
+        node = self.root
+        for i in range(self.size):
+            print(node.searchkey)
+            node = node.next
+
 
     def get_size(self):
         return self.size
@@ -66,10 +68,10 @@ class circular_chain():
 
 C = circular_chain()
 C.create_chain(6, 6)
-C.add_node(C.root, 7, 7)
-C.add_node(C.root, 9, 9)
-C.delete(C.root, 9)
-C.print_chain(C.root)
+C.add_node(7, 7)
+C.add_node(9, 9)
+C.delete(9)
+C.print_chain()
 
 
 
