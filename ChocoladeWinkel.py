@@ -1,5 +1,5 @@
 from InputReader import InputReader
-from Wrapper import StackWrapper, BSTWrapper, QueueWrapper, DLCWrapper, HashWrapper
+from Wrapper import StackWrapper, BSTWrapper, QueueWrapper, DLCWrapper, HashWrapper, CLCWrapper
 from ADT_Christoph.HashTable.HashTable import HashTableType
 
 
@@ -42,6 +42,13 @@ class Store:
 
             elif self.inputReader.commands[i] == "type=dll":
                 self.Wrapper = DLCWrapper()
+                self.Wrapper.create()
+                newItem = False
+                searchkey = True
+                i += 1
+
+            elif self.inputReader.commands[i] == "type=cll":
+                self.Wrapper = CLCWrapper()
                 self.Wrapper.create()
                 newItem = False
                 searchkey = True

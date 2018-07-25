@@ -4,8 +4,7 @@ from ADT_Christoph.HashTable.HashTable import HashTable
 from ADT_Christoph.BinarySearchTree.BinarySearchTree import BinarySearchTree
 from ADT_Cedric.Queue import Queue
 from ADT_Cedric.CircularChain import CircularChain
-from OutputGenerator import printStack, printQueue, printHashTable
-import copy
+from OutputGenerator import printStack, printQueue, printHashTable, printBST, printDLC, printCLC
 
 
 class StackWrapper:
@@ -47,11 +46,29 @@ class DLCWrapper:
         return
 
     def print(self):
+        printDLC(self.ADT)
         return
 
 
 class CLCWrapper:
-    pass
+    def __init__(self):
+        self.ADT = CircularChain()
+
+    def create(self):
+        self.ADT.createChain()
+        return
+
+    def insert(self, searchkey, newItem):
+        self.ADT.addNode(newItem, searchkey)
+        return
+
+    def delete(self, searchkey):
+        self.ADT.delete(searchkey)
+        return
+
+    def print(self):
+        printCLC(self.ADT)
+        return
 
 
 class QueueWrapper:
@@ -93,7 +110,7 @@ class BSTWrapper:
         return
 
     def print(self):
-        self.ADT.inOrder()
+        printBST(self.ADT)
         return
 
 

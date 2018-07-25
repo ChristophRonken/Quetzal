@@ -3,13 +3,19 @@
 # print geeft een grafische weergave in dot formaat: 
 # https://en.wikipedia.org/wiki/DOT_(graph_description_language),http://www.graphviz.org/content/dot-language
 type=bst
-insert 10
 insert 5
+insert 3
+insert 2
+insert 4
+insert 7
+insert 6
+insert 10
+insert 8
 insert 9
 # dit maakt een bestand bst-1.dot
 print
 insert 12
-delete 10
+delete 4
 # dit maakt een bestand bst-2.dot
 print
 
@@ -49,9 +55,36 @@ print
 
 type=dll
 insert 5
+insert 3
+insert 2
+insert 4
+insert 7
 insert 6
+insert 10
+insert 8
+insert 9
+# dit maakt een bestand bst-1.dot
+print
+insert 12
+delete 4
+# dit maakt een bestand bst-2.dot
+print
+
+type=cll
+insert 5
+insert 3
+insert 2
+insert 4
+insert 7
+insert 6
+insert 10
+insert 8
+insert 9
+# dit maakt een bestand bst-1.dot
+print
+insert 12
 delete 5
-# dit maakt een bestand stack-1.dot
+# dit maakt een bestand bst-2.dot
 print
 
 type=hlin
@@ -89,3 +122,4 @@ insert 10
 delete 7
 # dit maakt een bestand stack-1.dot
 print
+

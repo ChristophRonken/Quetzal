@@ -31,7 +31,7 @@ class CircularChain:
     def addNode(self, newItem, searchkey, root = None):
         if not root:
             root = self.root
-        if not root.item:
+        if not root.searchkey:
             root.item = newItem
             root.searchkey = searchkey
             self.size += 1
@@ -52,7 +52,7 @@ class CircularChain:
                 node = node.next
         return False
 
-    def delete(self, searchkey = None):
+    def delete(self, searchkey=None):
         if not searchkey:
             node = self.root
             while node.next is not self.root:
@@ -68,9 +68,14 @@ class CircularChain:
                 self.size -= 1
         else:
             removed_node = self.findNode(searchkey)
-            if removed_node != False:
+            if removed_node:
                 last_node = self.toLastNode(removed_node)
+                if removed_node == self.root:
+                    self.root = removed_node.next
                 last_node.next = removed_node.next
+                removed_node.next = None
+                removed_node.searchkey = None
+                removed_node.item = None
                 self.size -= 1
             else:
                 return False
