@@ -4,7 +4,7 @@ from ADT_Christoph.HashTable.HashTable import HashTable
 from ADT_Christoph.BinarySearchTree.BinarySearchTree import BinarySearchTree
 from ADT_Cedric.Queue import Queue
 from ADT_Cedric.CircularChain import CircularChain
-from OutputGenerator import printStack, printQueue
+from OutputGenerator import printStack, printQueue, printHashTable
 import copy
 
 
@@ -26,8 +26,7 @@ class StackWrapper:
         return
 
     def print(self):
-        ADTCopy = copy.deepcopy(self.ADT)
-        printStack(ADTCopy)
+        printStack(self.ADT)
         return
 
 
@@ -72,7 +71,7 @@ class QueueWrapper:
         return
 
     def print(self):
-        ADTCopy = copy.deepcopy(self.ADT)
+        printQueue(self.ADT)
         return
 
 
@@ -116,5 +115,5 @@ class HashWrapper:
         return
 
     def print(self):
-        self.ADT.print()
+        printHashTable(self.ADT)
         return

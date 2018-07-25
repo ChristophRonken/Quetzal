@@ -28,7 +28,7 @@ class Queue:
         else:
             searchnode = self.root
             while searchnode.next is not None:
-                searchnode = self.root.next
+                searchnode = searchnode.next
             searchnode.next = Node(newItem)
             self.size += 1
 

@@ -17,7 +17,7 @@ class Bucket:
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, Bucket):
-            return self.deleted is other.deleted and self.item is other.item and self.deleted is self.deleted
+            return self.deleted is other.deleted and self.item is other.item and self.searchkey is other.searchkey
         return False
 
 
@@ -66,7 +66,7 @@ class HashTable:
 
         elif self.type != HashTableType.Type3:
             for i in range(0, len(self.table)):
-                if self.table[i].item:
+                if self.table[i].searchkey:
                     return False
             return True
 
@@ -83,7 +83,7 @@ class HashTable:
 
         elif self.type != HashTableType.Type3:
             for i in range(0, len(self.table)):
-                if not self.table[i].item:
+                if not self.table[i].searchkey:
                     return False
             return True
 
@@ -102,7 +102,12 @@ class HashTable:
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
             probeNumber = 0
-            while self.table[(index + probeNumber) % self.getLength()] != Bucket():
+
+            print(self.table[(index + probeNumber) % self.getLength()] == Bucket())
+            print("searchkey: ", self.table[5].searchkey, " vs ", Bucket().searchkey)
+            print("deleted: ", self.table[5].deleted, " vs ", Bucket().deleted)
+
+            while self.table[(index + probeNumber) % self.getLength()] != Bucket() and self.table[(index + probeNumber) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
                     return False
@@ -112,7 +117,8 @@ class HashTable:
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
-            while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket():
+            print(self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket())
+            while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket() and self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
                     return False
@@ -180,20 +186,18 @@ class HashTable:
 
     def delete(self, searchkey):
         if not self.__exists():
+            print("notexist")
             return False
 
         if self.isEmpty():
+            print("isempty")
             return False
 
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
             probeNumber = 0
-            while self.table[(index + probeNumber) % self.getLength()].item or self.table[(index + probeNumber) % self.getLength()].deleted:
+            while self.table[(index + probeNumber) % self.getLength()].searchkey or self.table[(index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
-                    probeNumber += 1
-                    continue
-
-                if self.table[(index + probeNumber) % self.getLength()] == Bucket():
                     probeNumber += 1
                     continue
 
@@ -210,13 +214,9 @@ class HashTable:
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
-            while self.table[(index + probeNumber ** 2) % self.getLength()].item or self.table[
+            while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey or self.table[
                 (index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
-                    probeNumber += 1
-                    continue
-
-                if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket():
                     probeNumber += 1
                     continue
 

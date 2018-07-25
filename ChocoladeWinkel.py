@@ -13,7 +13,6 @@ class Store:
         self.Wrapper = None
 
     def runADTSimulation(self):
-        print(self.inputReader.commands)
         i = 0
         newItem = False
         searchkey = False
