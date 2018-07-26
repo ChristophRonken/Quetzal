@@ -29,26 +29,36 @@ class HashTable:
         self.table = [None] * self.size
 
     def createHashTable(self):
-        for i in range(0, len(self.table)):
-            self.table[i] = Bucket()
+        if self.type != HashTableType.Type3:
+            for i in range(0, len(self.table)):
+                self.table[i] = Bucket()
+        else:
+            for i in range(0, len(self.table)):
+                self.table[i] = DoublyLinkedChain()
+                self.table[i].createChain()
         return True
 
     def destroyHashTable(self):
         if not self.__exists():
             return False
 
-        for i in range(0, len(self.table)):
-            if self.type == HashTableType.Type3 and not self.table[i].deleted:
-                if not self.table[i].item:
-                    continue
-                while not self.table[i].item.isEmpty():
-                    self.table[i].item.removeLast()
-            self.table[i].item = None
-            self.table[i].searchkey = None
-            self.table[i].deleted = False
+        if self.type != HashTableType.Type3:
+            for i in range(0, len(self.table)):
+                if self.type == HashTableType.Type3 and not self.table[i].deleted:
+                    if not self.table[i].item:
+                        continue
+                    while not self.table[i].item.isEmpty():
+                        self.table[i].item.removeLast()
+                self.table[i].item = None
+                self.table[i].searchkey = None
+                self.table[i].deleted = False
 
-        for i in range(0, len(self.table)):
-            self.table[i] = None
+            for i in range(0, len(self.table)):
+                self.table[i] = None
+        else:
+            for i in range(0, len(self.table)):
+                self.table[i].destroyChain()
+                self.table[i] = None
         return not self.__exists()
 
     def __hash(self, searchkey):
@@ -72,7 +82,7 @@ class HashTable:
 
         else:
             for i in range(0, len(self.table)):
-                if self.table[i].item and self.table[i] != Bucket(None, True) and not self.table[i].item.isEmpty():
+                if not self.table[i].isEmpty():
                     return False
 
             return True
@@ -83,7 +93,7 @@ class HashTable:
 
         elif self.type != HashTableType.Type3:
             for i in range(0, len(self.table)):
-                if not self.table[i].searchkey:
+                if self.table[i].searchkey == None:
                     return False
             return True
 
@@ -96,17 +106,13 @@ class HashTable:
     def insert(self, searchkey, newItem):
         if not self.__exists():
             return False
+
         elif self.isFull():
             return False
 
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
             probeNumber = 0
-
-            print(self.table[(index + probeNumber) % self.getLength()] == Bucket())
-            print("searchkey: ", self.table[5].searchkey, " vs ", Bucket().searchkey)
-            print("deleted: ", self.table[5].deleted, " vs ", Bucket().deleted)
-
             while self.table[(index + probeNumber) % self.getLength()] != Bucket() and self.table[(index + probeNumber) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
@@ -117,7 +123,6 @@ class HashTable:
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
-            print(self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket())
             while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket() and self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
@@ -127,11 +132,10 @@ class HashTable:
             return True
 
         elif self.type == HashTableType.Type3:
-            if not self.table[index].item:
-                self.table[index].item = DoublyLinkedChain()
-                self.table[index].item.createChain()
-            self.table[index].item.add(searchkey, newItem)
+            self.table[index].add(searchkey, newItem)
             return True
+
+        return False
 
     def retrieve(self, searchkey):
         if not self.__exists():
@@ -179,10 +183,7 @@ class HashTable:
             return False
 
         elif self.type == HashTableType.Type3:
-            if not self.table[index].item:
-                return False
-            else:
-                return self.table[index].item.searchkeyRetrieve(searchkey)
+            return self.table[index].searchkeyRetrieve(searchkey)
 
     def delete(self, searchkey):
         if not self.__exists():
@@ -196,7 +197,7 @@ class HashTable:
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
             probeNumber = 0
-            while self.table[(index + probeNumber) % self.getLength()].searchkey or self.table[(index + probeNumber) % self.getLength()].deleted:
+            while self.table[(index + probeNumber) % self.getLength()].searchkey != None or self.table[(index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
                     probeNumber += 1
                     continue
@@ -214,7 +215,7 @@ class HashTable:
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
-            while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey or self.table[
+            while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey != None or self.table[
                 (index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
                     probeNumber += 1
@@ -232,12 +233,7 @@ class HashTable:
             return False
 
         elif self.type == HashTableType.Type3:
-            if not self.table[index].item:
-                return False
-            else:
-                self.table[index].searchkey = None
-                self.table[index].deleted = False
-                return self.table[index].item.remove(searchkey)
+            return self.table[index].remove(searchkey)
 
     def print(self):
         for i in range(0, len(self.table)):
@@ -246,4 +242,3 @@ class HashTable:
             else:
                 print(self.table[i].searchkey)
         return
-
