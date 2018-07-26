@@ -1,13 +1,12 @@
 import graphviz as gv
 import copy
 from ADT_Christoph.HashTable.HashTable import HashTableType, Bucket
-
-bstCounter, hlinCounter, hquadCounter, hsepCounter, queueCounter, stackCounter, dlcCounter, clcCounter = (1,)*8
-figuur = gv.Graph(format='png')
+from ADT_Christoph.DoublyLinkedChain.DoublyLinkedChain import DoublyLinkedChain
+from ADT_Cedric.CircularChain import CircularChain
+bstCounter, hlinCounter, hquadCounter, hsepCounter, queueCounter, stackCounter, dlcCounter, clcCounter, hashdlcCounter, hashclcCounter = (1,)*10
 
 
 def printStack(stack):
-    global figuur
     stackCopy = copy.deepcopy(stack)
     figuur = gv.Graph(format='png')
     figuur.node('TOP', label="TOP", style="solid", shape="circle")
@@ -32,7 +31,6 @@ def printStack(stack):
 
 
 def printQueue(queue):
-    global figuur
     queueCopy = copy.deepcopy(queue)
     figuur = gv.Graph(format='png')
     figuur.node('Front', label="Front", style="solid", shape="circle")
@@ -62,7 +60,7 @@ def printQueue(queue):
 
 
 def printHashTable(hashtable):
-    global figuur, hlinCounter, hquadCounter, hsepCounter
+    global hlinCounter, hquadCounter, hsepCounter
     hashtableCopy = copy.deepcopy(hashtable)
     figuur = gv.Graph(format='png')
 
@@ -96,6 +94,28 @@ def printHashTable(hashtable):
         hquadCounter += 1
 
     if hashtableCopy.type == HashTableType.Type3:
+        for i in range(0, len(hashtableCopy.table)):
+            if isinstance(hashtableCopy.table[i], CircularChain):
+                figuur.node("CLC" + str(i), label="hashtableCLL" + str(i), style="solid", shape="box")
+                printCLC(hashtableCopy.table[i], "hashtableCLL")
+            elif isinstance(hashtableCopy.table[i], DoublyLinkedChain):
+                figuur.node("DLC" + str(i), label="hashtableDLL" + str(i+1), style="solid", shape="box")
+                printDLC(hashtableCopy.table[i], "hashtableDLL")
+            if i == 0:
+                if isinstance(hashtableCopy.table[i], CircularChain):
+                    figuur.edge("Zero", "CLC" + str(i))
+                if isinstance(hashtableCopy.table[i], DoublyLinkedChain):
+                    figuur.edge("Zero", "DLC" + str(i))
+            if i > 0:
+                if isinstance(hashtableCopy.table[i], CircularChain):
+                    figuur.edge("CLC" + str(i - 1), "CLC" + str(i))
+                if isinstance(hashtableCopy.table[i], DoublyLinkedChain):
+                    figuur.edge("DLC" + str(i - 1), "DLC" + str(i))
+            if i == len(hashtableCopy.table) - 1:
+                if isinstance(hashtableCopy.table[i], CircularChain):
+                    figuur.edge("CLC" + str(i), "Length")
+                if isinstance(hashtableCopy.table[i], DoublyLinkedChain):
+                    figuur.edge("DLC" + str(i), "Length")
 
         figuur.render(filename='DotFiles/hsep-' + str(hsepCounter) + '.dot')
         hsepCounter += 1
@@ -107,13 +127,13 @@ rootMade = False
 
 
 def printBST(bst):
-    global bstCounter, figuur
+    global bstCounter
     bstCopy = copy.deepcopy(bst)
 
     figuur = gv.Graph(format='png')
     figuur.node('Root', label="Root", style="solid", shape="circle")
 
-    makebst(bstCopy.root)
+    makebst(bstCopy.root, figuur)
     figuur.edge('Root', str(bstCopy.root.searchkey))
 
     figuur.render(filename='DotFiles/bst-' + str(bstCounter) + '.dot')
@@ -121,7 +141,7 @@ def printBST(bst):
     return
 
 
-def makebst(root):
+def makebst(root, figuur):
     global rootMade
 
     if root.searchkey:
@@ -131,15 +151,15 @@ def makebst(root):
         if root.lchild:
             figuur.node(str(root.lchild.searchkey), label=str(root.lchild.searchkey), style="solid", shape="circle")
             figuur.edge(str(root.searchkey), str(root.lchild.searchkey))
-            makebst(root.lchild)
+            makebst(root.lchild, figuur)
         if root.rchild:
             figuur.node(str(root.rchild.searchkey), label=str(root.rchild.searchkey), style="solid", shape="circle")
             figuur.edge(str(root.searchkey), str(root.rchild.searchkey))
-            makebst(root.rchild)
+            makebst(root.rchild, figuur)
 
 
-def printDLC(dlc):
-    global dlcCounter, figuur
+def printDLC(dlc, customName=None):
+    global dlcCounter, hashdlcCounter
     dlcCopy = copy.deepcopy(dlc)
     figuur = gv.Graph(format='png')
 
@@ -160,19 +180,20 @@ def printDLC(dlc):
             figuur.edge(str(headNode.searchkey), "Tail")
         headNode = headNode.next
         count += 1
+    if not customName:
+        figuur.render(filename='DotFiles/dll-' + str(dlcCounter) + '.dot')
+        dlcCounter += 1
+    else:
+        figuur.render(filename='DotFiles/' + customName + '/' + customName + str(hashdlcCounter) + '.dot')
+        hashdlcCounter += 1
 
-    figuur.render(filename='DotFiles/dll-' + str(dlcCounter) + '.dot')
-    dlcCounter += 1
     return
 
 
-def printCLC(clc):
-    global clcCounter, figuur
+def printCLC(clc, customName=None):
+    global clcCounter, hashclcCounter
     clcCopy = copy.deepcopy(clc)
     figuur = gv.Graph(format='png')
-
-    print(clcCopy.root.searchkey)
-    print(clcCopy.root.next.searchkey)
 
     figuur.node("Root", label="Root", style="solid", shape="circle")
     startNode = clcCopy.root
@@ -187,6 +208,10 @@ def printCLC(clc):
             startNode = startNode.next
         figuur.edge(str(startNode.searchkey), str(clcCopy.root.searchkey), arrowhead="normal", dir="forward")
 
-    figuur.render(filename='DotFiles/cll-' + str(clcCounter) + '.dot')
-    clcCounter += 1
+    if not customName:
+        figuur.render(filename='DotFiles/cll-' + str(clcCounter) + '.dot')
+        clcCounter += 1
+    else:
+        figuur.render(filename='DotFiles/' + customName + '/' + customName + str(hashclcCounter) + '.dot')
+        hashclcCounter += 1
     return

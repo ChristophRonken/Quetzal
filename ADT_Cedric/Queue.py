@@ -38,13 +38,11 @@ class Queue:
         self.size -= 1
 
     def getFront(self):
-        print(self.root.item)
         return self.root.item
 
     def getBack(self):
         searchnode = self.root
         for i in range(self.size - 1):
             searchnode = searchnode.next
-        print(searchnode.item)
         return searchnode.item
 
