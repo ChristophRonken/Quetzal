@@ -1,12 +1,13 @@
 class InputReader:
 
-    def __init__(self):
+    def __init__(self, fileName):
         self.file = None
         self.lines = None
         self.commands = None
+        self.fileName = fileName
 
     def StoreInputData(self):
-        self.file = open("vbn\\ADT.txt", "r")  # opens file with name of "ADT.txt"
+        self.file = open("vbn\\"+self.fileName, "r")  # opens file with name of "ADT.txt"
         self.lines = self.file.readlines()
         self.file.close()
 

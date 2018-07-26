@@ -1,3 +1,13 @@
+from enum import Enum, auto
+
+
+class ChocolateShotType(Enum):
+    milk = auto()
+    white = auto()
+    dark = auto()
+    brown = auto()
+
+
 class Ingredient:
     def __init__(self):
         self.name = ""
@@ -6,7 +16,7 @@ class Ingredient:
         self.expirationDate = 0
         self.searchkey = self.expirationDate
 
-'''
+
 class ChocolateMilk(Ingredient):
 
     def __init__(self, expirationDate):
@@ -16,15 +26,16 @@ class ChocolateMilk(Ingredient):
         self.price = 2
         self.expirationDate = expirationDate
         self.searchkey = self.expirationDate
-'''
 
 
 class ChocolateShot(Ingredient):
 
-    def __init__(self, expirationDate):
+    def __init__(self, expirationDate, chocolateShotType):
         # kan witte, melk-, bruine, of zwarte chocolade zijn
+        print(expirationDate)
         Ingredient.__init__(self)
         self.name = "ChocolateShot"
+        self.type = chocolateShotType
         self.credit = 1
         self.price = 1
         self.expirationDate = expirationDate

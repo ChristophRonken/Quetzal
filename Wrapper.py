@@ -38,7 +38,7 @@ class DLCWrapper:
         self.ADT.createChain()
 
     def insert(self, searchkey, newItem):
-        self.ADT.add(searchkey, newItem)
+        print(self.ADT.add(searchkey, newItem))
         return
 
     def delete(self, searchkey):

@@ -150,11 +150,11 @@ def makebst(root, figuur):
             rootMade = True
         if root.lchild:
             figuur.node(str(root.lchild.searchkey), label=str(root.lchild.searchkey), style="solid", shape="circle")
-            figuur.edge(str(root.searchkey), str(root.lchild.searchkey))
+            figuur.edge(str(root.searchkey), str(root.lchild.searchkey), arrowhead="normal", dir="forward")
             makebst(root.lchild, figuur)
         if root.rchild:
             figuur.node(str(root.rchild.searchkey), label=str(root.rchild.searchkey), style="solid", shape="circle")
-            figuur.edge(str(root.searchkey), str(root.rchild.searchkey))
+            figuur.edge(str(root.searchkey), str(root.rchild.searchkey), arrowhead="normal", dir="forward")
             makebst(root.rchild, figuur)
 
 
@@ -170,14 +170,14 @@ def printDLC(dlc, customName=None):
 
     count = 0
     while headNode != dlcCopy.tail:
-        figuur.node(str(headNode.searchkey), label=str(headNode.searchkey), style="solid", shape="box")
+        figuur.node(str(count), label=str(headNode.searchkey), style="solid", shape="box")
         if count == 0:
-            figuur.edge("Head", str(headNode.searchkey))
+            figuur.edge("Head", str(count))
         if count > 0:
-            figuur.edge(str(headNode.prev.searchkey), str(headNode.searchkey), arrowhead="normal", dir="forward")
-            figuur.edge(str(headNode.searchkey), str(headNode.prev.searchkey), arrowhead="normal", dir="forward")
+            figuur.edge(str(count-1), str(count), arrowhead="normal", dir="forward")
+            figuur.edge(str(count), str(count-1), arrowhead="normal", dir="forward")
         if headNode.next == dlcCopy.tail:
-            figuur.edge(str(headNode.searchkey), "Tail")
+            figuur.edge(str(count), "Tail")
         headNode = headNode.next
         count += 1
     if not customName:

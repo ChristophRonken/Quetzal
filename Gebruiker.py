@@ -5,3 +5,22 @@ class User:
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.currentOrder = None
+        self.orders = []
+        self.store = None
+
+    def createOrder(self):
+        return
+
+    def addHoney(self):
+        return
+
+    def addMarshmallow(self):
+        return
+
+    def addChocolateShot(self):
+        return
+
+    def addChilipepper(self):
+        return
+

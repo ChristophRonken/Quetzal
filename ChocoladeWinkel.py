@@ -3,11 +3,10 @@ from Wrapper import StackWrapper, BSTWrapper, QueueWrapper, DLCWrapper, HashWrap
 from ADT_Christoph.HashTable.HashTable import HashTableType
 
 
-class Store:
+class ADTSimulator:
 
     def __init__(self):
-        self.inputReader = InputReader()
-
+        self.inputReader = InputReader("adt.txt")
         self.inputReader.StoreInputData()
         self.inputReader.InputFileToCommands()
         self.Wrapper = None
@@ -96,6 +95,4 @@ class Store:
             elif self.inputReader.commands[i] == "print":
                 self.Wrapper.print()
                 i += 1
-
         return
-
