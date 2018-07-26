@@ -18,7 +18,6 @@ class DoublyLinkedChain:
     def __init__(self):
         self.head = None
         self.tail = None
-        self.size = None
 
     def createChain(self):
         if not self.exists():
@@ -26,7 +25,6 @@ class DoublyLinkedChain:
             self.tail = Node(None, None)
             self.head.next = self.tail
             self.tail.prev = self.head
-            self.size = 0
             return True
         return False
 
@@ -37,7 +35,6 @@ class DoublyLinkedChain:
             self.removeFirst()
         self.head = None
         self.tail = None
-        self.size = None
         return
 
     def exists(self):
