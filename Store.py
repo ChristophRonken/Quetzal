@@ -19,6 +19,8 @@ class Store:
         self.workload = StackWrapper()
         self.orderlist = QueueWrapper()
 
+        self.chocolateMilkCount = 0
+
     def createStore(self):
         self.orders = BSTWrapper()
         self.marshmallowStock.create()

@@ -184,7 +184,6 @@ class DoublyLinkedChain:
             return False
         else:
             searchNode = self.head.next
-            while searchNode.searchkey is not searchkey:
+            while searchNode.searchkey != searchkey:
                 searchNode = searchNode.next
-
-            return searchNode
+            return searchNode.item

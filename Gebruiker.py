@@ -1,3 +1,6 @@
+from Bestelling import Order
+from Ingredient import *
+
 UserIdCount = 1
 
 
@@ -14,21 +17,30 @@ class User:
         self.store = None
         UserIdCount += 1
 
-    def createOrder(self):
+    def createOrder(self, chocolateMilkId):
+        self.currentOrder = Order(self.userID, chocolateMilkId)
         return
 
     def pushOrder(self):
         return
 
     def addHoney(self):
+        honey = Honey(0)
+        self.currentOrder.addIngredient(honey)
         return
 
     def addMarshmallow(self):
+        marshmallow = Marshmallow(0)
+        self.currentOrder.addIngredient(marshmallow)
         return
 
-    def addChocolateShot(self):
+    def addChocolateShot(self, type):
+        chocoladeshot = ChocolateShot(0, type)
+        self.currentOrder.addIngredient(chocoladeshot)
         return
 
     def addChilipepper(self):
+        chili = Chilipepper(0)
+        self.currentOrder.addIngredient(chili)
         return
 

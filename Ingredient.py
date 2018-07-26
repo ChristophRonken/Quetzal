@@ -29,7 +29,6 @@ class ChocolateMilk(Ingredient):
 class ChocolateShot(Ingredient):
 
     def __init__(self, expirationDate, chocolateShotType):
-        print(expirationDate)
         Ingredient.__init__(self)
         self.type = chocolateShotType
         self.credit = 1

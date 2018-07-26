@@ -12,7 +12,6 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.assertTrue(self.doublyLinkedChain.createChain())
         self.assertEqual(self.doublyLinkedChain.head.next, self.doublyLinkedChain.tail)
         self.assertEqual(self.doublyLinkedChain.tail.prev, self.doublyLinkedChain.head)
-        self.assertEqual(self.doublyLinkedChain.size, 0)
         self.assertFalse(self.doublyLinkedChain.createChain())
 
     def test_exists(self):
@@ -35,7 +34,6 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.doublyLinkedChain.destroyChain()
         self.assertEqual(self.doublyLinkedChain.head, None)
         self.assertEqual(self.doublyLinkedChain.tail, None)
-        self.assertEqual(self.doublyLinkedChain.size, None)
 
     def test_add(self):
         self.assertFalse(self.doublyLinkedChain.add(6, "test0"))
