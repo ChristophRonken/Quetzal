@@ -116,7 +116,7 @@ class StoreSimulator:
             print(self.inputReader.commands[i])
             if self.inputReader.commands[i] == "init":
                 i += 1
-                self.quetzal.createQuetzal()
+                self.store.createStore()
                 continue
 
             if self.inputReader.commands[i] == "start":
@@ -138,22 +138,22 @@ class StoreSimulator:
                 if type == "melk":
                     for j in range(0, int(amount)):
                         milkChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.milk)
-                        self.quetzal.milkChocolateStock.insert(milkChoocolateItem.expirationDate, milkChoocolateItem)
+                        self.store.milkChocolateStock.insert(milkChoocolateItem.expirationDate, milkChoocolateItem)
                     continue
                 elif type == "wit":
                     for j in range(0, int(amount)):
                         whiteChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.white)
-                        self.quetzal.whiteChocolateStock.insert(whiteChoocolateItem.expirationDate, whiteChoocolateItem)
+                        self.store.whiteChocolateStock.insert(whiteChoocolateItem.expirationDate, whiteChoocolateItem)
                     continue
                 elif type == "zwart":
                     for j in range(0, int(amount)):
                         darkChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.dark)
-                        self.quetzal.darkChocolateStock.insert(darkChoocolateItem.expirationDate, darkChoocolateItem)
+                        self.store.darkChocolateStock.insert(darkChoocolateItem.expirationDate, darkChoocolateItem)
                     continue
                 elif type == "bruin":
                     for j in range(0, int(amount)):
                         brownChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.brown)
-                        self.quetzal.brownChocolateStock.insert(brownChoocolateItem.expirationDate, brownChoocolateItem)
+                        self.store.brownChocolateStock.insert(brownChoocolateItem.expirationDate, brownChoocolateItem)
                     continue
                 return False
             if self.inputReader.commands[i] == "honing":
@@ -168,7 +168,7 @@ class StoreSimulator:
                 i += 1
                 for j in range(0, int(amount)):
                     honeyItem = Honey(int(year + month + day))
-                    self.quetzal.honeyStock.insert(honeyItem.expirationDate, honeyItem)
+                    self.store.honeyStock.insert(honeyItem.expirationDate, honeyItem)
                 continue
             if self.inputReader.commands[i] == "marshmallow":
                 i += 1
@@ -182,7 +182,7 @@ class StoreSimulator:
                 i += 1
                 for j in range(0, int(amount)):
                     marshmallowItem = Marshmallow(int(year + month + day))
-                    self.quetzal.marshmallowStock.insert(marshmallowItem.expirationDate, marshmallowItem)
+                    self.store.marshmallowStock.insert(marshmallowItem.expirationDate, marshmallowItem)
                 continue
             if self.inputReader.commands[i] == "chili":
                 i += 1
@@ -196,7 +196,7 @@ class StoreSimulator:
                 i += 1
                 for j in range(0, int(amount)):
                     chiliItem = Marshmallow(int(year + month + day))
-                    self.quetzal.chiliStock.insert(chiliItem.expirationDate, chiliItem)
+                    self.store.chiliStock.insert(chiliItem.expirationDate, chiliItem)
                 continue
             if self.inputReader.commands[i] == "gebruiker":
                 i += 1
@@ -207,7 +207,7 @@ class StoreSimulator:
                 email = self.inputReader.commands[i]
                 i += 1
                 userItem = User(firstName, lastName, email)
-                self.quetzal.users.insert(text_to_bits(userItem.email), userItem)
+                self.store.users.insert(text_to_bits(userItem.email), userItem)
                 print(text_from_bits(text_to_bits(userItem.email)))
                 continue
             if self.inputReader.commands[i] == "werknemer":
@@ -219,7 +219,7 @@ class StoreSimulator:
                 workLoad = self.inputReader.commands[i]
                 i += 1
                 workerItem = Worker(firstName, lastName, workLoad)
-                self.quetzal.workers.insert(workerItem.workerId, workerItem)
+                self.store.workers.insert(workerItem.workerId, workerItem)
                 continue
             if self.inputReader.commands[i] == "bestel":
                 return
