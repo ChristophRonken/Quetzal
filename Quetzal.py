@@ -1,4 +1,4 @@
-from ChocoladeWinkel import ADTSimulator
+from Simulator import ADTSimulator
 from Wrapper import *
 from InputReader import InputReader
 from Ingredient import *
