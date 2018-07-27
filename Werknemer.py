@@ -9,6 +9,7 @@ class Worker:
         self.firstName = firstName
         self.lastName = lastName
         self.workLoad = workLoad
+        self.order = None
         WorkerIdCount += 1
         self.isBusy = False
 

@@ -35,7 +35,9 @@ class LogOutput:
                 self.logString += '''<td>''' + firstworker.firstName + " " + firstworker.lastName + '''</td>
                 '''
                 workerCopy.delete(None)
-            self.logString += '''<td>wit</td>
+            self.logString += '''<td>Nieuwe bestellingen</td>
+                <td>Wachtende bestellingen</td>
+                <td>wit</td>
                 <td>melk</td>
                 <td>bruin</td>
                 <td>zwart</td>
@@ -57,6 +59,7 @@ class LogOutput:
                     stackstring += str(workerCopy.retrieve().workLoad)
                     workerCopy.delete(None)
                 else:
+                    stackstring += "_"
                     workerCopy.delete(None)
                 if not workerCopy.isEmpty():
                     stackstring += " | "
@@ -64,9 +67,38 @@ class LogOutput:
 
             workerCopy = copy.deepcopy(store.workers)
             while not workerCopy.isEmpty():
-                firstworker = workerCopy.retrieve()
-                self.writecube(str(firstworker.workLoad))
+                worker = workerCopy.retrieve()
+                if worker.order is not None:
+                    self.writecube(str(worker.order.credit))
+                else:
+                    self.writecube(" ")
                 workerCopy.delete(None)
+
+            newOrderCopy = copy.deepcopy(store.newOrders)
+            if newOrderCopy.isEmpty():
+                self.writecube(" ")
+            else:
+                orderstring = ""
+                while not newOrderCopy.isEmpty():
+                    order = newOrderCopy.retrieve()
+                    orderstring += str(order.chocolateMilkId)
+                    newOrderCopy.delete(None)
+                    if not newOrderCopy.isEmpty():
+                        orderstring += " | "
+                self.writecube(orderstring)
+
+            waitingOrderCopy = copy.deepcopy(store.waitingOrders)
+            if waitingOrderCopy.isEmpty():
+                self.writecube(" ")
+            else:
+                orderstring = ""
+                while not waitingOrderCopy.isEmpty():
+                    order = waitingOrderCopy.retrieve()
+                    orderstring += str(order.chocolateMilkId)
+                    waitingOrderCopy.delete(None)
+                    if not waitingOrderCopy.isEmpty():
+                        orderstring += " | "
+                self.writecube(orderstring)
 
             stockList = [store.milkChocolateStock, store.whiteChocolateStock, store.brownChocolateStock,
                          store.darkChocolateStock, store.honeyStock, store.marshmallowStock, store.chiliStock]

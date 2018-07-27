@@ -274,7 +274,7 @@ class StoreSimulator:
                 i += 1
                 user.currentOrder.setTimeStamp(int(year+month+day+hour+minute))
                 self.store.chocolateMilkToBeMade.insert(user.chocolateMilk.searchkey, user.chocolateMilk)
-                self.store.unfinishedOrders.insert(user.currentOrder.searchkey, user.currentOrder)
+                self.store.newOrders.insert(user.currentOrder.searchkey, user.currentOrder)
                 self.store.makeChocolateMilk(user.chocolateMilk, int(year+month+day+hour+minute))
             if self.inputReader.commands[i] == "stock":
                 i += 1

@@ -23,8 +23,11 @@ class Store:
 
         self.chocolateMilkCount = 0
         self.chocolateMilkToBeMade = DLCWrapper()
-        self.unfinishedOrders = QueueWrapper()
+        self.newOrders = QueueWrapper()
+        self.waitingOrders = QueueWrapper()
         self.finishedOrders = DLCWrapper()
+
+        self.money = 0
 
     def createStore(self):
         self.orders = BSTWrapper()
@@ -42,7 +45,7 @@ class Store:
         self.orderlist.create()
 
         self.chocolateMilkToBeMade.create()
-        self.unfinishedOrders.create()
+        self.waitingOrders.create()
         self.finishedOrders.create()
 
     def addWorker(self, worker):
@@ -51,7 +54,7 @@ class Store:
             self.workload.insert(None, "credit")
 
     def work(self):
-        ordersCopy = copy.deepcopy(self.unfinishedOrders)
+        ordersCopy = copy.deepcopy(self.waitingOrders)
         order = ordersCopy.retrieve()
         if order is None:
             return
