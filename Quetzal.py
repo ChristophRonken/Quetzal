@@ -272,8 +272,12 @@ class StoreSimulator:
                 i += 1
                 minute = self.inputReader.commands[i]
                 i += 1
+                print(user.currentOrder.searchkey)
                 user.currentOrder.setTimeStamp(int(year+month+day+hour+minute))
-                print(user.currentOrder.ingredients)
+                print(user.currentOrder.searchkey)
+                self.store.chocolateMilkToBeMade.insert(user.chocolateMilk.searchkey, user.chocolateMilk)
+                print(user.currentOrder.searchkey)
+                self.store.unfinishedOrders.insert(user.currentOrder.searchkey, user.currentOrder)
             if self.inputReader.commands[i] == "stock":
                 i += 1
                 if self.inputReader.commands[i] == "shot":

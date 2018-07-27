@@ -20,6 +20,9 @@ class Store:
         self.orderlist = QueueWrapper()
 
         self.chocolateMilkCount = 0
+        self.chocolateMilkToBeMade = DLCWrapper()
+        self.unfinishedOrders = DLCWrapper()
+        self.finishedOrders = DLCWrapper()
 
     def createStore(self):
         self.orders = BSTWrapper()
@@ -35,6 +38,10 @@ class Store:
         self.workers.create()
         self.workload.create()
         self.orderlist.create()
+
+        self.chocolateMilkToBeMade.create()
+        self.unfinishedOrders.create()
+        self.finishedOrders.create()
 
     def createorder(self):
         return

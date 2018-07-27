@@ -4,15 +4,29 @@ class Order:
         self.userId = userId
         self.timeStamp = None
         self.chocolateMilkId = chocolateMilkId
-        self.price = 0
-        self.credits = 0
-        self.ingredients = []
+
+    @property
+    def searchkey(self):
+        return self.timeStamp
 
     def setTimeStamp(self, timeStamp):
         self.timeStamp = timeStamp
 
+
+class ChocolateMilk:
+    # zoeksleutel price
+    def __init__(self, chocolateMilkId):
+        self.chocolateMilkId = chocolateMilkId
+        self.credit = 1
+        self.price = 2
+        self.ingredients = []
+
+    @property
+    def searchkey(self):
+        return self.price
+
     def addIngredient(self, ingredient):
         self.price += ingredient.price
-        self.credits += ingredient.credit
+        self.credit += ingredient.credit
         self.ingredients.append(ingredient)
         return

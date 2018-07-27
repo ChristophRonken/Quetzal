@@ -13,17 +13,10 @@ class Ingredient:
         self.credit = 0
         self.price = 0
         self.expirationDate = 0
-        self.searchkey = self.expirationDate
 
-
-class ChocolateMilk(Ingredient):
-
-    def __init__(self, expirationDate):
-        Ingredient.__init__(self)
-        self.credit = 1
-        self.price = 2
-        self.expirationDate = expirationDate
-        self.searchkey = self.expirationDate
+    @property
+    def searchkey(self):
+        return self.expirationDate
 
 
 class ChocolateShot(Ingredient):
