@@ -50,7 +50,6 @@ class LogOutput:
         else:
             self.startRow()
             self.writecube(str(tick))
-            workloadCopy = copy.deepcopy(store.workload)
             stackstring = ""
 
             workerCopy = copy.deepcopy(store.workers)
@@ -100,7 +99,7 @@ class LogOutput:
                         orderstring += " | "
                 self.writecube(orderstring)
 
-            stockList = [store.milkChocolateStock, store.whiteChocolateStock, store.brownChocolateStock,
+            stockList = [store.whiteChocolateStock, store.milkChocolateStock, store.brownChocolateStock,
                          store.darkChocolateStock, store.honeyStock, store.marshmallowStock, store.chiliStock]
             for i in range(0, len(stockList)):
                 j = 0

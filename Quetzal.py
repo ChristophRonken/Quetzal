@@ -198,7 +198,7 @@ class StoreSimulator:
                 day = self.inputReader.commands[i]
                 i += 1
                 for j in range(0, int(amount)):
-                    chiliItem = Marshmallow(int(year + month + day))
+                    chiliItem = Chilipepper(int(year + month + day))
                     self.store.chiliStock.insert(chiliItem.expirationDate, chiliItem)
                 continue
             if self.inputReader.commands[i] == "gebruiker":
@@ -273,9 +273,15 @@ class StoreSimulator:
                 minute = self.inputReader.commands[i]
                 i += 1
                 user.currentOrder.setTimeStamp(int(year+month+day+hour+minute))
-                self.store.chocolateMilkToBeMade.insert(user.chocolateMilk.searchkey, user.chocolateMilk)
-                self.store.newOrders.insert(user.currentOrder.searchkey, user.currentOrder)
-                self.store.makeChocolateMilk(user.chocolateMilk, int(year+month+day+hour+minute))
+                self.store.cleanup(int(year+month+day))
+                if self.store.makeChocolateMilk(user.chocolateMilk):
+                    self.store.newOrders.insert(user.currentOrder.searchkey, user.currentOrder)
+
+                    user.chocolateMilk = None
+                    user.currentOrder = None
+                else:
+                    print(user.chocolateMilk.ingredients)
+                    print("too little items in stock")
             if self.inputReader.commands[i] == "stock":
                 i += 1
                 if self.inputReader.commands[i] == "shot":
