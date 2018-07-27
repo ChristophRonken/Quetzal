@@ -7,7 +7,7 @@ class InputReader:
         self.fileName = fileName
 
     def StoreInputData(self):
-        self.file = open("./vbn\\"+self.fileName, "r")  # opens file with name of "ADT.txt"
+        self.file = open("./vbn/"+self.fileName, "r")  # opens file with name of "ADT.txt"
         self.lines = self.file.readlines()
         self.file.close()
 

@@ -67,7 +67,19 @@ class LogOutput:
                 firstworker = workerCopy.retrieve()
                 self.writecube(str(firstworker.workLoad))
                 workerCopy.delete(None)
-            self.writecube(str(tick))
+
+            stockList = [store.milkChocolateStock, store.whiteChocolateStock, store.brownChocolateStock,
+                         store.darkChocolateStock, store.honeyStock, store.marshmallowStock, store.chiliStock]
+            for i in range(0, len(stockList)):
+                j = 0
+                stockCopy = copy.deepcopy(stockList[i])
+                while not stockCopy.isEmpty():
+                    item = stockCopy.retrieve()
+                    stockCopy.delete(item.searchkey)
+                    j += 1
+                    if stockCopy.isEmpty():
+                        self.writecube(str(j))
+
             self.endRow()
         return
 

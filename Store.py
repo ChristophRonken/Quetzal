@@ -9,10 +9,10 @@ class Store:
     def __init__(self):
         self.orders = BSTWrapper()
         self.marshmallowStock = DLCWrapper()
-        self.milkChocolateStock = StackWrapper()
+        self.milkChocolateStock = DLCWrapper()
         self.darkChocolateStock = DLCWrapper()
         self.whiteChocolateStock = DLCWrapper()
-        self.brownChocolateStock = StackWrapper()
+        self.brownChocolateStock = DLCWrapper()
         self.honeyStock = DLCWrapper()
         self.chiliStock = DLCWrapper()
 
@@ -56,7 +56,7 @@ class Store:
         if order is None:
             return
 
-    def makeChocolateMilk(self, chocolateMilk):
+    def makeChocolateMilk(self, chocolateMilk, time):
         for i in range(0, len(chocolateMilk.ingredients)):
             if isinstance(chocolateMilk.ingredients[i], ChocolateShot):
                 print("chocoladeshot")
