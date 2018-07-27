@@ -1,5 +1,5 @@
 from Store import Store, text_from_bits, text_to_bits
-
+from LogOutput import LogOutput
 from Wrapper import *
 from InputReader import InputReader
 from OutputGenerator import *
@@ -105,9 +105,11 @@ class ADTSimulator:
 class StoreSimulator:
     def __init__(self):
         self.store = Store()
+        self.logOut = LogOutput()
         self.inputReader = InputReader("system.txt")
         self.inputReader.StoreInputData()
         self.inputReader.InputFileToCommands()
+        self.currentTick = 0
 
     def storeSimulation(self):
         print(self.inputReader.commands)
@@ -224,14 +226,14 @@ class StoreSimulator:
         return
 
     def getToWork(self, i):
-        currentTick = 0
         while i != len(self.inputReader.commands):
-            print("currentTick = ", currentTick)
-            if self.inputReader.commands[i] == str(currentTick + 1):
-                currentTick += 1
+            print("currentTick = ", self.currentTick)
+            if self.inputReader.commands[i] == str(self.currentTick + 1):
+                self.logOut.addRow(self.store, self.currentTick)
+                self.currentTick += 1
                 i += 1
                 continue
-            if self.inputReader.commands[i] == str(currentTick):
+            if self.inputReader.commands[i] == str(self.currentTick):
                 i += 1
                 continue
             if self.inputReader.commands[i] == "bestel":
@@ -352,6 +354,8 @@ class StoreSimulator:
                         self.store.chiliStock.insert(chiliItem.expirationDate, chiliItem)
                     continue
             if self.inputReader.commands[i] == "log":
+                self.logOut.addRow(self.store, self.currentTick)
+                self.logOut.writeHtml()
                 return
         return
 
@@ -361,11 +365,12 @@ a.runADTSimulation()
 '''
 a = StoreSimulator()
 a.storeSimulation()
+'''
 printDLC(a.store.milkChocolateStock.ADT)
 printDLC(a.store.darkChocolateStock.ADT)
 printDLC(a.store.brownChocolateStock.ADT)
 printDLC(a.store.whiteChocolateStock.ADT)
 printDLC(a.store.honeyStock.ADT)
 printDLC(a.store.marshmallowStock.ADT)
-
 printDLC(a.store.workers.ADT)
+'''

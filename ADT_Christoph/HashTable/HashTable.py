@@ -93,7 +93,7 @@ class HashTable:
 
         elif self.type != HashTableType.Type3:
             for i in range(0, len(self.table)):
-                if self.table[i].searchkey == None:
+                if self.table[i].searchkey is None:
                     return False
             return True
 
@@ -197,7 +197,7 @@ class HashTable:
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
             probeNumber = 0
-            while self.table[(index + probeNumber) % self.getLength()].searchkey != None or self.table[(index + probeNumber) % self.getLength()].deleted:
+            while self.table[(index + probeNumber) % self.getLength()].searchkey is not None or self.table[(index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
                     probeNumber += 1
                     continue
@@ -215,7 +215,7 @@ class HashTable:
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
-            while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey != None or self.table[
+            while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey is not None or self.table[
                 (index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
                     probeNumber += 1

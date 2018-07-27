@@ -10,6 +10,7 @@ class Worker:
         self.lastName = lastName
         self.workLoad = workLoad
         WorkerIdCount += 1
+        self.isBusy = False
 
     def beBusy(self):
         return

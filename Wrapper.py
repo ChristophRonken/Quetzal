@@ -17,16 +17,13 @@ class StackWrapper:
         return
 
     def insert(self, searchkey, newItem):
-        self.ADT.push(newItem)
-        return
+        return self.ADT.push(newItem)
 
     def delete(self, searchkey):
-        self.ADT.pop()
-        return
+        return self.ADT.pop()
 
     def print(self):
-        printStack(self.ADT)
-        return
+        return printStack(self.ADT)
 
 
 class DLCWrapper:
@@ -35,22 +32,19 @@ class DLCWrapper:
         self.ADT = DoublyLinkedChain()
 
     def create(self):
-        self.ADT.createChain()
+        return self.ADT.createChain()
 
     def insert(self, searchkey, newItem):
-        self.ADT.add(searchkey, newItem)
-        return
+        return self.ADT.add(searchkey, newItem)
 
     def delete(self, searchkey):
-        self.ADT.remove(searchkey)
-        return
+        return self.ADT.remove(searchkey)
 
     def retrieve(self, searchkey):
         return self.ADT.searchkeyRetrieve(searchkey)
 
     def print(self):
-        printDLC(self.ADT)
-        return
+        return printDLC(self.ADT)
 
 
 class CLCWrapper:
@@ -58,20 +52,16 @@ class CLCWrapper:
         self.ADT = CircularChain()
 
     def create(self):
-        self.ADT.createChain()
-        return
+        return self.ADT.createChain()
 
     def insert(self, searchkey, newItem):
-        self.ADT.addNode(newItem, searchkey)
-        return
+        return self.ADT.addNode(newItem, searchkey)
 
     def delete(self, searchkey):
-        self.ADT.delete(searchkey)
-        return
+        return self.ADT.delete(searchkey)
 
     def print(self):
-        printCLC(self.ADT)
-        return
+        return printCLC(self.ADT)
 
 
 class QueueWrapper:
@@ -79,20 +69,22 @@ class QueueWrapper:
         self.ADT = Queue()
 
     def create(self):
-        self.ADT.createQueue()
-        return
+        return self.ADT.createQueue()
+
+    def isEmpty(self):
+        return self.ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        self.ADT.enQueue(newItem)
-        return
+        return self.ADT.enQueue(newItem)
 
     def delete(self, searchkey):
-        self.ADT.deQueue()
-        return
+        return self.ADT.deQueue()
+
+    def retrieve(self):
+        return self.ADT.getFront()
 
     def print(self):
-        printQueue(self.ADT)
-        return
+        return printQueue(self.ADT)
 
 
 class BSTWrapper:
@@ -101,20 +93,16 @@ class BSTWrapper:
         self.ADT = BinarySearchTree()
 
     def create(self):
-        self.ADT.createSearchTree()
-        return
+        return self.ADT.createSearchTree()
 
     def insert(self, searchkey, newItem):
-        self.ADT.insert(searchkey, newItem)
-        return
+        return self.ADT.insert(searchkey, newItem)
 
     def delete(self, searchkey):
-        self.ADT.delete(searchkey)
-        return
+        return self.ADT.delete(searchkey)
 
     def print(self):
-        printBST(self.ADT)
-        return
+        return printBST(self.ADT)
 
 
 class HashWrapper:
@@ -123,17 +111,13 @@ class HashWrapper:
         self.ADT = HashTable()
 
     def create(self):
-        self.ADT.createHashTable()
-        return
+        return self.ADT.createHashTable()
 
     def insert(self, searchkey, newItem):
-        self.ADT.insert(searchkey, newItem)
-        return
+        return self.ADT.insert(searchkey, newItem)
 
     def delete(self, searchkey):
-        self.ADT.delete(searchkey)
-        return
+        return self.ADT.delete(searchkey)
 
     def print(self):
-        printHashTable(self.ADT)
-        return
+        return printHashTable(self.ADT)
