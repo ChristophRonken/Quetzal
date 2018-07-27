@@ -8,7 +8,6 @@ class LogOutput:
         self.rowLength = 11
 
     def addRow(self, store, tick):
-        workerCopy = copy.deepcopy(store.workers)
         if self.logString is None:
             self.logString = '''<html>
     <head>
@@ -29,7 +28,7 @@ class LogOutput:
                 <td>tijdstip</td>
                 <td>Stack</td>
                 '''
-
+            workerCopy = copy.deepcopy(store.workers)
             while not workerCopy.isEmpty():
                 self.rowLength += 1
                 firstworker = workerCopy.retrieve()
@@ -49,6 +48,21 @@ class LogOutput:
         else:
             self.startRow()
             self.writecube(str(tick))
+            workloadCopy = copy.deepcopy(store.workload)
+            stackstring = ""
+
+            workerCopy = copy.deepcopy(store.workers)
+            while not workerCopy.isEmpty():
+                if not workerCopy.retrieve().isBusy:
+                    stackstring += str(workerCopy.retrieve().workLoad)
+                    workerCopy.delete(None)
+                else:
+                    workerCopy.delete(None)
+                if not workerCopy.isEmpty():
+                    stackstring += " | "
+            self.writecube(stackstring)
+
+            workerCopy = copy.deepcopy(store.workers)
             while not workerCopy.isEmpty():
                 firstworker = workerCopy.retrieve()
                 self.writecube(str(firstworker.workLoad))

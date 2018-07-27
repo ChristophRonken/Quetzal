@@ -12,5 +12,6 @@ class Worker:
         WorkerIdCount += 1
         self.isBusy = False
 
-    def beBusy(self):
+    def actBusy(self, busy):
+        self.isBusy = busy
         return

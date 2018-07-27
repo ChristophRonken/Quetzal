@@ -16,11 +16,17 @@ class StackWrapper:
     def create(self):
         return
 
+    def isEmpty(self):
+        return self.ADT.isEmpty()
+
     def insert(self, searchkey, newItem):
         return self.ADT.push(newItem)
 
     def delete(self, searchkey):
         return self.ADT.pop()
+
+    def retrieve(self):
+        return self.ADT.getTop()
 
     def print(self):
         return printStack(self.ADT)
@@ -34,13 +40,16 @@ class DLCWrapper:
     def create(self):
         return self.ADT.createChain()
 
+    def isEmpty(self):
+        return self.ADT.isEmpty()
+
     def insert(self, searchkey, newItem):
         return self.ADT.add(searchkey, newItem)
 
     def delete(self, searchkey):
         return self.ADT.remove(searchkey)
 
-    def retrieve(self, searchkey):
+    def retrieve(self, searchkey=None):
         return self.ADT.searchkeyRetrieve(searchkey)
 
     def print(self):

@@ -50,4 +50,4 @@ class Stack:
             return False
         else:
             self.topItem = self.top.item
-            return True
+            return self.topItem

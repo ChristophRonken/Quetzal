@@ -1,5 +1,7 @@
 from Wrapper import *
+from Ingredient import *
 import binascii
+import copy
 
 
 class Store:
@@ -7,10 +9,10 @@ class Store:
     def __init__(self):
         self.orders = BSTWrapper()
         self.marshmallowStock = DLCWrapper()
-        self.milkChocolateStock = DLCWrapper()
+        self.milkChocolateStock = StackWrapper()
         self.darkChocolateStock = DLCWrapper()
         self.whiteChocolateStock = DLCWrapper()
-        self.brownChocolateStock = DLCWrapper()
+        self.brownChocolateStock = StackWrapper()
         self.honeyStock = DLCWrapper()
         self.chiliStock = DLCWrapper()
 
@@ -21,7 +23,7 @@ class Store:
 
         self.chocolateMilkCount = 0
         self.chocolateMilkToBeMade = DLCWrapper()
-        self.unfinishedOrders = DLCWrapper()
+        self.unfinishedOrders = QueueWrapper()
         self.finishedOrders = DLCWrapper()
 
     def createStore(self):
@@ -43,11 +45,27 @@ class Store:
         self.unfinishedOrders.create()
         self.finishedOrders.create()
 
-    def createorder(self):
-        return
+    def addWorker(self, worker):
+        self.workers.insert(worker.workerId, worker)
+        for i in range(0, worker.workLoad):
+            self.workload.insert(None, "credit")
 
-    def addOrder(self, order):
-        return self.orders.insert('orderid', order)
+    def work(self):
+        ordersCopy = copy.deepcopy(self.unfinishedOrders)
+        order = ordersCopy.retrieve()
+        if order is None:
+            return
+
+    def makeChocolateMilk(self, chocolateMilk):
+        for i in range(0, len(chocolateMilk.ingredients)):
+            if isinstance(chocolateMilk.ingredients[i], ChocolateShot):
+                print("chocoladeshot")
+
+
+
+
+
+
 
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):

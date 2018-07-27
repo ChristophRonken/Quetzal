@@ -4,6 +4,8 @@ class Order:
         self.userId = userId
         self.timeStamp = None
         self.chocolateMilkId = chocolateMilkId
+        self.pickedUp = False
+        self.beingMade = False
 
     @property
     def searchkey(self):

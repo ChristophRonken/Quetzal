@@ -220,8 +220,8 @@ class StoreSimulator:
                 i += 1
                 workLoad = self.inputReader.commands[i]
                 i += 1
-                workerItem = Worker(firstName, lastName, workLoad)
-                self.store.workers.insert(workerItem.workerId, workerItem)
+                workerItem = Worker(firstName, lastName, int(workLoad))
+                self.store.addWorker(workerItem)
                 continue
         return
 
@@ -278,6 +278,7 @@ class StoreSimulator:
                 self.store.chocolateMilkToBeMade.insert(user.chocolateMilk.searchkey, user.chocolateMilk)
                 print(user.currentOrder.searchkey)
                 self.store.unfinishedOrders.insert(user.currentOrder.searchkey, user.currentOrder)
+                self.store.makeChocolateMilk(user.chocolateMilk)
             if self.inputReader.commands[i] == "stock":
                 i += 1
                 if self.inputReader.commands[i] == "shot":
