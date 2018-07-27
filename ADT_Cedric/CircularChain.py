@@ -52,6 +52,19 @@ class CircularChain:
                 node = node.next
         return False
 
+    def retrieve(self, searchkey = None):
+        if not searchkey:
+            return self.root.item
+        node = self.root
+        for i in range(self.size):
+            if node.searchkey == searchkey:
+                return node.item
+            else:
+                node = node.next
+        return False
+
+
+
     def delete(self, searchkey=None):
         if not searchkey:
             node = self.root
