@@ -104,7 +104,6 @@ class StoreSimulator:
         self.__inputReader = InputReader("system.txt")
         self.__inputReader.StoreInputData()
         self.__inputReader.InputFileToCommands()
-        self.__currentTick = 0
 
     def initialise(self):
         print(self.__inputReader.getLines())
@@ -212,25 +211,24 @@ class StoreSimulator:
         return
 
     def simulate(self, i):
-        self.__logOut.addRow(self.__store, self.__currentTick)
+        self.__logOut.addRow(self.__store, self.__store.getTime())
         while i != len(self.__inputReader.getCommands()):
-            print("currentTick = ", self.__currentTick)
+            print("currentTick = ", self.__store.getTime())
             if self.__inputReader.getCommands()[i] == "pass":
                 i += 1
                 continue
-            if self.__inputReader.getCommands()[i] == str(self.__currentTick + 1):
-                self.__store.cleanup()
-                self.__logOut.addRow(self.__store, self.__currentTick)
-                print("working at tick ", self.__currentTick)
+            if self.__inputReader.getCommands()[i] == str(self.__store.getTime() + 1):
+                self.__logOut.addRow(self.__store, self.__store.getTime())
+                print("working at tick ", self.__store.getTime())
                 self.__store.work()
                 workersCopy = copy.deepcopy(self.__store.getWorkers())
                 while not workersCopy.isEmpty():
                     worker = workersCopy.retrieve(None)
                     workersCopy.delete(None)
-                self.__currentTick += 1
+                self.__store.tick()
                 i += 1
                 continue
-            if self.__inputReader.getCommands()[i] == str(self.__currentTick):
+            if self.__inputReader.getCommands()[i] == str(self.__store.getTime()):
                 i += 1
                 continue
             if self.__inputReader.getCommands()[i] == "bestel":
@@ -268,9 +266,8 @@ class StoreSimulator:
                 i += 1
                 minute = self.__inputReader.getCommands()[i]
                 i += 1
-                self.__store.updateTime(int(year+month+day))
                 user.getCurrentOrder().setTimeStamp(int(year+month+day+hour+minute))
-                if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder()):
+                if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder(), int(year+month+day)):
                     user.setChocolateMilk(None)
                     user.setCurrentOrder(None)
                 else:
@@ -346,7 +343,7 @@ class StoreSimulator:
                         self.__store.restockChilipepper(int(year+month+day))
                     continue
             if self.__inputReader.getCommands()[i] == "log":
-                self.__logOut.addRow(self.__store, self.__currentTick)
+                self.__logOut.addRow(self.__store, self.__store.getTime())
                 self.__logOut.writeHtml()
                 return
         return

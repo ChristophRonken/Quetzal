@@ -1,9 +1,9 @@
 # lijnen die beginnen met # worden genegeerd
 init
 # de vervaldatum staat achteraan in het formaat: jaar maand dag
-shot melk 100 2019 03 01
+shot melk 20 2019 03 01
 shot melk 20 2017 05 01
-shot melk 50 2030 06 10
+shot melk 20 2030 06 10
 shot wit 10 2030 05 01
 shot zwart 5 2030 05 01
 shot zwart 1 2017 05 01
@@ -36,4 +36,10 @@ start
 4 pass
 5 pass
 6 pass
-7 log
+7 pass
+8 bestel tom.hofkens@uantwerpen.be melk marshmallow melk zwart zwart 2018 05 01 12 00
+9 pass
+10 pass
+11 pass
+12 pass
+13 log

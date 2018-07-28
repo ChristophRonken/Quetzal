@@ -44,6 +44,7 @@ class LogOutput:
                 <td>honing</td>
                 <td>marshmallow</td>
                 <td>chili</td>
+                <td>money</td>
             </thead>
             <tbody>
             '''
@@ -113,7 +114,7 @@ class LogOutput:
                     j += 1
                     if stockCopy.isEmpty():
                         self.__writecube(str(j))
-
+            self.__writecube('€'+ str(store.getMoney()))
             self.__endRow()
         return
 

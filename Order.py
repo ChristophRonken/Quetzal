@@ -8,6 +8,7 @@ class Order:
         self.__timeStamp = None
         self.__chocolateMilkId = chocolateMilkId
         self.__pickedUp = False
+        self.__finishedTime = None
 
     @property
     def searchkey(self):
@@ -22,6 +23,9 @@ class Order:
     def setPickedUp(self, pickedUp):
         self.__pickedUp = pickedUp
 
+    def setFinishedTime(self, finishedTime):
+        self.__finishedTime = finishedTime
+
     def getUserId(self):
         return self.__userId
 
@@ -33,6 +37,9 @@ class Order:
 
     def getPickedUp(self):
         return self.__pickedUp
+
+    def getFinishedTime(self):
+        return self.__finishedTime
 
 
 class ChocolateMilk:
