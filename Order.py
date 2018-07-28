@@ -1,4 +1,4 @@
-from Ingredient import Ingredient
+from Ingredient import *
 
 
 class Order:
@@ -57,9 +57,10 @@ class ChocolateMilk:
         return self.__ingredients
 
     def addIngredient(self, ingredient):
-        if not isinstance(ingredient, Ingredient):
-            return False
         self.__price += ingredient.getPrice()
         self.__credit += ingredient.getCredit()
         self.__ingredients.append(ingredient)
         return True
+
+    def getChocolateMilkId(self):
+        return self.__chocolateMilkId

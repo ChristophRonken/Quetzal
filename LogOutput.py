@@ -31,7 +31,7 @@ class LogOutput:
             workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
                 self.__rowLength += 1
-                firstworker = workerCopy.retrieve()
+                firstworker = workerCopy.retrieve(None)
                 self.__logString += '''<td>''' + firstworker.getFirstName() + " " + firstworker.getLastName() + '''</td>
                 '''
                 workerCopy.delete(None)
@@ -54,8 +54,8 @@ class LogOutput:
 
             workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
-                if not workerCopy.retrieve().getIsBusy():
-                    stackstring += str(workerCopy.retrieve().getWorkLoad())
+                if not workerCopy.retrieve(None).getIsBusy():
+                    stackstring += str(workerCopy.retrieve(None).getWorkLoad())
                     workerCopy.delete(None)
                 else:
                     stackstring += "_"
@@ -66,7 +66,7 @@ class LogOutput:
 
             workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
-                worker = workerCopy.retrieve()
+                worker = workerCopy.retrieve(None)
                 if worker.getIsBusy():
                     self.__writecube(str(worker.getBusyTime()))
                 else:
@@ -79,7 +79,7 @@ class LogOutput:
             else:
                 orderstring = ""
                 while not newOrderCopy.isEmpty():
-                    order = newOrderCopy.retrieve()
+                    order = newOrderCopy.retrieve(None)
                     orderstring += str(order.getChocolateMilkId())
                     newOrderCopy.delete(None)
                     if not newOrderCopy.isEmpty():
@@ -92,7 +92,7 @@ class LogOutput:
             else:
                 orderstring = ""
                 while not waitingOrderCopy.isEmpty():
-                    order = waitingOrderCopy.retrieve()
+                    order = waitingOrderCopy.retrieve(None)
                     orderstring += str(order.getChocolateMilkId())
                     waitingOrderCopy.delete(None)
                     if not waitingOrderCopy.isEmpty():

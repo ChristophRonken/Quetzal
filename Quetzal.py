@@ -123,7 +123,7 @@ class StoreSimulator:
 
             if self.__inputReader.getCommands()[i] == "shot":
                 i += 1
-                type = self.__inputReader.getCommands()[i]
+                shotType = self.__inputReader.getCommands()[i]
                 i += 1
                 amount = self.__inputReader.getCommands()[i]
                 i += 1
@@ -133,19 +133,19 @@ class StoreSimulator:
                 i += 1
                 day = self.__inputReader.getCommands()[i]
                 i += 1
-                if type == "melk":
+                if shotType == "melk":
                     for j in range(0, int(amount)):
                         self.__store.restockMilkChocolateShot(int(year+month+day))
                     continue
-                elif type == "wit":
+                elif shotType == "wit":
                     for j in range(0, int(amount)):
                         self.__store.restockWhiteChocolateShot(int(year+month+day))
                     continue
-                elif type == "zwart":
+                elif shotType == "zwart":
                     for j in range(0, int(amount)):
                         self.__store.restockDarkChocolateShot(int(year+month+day))
                     continue
-                elif type == "bruin":
+                elif shotType == "bruin":
                     for j in range(0, int(amount)):
                         self.__store.restockBrownChocolateShot(int(year+month+day))
                     continue
@@ -219,12 +219,13 @@ class StoreSimulator:
                 i += 1
                 continue
             if self.__inputReader.getCommands()[i] == str(self.__currentTick + 1):
+                self.__store.cleanup()
                 self.__logOut.addRow(self.__store, self.__currentTick)
                 print("working at tick ", self.__currentTick)
                 self.__store.work()
                 workersCopy = copy.deepcopy(self.__store.getWorkers())
                 while not workersCopy.isEmpty():
-                    worker = workersCopy.retrieve()
+                    worker = workersCopy.retrieve(None)
                     workersCopy.delete(None)
                 self.__currentTick += 1
                 i += 1
@@ -267,19 +268,18 @@ class StoreSimulator:
                 i += 1
                 minute = self.__inputReader.getCommands()[i]
                 i += 1
+                self.__store.updateTime(int(year+month+day))
                 user.getCurrentOrder().setTimeStamp(int(year+month+day+hour+minute))
-                self.__store.cleanup(int(year+month+day))
-                if self.__store.addChocolateMilk(user.getChocolateMilk()):
-                    self.__store.addNewOrder(user.getCurrentOrder())
+                if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder()):
                     user.setChocolateMilk(None)
                     user.setCurrentOrder(None)
                 else:
-                    print(user.chocolateMilk.ingredients)
+                    print(user.getChocolateMilk().getIngredients())
             if self.__inputReader.getCommands()[i] == "stock":
                 i += 1
                 if self.__inputReader.getCommands()[i] == "shot":
                     i += 1
-                    type = self.__inputReader.getCommands()[i]
+                    shotType = self.__inputReader.getCommands()[i]
                     i += 1
                     amount = self.__inputReader.getCommands()[i]
                     i += 1
@@ -289,19 +289,19 @@ class StoreSimulator:
                     i += 1
                     day = self.__inputReader.getCommands()[i]
                     i += 1
-                    if type == "melk":
+                    if shotType == "melk":
                         for j in range(0, int(amount)):
                             self.__store.restockMilkChocolateShot(int(year+month+day))
                         continue
-                    elif type == "wit":
+                    elif shotType == "wit":
                         for j in range(0, int(amount)):
                             self.__store.restockWhiteChocolateShot(int(year+month+day))
                         continue
-                    elif type == "zwart":
+                    elif shotType == "zwart":
                         for j in range(0, int(amount)):
                             self.__store.restockDarkChocolateShot(int(year+month+day))
                         continue
-                    elif type == "bruin":
+                    elif shotType == "bruin":
                         for j in range(0, int(amount)):
                             self.__store.restockBrownChocolateShot(int(year+month+day))
                         continue

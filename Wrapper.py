@@ -25,7 +25,7 @@ class StackWrapper:
     def delete(self, searchkey):
         return self.__ADT.pop()
 
-    def retrieve(self):
+    def retrieve(self, searchkey):
         return self.__ADT.getTop()
 
     def print(self):
@@ -49,7 +49,7 @@ class DLCWrapper:
     def delete(self, searchkey):
         return self.__ADT.remove(searchkey)
 
-    def retrieve(self, searchkey=None):
+    def retrieve(self, searchkey):
         return self.__ADT.searchkeyRetrieve(searchkey)
 
     def print(self):
@@ -89,7 +89,7 @@ class QueueWrapper:
     def delete(self, searchkey):
         return self.__ADT.deQueue()
 
-    def retrieve(self):
+    def retrieve(self, searchkey):
         return self.__ADT.getFront()
 
     def print(self):
@@ -110,6 +110,9 @@ class BSTWrapper:
     def delete(self, searchkey):
         return self.__ADT.delete(searchkey)
 
+    def retrieve(self, searchkey):
+        return self.__ADT.retrieve(searchkey)
+
     def print(self):
         return printBST(self.__ADT)
 
@@ -128,6 +131,9 @@ class HLinWrapper:
 
     def delete(self, searchkey):
         return self.__ADT.delete(searchkey)
+
+    def retrieve(self, searchkey):
+        return self.__ADT.retrieve(searchkey)
 
     def print(self):
         return printHashTable(self.__ADT)
@@ -148,6 +154,9 @@ class HQuadWrapper:
     def delete(self, searchkey):
         return self.__ADT.delete(searchkey)
 
+    def retrieve(self, searchkey):
+        return self.__ADT.retrieve(searchkey)
+
     def print(self):
         return printHashTable(self.__ADT)
 
@@ -166,6 +175,9 @@ class HSepWrapper:
 
     def delete(self, searchkey):
         return self.__ADT.delete(searchkey)
+
+    def retrieve(self, searchkey):
+        return self.__ADT.retrieve(searchkey)
 
     def print(self):
         return printHashTable(self.__ADT)

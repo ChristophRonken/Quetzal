@@ -180,10 +180,6 @@ class DoublyLinkedChain:
                 displayNode = displayNode.next
 
     def searchkeyRetrieve(self, searchkey):
-        if searchkey is None:
-            if self.exists():
-                return self.head.next.item
-            return False
         if not self.isInChain(searchkey):
             return False
         else:
