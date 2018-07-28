@@ -22,6 +22,8 @@ class Store:
         self.orderlist = QueueWrapper()
 
         self.chocolateMilkCount = 0
+        self.userCount = 0
+
         self.chocolateMilkToBeMade = DLCWrapper()
         self.finishedChocolateMilks = DLCWrapper()
         self.newOrders = QueueWrapper()
@@ -175,11 +177,6 @@ class Store:
                 if isinstance(ingredientList[i], Marshmallow):
                     self.marshmallowStock.insert(ingredientList[i].searchkey, ingredientList[i])
             return False
-
-
-
-
-
 
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):

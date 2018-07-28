@@ -208,7 +208,7 @@ class StoreSimulator:
                 i += 1
                 email = self.inputReader.commands[i]
                 i += 1
-                userItem = User(firstName, lastName, email)
+                userItem = User(firstName, lastName, email, self.store.userCount)
                 self.store.users.insert(text_to_bits(userItem.email), userItem)
                 continue
             if self.inputReader.commands[i] == "werknemer":

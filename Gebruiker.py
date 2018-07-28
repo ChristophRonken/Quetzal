@@ -1,21 +1,18 @@
 from Bestelling import Order, ChocolateMilk
 from Ingredient import *
 
-UserIdCount = 1
-
 
 class User:
     # zoeksleutel email
-    def __init__(self, firstName, lastName, email):
-        global UserIdCount
-        self.userID = UserIdCount
+    def __init__(self, firstName, lastName, email, UserCount):
+        self.userID = UserCount
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.currentOrder = None
         self.chocolateMilk = None
         self.orders = []
-        UserIdCount += 1
+        UserCount += 1
 
     def createOrder(self, chocolateMilkId):
         self.currentOrder = Order(self.userID, chocolateMilkId)
