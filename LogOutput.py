@@ -4,12 +4,12 @@ import copy
 class LogOutput:
 
     def __init__(self):
-        self.logString = None
-        self.rowLength = 11
+        self.__logString = None
+        self.__rowLength = 11
 
     def addRow(self, store, tick):
-        if self.logString is None:
-            self.logString = '''<html>
+        if self.__logString is None:
+            self.__logString = '''<html>
     <head>
     <style>
         table {
@@ -28,14 +28,14 @@ class LogOutput:
                 <td>tijdstip</td>
                 <td>Stack</td>
                 '''
-            workerCopy = copy.deepcopy(store.workers)
+            workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
-                self.rowLength += 1
+                self.__rowLength += 1
                 firstworker = workerCopy.retrieve()
-                self.logString += '''<td>''' + firstworker.firstName + " " + firstworker.lastName + '''</td>
+                self.__logString += '''<td>''' + firstworker.getFirstName() + " " + firstworker.getLastName() + '''</td>
                 '''
                 workerCopy.delete(None)
-            self.logString += '''<td>Nieuwe bestellingen</td>
+            self.__logString += '''<td>Nieuwe bestellingen</td>
                 <td>Wachtende bestellingen</td>
                 <td>wit</td>
                 <td>melk</td>
@@ -52,10 +52,10 @@ class LogOutput:
             self.__writecube(str(tick))
             stackstring = ""
 
-            workerCopy = copy.deepcopy(store.workers)
+            workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
-                if not workerCopy.retrieve().isBusy:
-                    stackstring += str(workerCopy.retrieve().workLoad)
+                if not workerCopy.retrieve().getIsBusy():
+                    stackstring += str(workerCopy.retrieve().getWorkLoad())
                     workerCopy.delete(None)
                 else:
                     stackstring += "_"
@@ -64,43 +64,44 @@ class LogOutput:
                     stackstring += " | "
             self.__writecube(stackstring)
 
-            workerCopy = copy.deepcopy(store.workers)
+            workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
                 worker = workerCopy.retrieve()
-                if worker.isBusy:
-                    self.__writecube(str(worker.busyTime))
+                if worker.getIsBusy():
+                    self.__writecube(str(worker.getBusyTime()))
                 else:
                     self.__writecube(" ")
                 workerCopy.delete(None)
 
-            newOrderCopy = copy.deepcopy(store.newOrders)
+            newOrderCopy = copy.deepcopy(store.getNewOrders())
             if newOrderCopy.isEmpty():
                 self.__writecube(" ")
             else:
                 orderstring = ""
                 while not newOrderCopy.isEmpty():
                     order = newOrderCopy.retrieve()
-                    orderstring += str(order.chocolateMilkId)
+                    orderstring += str(order.getChocolateMilkId())
                     newOrderCopy.delete(None)
                     if not newOrderCopy.isEmpty():
                         orderstring += " | "
                 self.__writecube(orderstring)
 
-            waitingOrderCopy = copy.deepcopy(store.waitingOrders)
+            waitingOrderCopy = copy.deepcopy(store.getWaitingOrders())
             if waitingOrderCopy.isEmpty():
                 self.__writecube(" ")
             else:
                 orderstring = ""
                 while not waitingOrderCopy.isEmpty():
                     order = waitingOrderCopy.retrieve()
-                    orderstring += str(order.chocolateMilkId)
+                    orderstring += str(order.getChocolateMilkId())
                     waitingOrderCopy.delete(None)
                     if not waitingOrderCopy.isEmpty():
                         orderstring += " | "
                 self.__writecube(orderstring)
 
-            stockList = [store.whiteChocolateStock, store.milkChocolateStock, store.brownChocolateStock,
-                         store.darkChocolateStock, store.honeyStock, store.marshmallowStock, store.chiliStock]
+            stockList = [store.getWhiteChocolateStock(), store.getMilkChocolateStock(),
+                         store.getBrownChocolateStock(), store.getDarkChocolateStock(),
+                         store.getHoneyStock(), store.getMarshmallowStock(), store.getChilipepperStock()]
             for i in range(0, len(stockList)):
                 j = 0
                 stockCopy = copy.deepcopy(stockList[i])
@@ -117,20 +118,20 @@ class LogOutput:
         return
 
     def __writecube(self, string):
-        self.logString += '''    <td>''' + string + '''</td>
+        self.__logString += '''    <td>''' + string + '''</td>
                 '''
         return
 
     def __startRow(self):
-        self.logString += '''    <tr>
+        self.__logString += '''    <tr>
                 '''
 
     def __endRow(self):
-        self.logString += '''</tr>
+        self.__logString += '''</tr>
             '''
 
     def writeHtml(self):
-        printString = self.logString
+        printString = self.__logString
         printString += '''</tbody>
         </table>
     </body>

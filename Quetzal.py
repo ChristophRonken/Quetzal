@@ -1,381 +1,361 @@
-from Store import Store, text_from_bits, text_to_bits
+from Store import *
 from LogOutput import LogOutput
 from Wrapper import *
 from InputReader import InputReader
 from OutputGenerator import *
-from User import *
-from Worker import Worker
 
 
 class ADTSimulator:
 
     def __init__(self):
-        self.inputReader = InputReader("adt.txt")
-        self.inputReader.StoreInputData()
-        self.inputReader.InputFileToCommands()
-        self.Wrapper = None
+        self.__inputReader = InputReader("adt.txt")
+        self.__inputReader.StoreInputData()
+        self.__inputReader.InputFileToCommands()
+        self.__Wrapper = None
 
     def runADTSimulation(self):
         i = 0
         newItem = False
         searchkey = False
-        while i != len(self.inputReader.commands):
-            print(self.inputReader.commands[i])
+        while i != len(self.__inputReader.getCommands()):
+            print(self.__inputReader.getCommands()[i])
 
-            if self.inputReader.commands[i] == "type=bst":
-                self.Wrapper = BSTWrapper()
-                self.Wrapper.create()
+            if self.__inputReader.getCommands()[i] == "type=bst":
+                self.__Wrapper = BSTWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=stack":
-                self.Wrapper = StackWrapper()
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=stack":
+                self.__Wrapper = StackWrapper()
+                self.__Wrapper.create()
                 newItem = True
                 searchkey = False
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=queue":
-                self.Wrapper = QueueWrapper()
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=queue":
+                self.__Wrapper = QueueWrapper()
+                self.__Wrapper.create()
                 newItem = True
                 searchkey = False
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=dll":
-                self.Wrapper = DLCWrapper()
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=dll":
+                self.__Wrapper = DLCWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=cll":
-                self.Wrapper = CLCWrapper()
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=cll":
+                self.__Wrapper = CLCWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=hlin":
-                self.Wrapper = HashWrapper()
-                self.Wrapper.ADT.type = HashTableType.Type1
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=hlin":
+                self.__Wrapper = HLinWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=hquad":
-                self.Wrapper = HashWrapper()
-                self.Wrapper.ADT.type = HashTableType.Type2
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=hquad":
+                self.__Wrapper = HQuadWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "type=hsep":
-                self.Wrapper = HashWrapper()
-                self.Wrapper.ADT.type = HashTableType.Type3
-                self.Wrapper.create()
+            elif self.__inputReader.getCommands()[i] == "type=hsep":
+                self.__Wrapper = HSepWrapper()
+                self.__Wrapper.create()
                 newItem = False
                 searchkey = True
                 i += 1
 
-            elif self.inputReader.commands[i] == "insert":
+            elif self.__inputReader.getCommands()[i] == "insert":
                 i += 1
                 if not newItem:
-                    self.Wrapper.insert(int(self.inputReader.commands[i]), None)
+                    self.__Wrapper.insert(int(self.__inputReader.getCommands()[i]), None)
                 elif not searchkey:
-                    self.Wrapper.insert(None, int(self.inputReader.commands[i]))
+                    self.__Wrapper.insert(None, int(self.__inputReader.getCommands()[i]))
                 i += 1
-            elif self.inputReader.commands[i] == "delete":
+            elif self.__inputReader.getCommands()[i] == "delete":
                 i += 1
                 if not searchkey:
-                    self.Wrapper.delete(None)
+                    self.__Wrapper.delete(None)
                 else:
-                    self.Wrapper.delete(int(self.inputReader.commands[i]))
+                    self.__Wrapper.delete(int(self.__inputReader.getCommands()[i]))
                     i += 1
 
-            elif self.inputReader.commands[i] == "print":
-                self.Wrapper.print()
+            elif self.__inputReader.getCommands()[i] == "print":
+                self.__Wrapper.print()
                 i += 1
         return
 
 
 class StoreSimulator:
     def __init__(self):
-        self.store = Store()
-        self.logOut = LogOutput()
-        self.inputReader = InputReader("system.txt")
-        self.inputReader.StoreInputData()
-        self.inputReader.InputFileToCommands()
-        self.currentTick = 0
+        self.__store = Store()
+        self.__logOut = LogOutput()
+        self.__inputReader = InputReader("system.txt")
+        self.__inputReader.StoreInputData()
+        self.__inputReader.InputFileToCommands()
+        self.__currentTick = 0
 
     def initialise(self):
-        print(self.inputReader.lines)
-        print(self.inputReader.commands)
+        print(self.__inputReader.getLines())
+        print(self.__inputReader.getCommands())
         i = 0
-        while i != len(self.inputReader.commands):
-            print(self.inputReader.commands[i])
-            if self.inputReader.commands[i] == "init":
+        while i != len(self.__inputReader.getCommands()):
+            print(self.__inputReader.getCommands()[i])
+            if self.__inputReader.getCommands()[i] == "init":
                 i += 1
-                self.store.createStore()
+                self.__store.createStore()
                 continue
 
-            if self.inputReader.commands[i] == "start":
+            if self.__inputReader.getCommands()[i] == "start":
                 i += 1
                 return i
 
-            if self.inputReader.commands[i] == "shot":
+            if self.__inputReader.getCommands()[i] == "shot":
                 i += 1
-                type = self.inputReader.commands[i]
+                type = self.__inputReader.getCommands()[i]
                 i += 1
-                amount = self.inputReader.commands[i]
+                amount = self.__inputReader.getCommands()[i]
                 i += 1
-                year = self.inputReader.commands[i]
+                year = self.__inputReader.getCommands()[i]
                 i += 1
-                month = self.inputReader.commands[i]
+                month = self.__inputReader.getCommands()[i]
                 i += 1
-                day = self.inputReader.commands[i]
+                day = self.__inputReader.getCommands()[i]
                 i += 1
                 if type == "melk":
                     for j in range(0, int(amount)):
-                        milkChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.milk)
-                        self.store.milkChocolateStock.insert(milkChoocolateItem.expirationDate, milkChoocolateItem)
+                        self.__store.restockMilkChocolateShot(int(year+month+day))
                     continue
                 elif type == "wit":
                     for j in range(0, int(amount)):
-                        whiteChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.white)
-                        self.store.whiteChocolateStock.insert(whiteChoocolateItem.expirationDate, whiteChoocolateItem)
+                        self.__store.restockWhiteChocolateShot(int(year+month+day))
                     continue
                 elif type == "zwart":
                     for j in range(0, int(amount)):
-                        darkChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.dark)
-                        self.store.darkChocolateStock.insert(darkChoocolateItem.expirationDate, darkChoocolateItem)
+                        self.__store.restockDarkChocolateShot(int(year+month+day))
                     continue
                 elif type == "bruin":
                     for j in range(0, int(amount)):
-                        brownChoocolateItem = ChocolateShot(int(year+month+day), ChocolateShotType.brown)
-                        self.store.brownChocolateStock.insert(brownChoocolateItem.expirationDate, brownChoocolateItem)
+                        self.__store.restockBrownChocolateShot(int(year+month+day))
                     continue
                 return False
-            if self.inputReader.commands[i] == "honing":
+            if self.__inputReader.getCommands()[i] == "honing":
                 i += 1
-                amount = self.inputReader.commands[i]
+                amount = self.__inputReader.getCommands()[i]
                 i += 1
-                year = self.inputReader.commands[i]
+                year = self.__inputReader.getCommands()[i]
                 i += 1
-                month = self.inputReader.commands[i]
+                month = self.__inputReader.getCommands()[i]
                 i += 1
-                day = self.inputReader.commands[i]
-                i += 1
-                for j in range(0, int(amount)):
-                    honeyItem = Honey(int(year + month + day))
-                    self.store.honeyStock.insert(honeyItem.expirationDate, honeyItem)
-                continue
-            if self.inputReader.commands[i] == "marshmallow":
-                i += 1
-                amount = self.inputReader.commands[i]
-                i += 1
-                year = self.inputReader.commands[i]
-                i += 1
-                month = self.inputReader.commands[i]
-                i += 1
-                day = self.inputReader.commands[i]
+                day = self.__inputReader.getCommands()[i]
                 i += 1
                 for j in range(0, int(amount)):
-                    marshmallowItem = Marshmallow(int(year + month + day))
-                    self.store.marshmallowStock.insert(marshmallowItem.expirationDate, marshmallowItem)
+                    self.__store.restockHoney(int(year + month + day))
                 continue
-            if self.inputReader.commands[i] == "chili":
+            if self.__inputReader.getCommands()[i] == "marshmallow":
                 i += 1
-                amount = self.inputReader.commands[i]
+                amount = self.__inputReader.getCommands()[i]
                 i += 1
-                year = self.inputReader.commands[i]
+                year = self.__inputReader.getCommands()[i]
                 i += 1
-                month = self.inputReader.commands[i]
+                month = self.__inputReader.getCommands()[i]
                 i += 1
-                day = self.inputReader.commands[i]
+                day = self.__inputReader.getCommands()[i]
                 i += 1
                 for j in range(0, int(amount)):
-                    chiliItem = Chilipepper(int(year + month + day))
-                    self.store.chiliStock.insert(chiliItem.expirationDate, chiliItem)
+                    self.__store.restockMarshmallow(int(year + month + day))
                 continue
-            if self.inputReader.commands[i] == "gebruiker":
+            if self.__inputReader.getCommands()[i] == "chili":
                 i += 1
-                firstName = self.inputReader.commands[i]
+                amount = self.__inputReader.getCommands()[i]
                 i += 1
-                lastName = self.inputReader.commands[i]
+                year = self.__inputReader.getCommands()[i]
                 i += 1
-                email = self.inputReader.commands[i]
+                month = self.__inputReader.getCommands()[i]
                 i += 1
-                userItem = User(firstName, lastName, email, self.store.userCount)
-                self.store.users.insert(text_to_bits(userItem.email), userItem)
+                day = self.__inputReader.getCommands()[i]
+                i += 1
+                for j in range(0, int(amount)):
+                    self.__store.restockChilipepper(int(year + month + day))
                 continue
-            if self.inputReader.commands[i] == "werknemer":
+            if self.__inputReader.getCommands()[i] == "gebruiker":
                 i += 1
-                firstName = self.inputReader.commands[i]
+                firstName = self.__inputReader.getCommands()[i]
                 i += 1
-                lastName = self.inputReader.commands[i]
+                lastName = self.__inputReader.getCommands()[i]
                 i += 1
-                workLoad = self.inputReader.commands[i]
+                email = self.__inputReader.getCommands()[i]
                 i += 1
-                workerItem = Worker(firstName, lastName, int(workLoad))
-                self.store.addWorker(workerItem)
+                self.__store.addUser(firstName, lastName, email)
+                continue
+            if self.__inputReader.getCommands()[i] == "werknemer":
+                i += 1
+                firstName = self.__inputReader.getCommands()[i]
+                i += 1
+                lastName = self.__inputReader.getCommands()[i]
+                i += 1
+                workLoad = self.__inputReader.getCommands()[i]
+                i += 1
+                self.__store.addWorker(firstName, lastName, int(workLoad))
                 continue
         return
 
     def simulate(self, i):
-        self.logOut.addRow(self.store, self.currentTick)
-        while i != len(self.inputReader.commands):
-            print("currentTick = ", self.currentTick)
-            if self.inputReader.commands[i] == "pass":
+        self.__logOut.addRow(self.__store, self.__currentTick)
+        while i != len(self.__inputReader.getCommands()):
+            print("currentTick = ", self.__currentTick)
+            if self.__inputReader.getCommands()[i] == "pass":
                 i += 1
                 continue
-            if self.inputReader.commands[i] == str(self.currentTick + 1):
-                self.logOut.addRow(self.store, self.currentTick)
-                print("working at tick ", self.currentTick)
-                self.store.work()
-                workersCopy = copy.deepcopy(self.store.workers)
+            if self.__inputReader.getCommands()[i] == str(self.__currentTick + 1):
+                self.__logOut.addRow(self.__store, self.__currentTick)
+                print("working at tick ", self.__currentTick)
+                self.__store.work()
+                workersCopy = copy.deepcopy(self.__store.getWorkers())
                 while not workersCopy.isEmpty():
                     worker = workersCopy.retrieve()
                     workersCopy.delete(None)
-                self.currentTick += 1
+                self.__currentTick += 1
                 i += 1
                 continue
-            if self.inputReader.commands[i] == str(self.currentTick):
+            if self.__inputReader.getCommands()[i] == str(self.__currentTick):
                 i += 1
                 continue
-            if self.inputReader.commands[i] == "bestel":
+            if self.__inputReader.getCommands()[i] == "bestel":
                 i += 1
-                email = self.inputReader.commands[i]
+                email = self.__inputReader.getCommands()[i]
                 i += 1
-                user = self.store.users.retrieve(text_to_bits(email))
-                user.createOrder(self.store.chocolateMilkCount)
-                self.store.chocolateMilkCount += 1
-                while (self.inputReader.commands[i] == "melk" or self.inputReader.commands[i] == "wit" or
-                       self.inputReader.commands[i] == "zwart" or self.inputReader.commands[i] == "bruin" or
-                       self.inputReader.commands[i] == "marshmallow" or self.inputReader.commands[i] == "chili" or
-                       self.inputReader.commands[i] == "honey"):
-                    if self.inputReader.commands[i] == "melk":
+                user = self.__store.getUser(email)
+                user.createOrder(self.__store.getChocolateMilkCount())
+                while (self.__inputReader.getCommands()[i] == "melk" or self.__inputReader.getCommands()[i] == "wit" or
+                       self.__inputReader.getCommands()[i] == "zwart" or self.__inputReader.getCommands()[i] == "bruin" or
+                       self.__inputReader.getCommands()[i] == "marshmallow" or self.__inputReader.getCommands()[i] == "chili" or
+                       self.__inputReader.getCommands()[i] == "honey"):
+                    if self.__inputReader.getCommands()[i] == "melk":
                         user.addMilkChocolateShot()
-                    elif self.inputReader.commands[i] == "wit":
+                    elif self.__inputReader.getCommands()[i] == "wit":
                         user.addWhiteChocolateShot()
-                    elif self.inputReader.commands[i] == "zwart":
+                    elif self.__inputReader.getCommands()[i] == "zwart":
                         user.addDarkChocolateShot()
-                    elif self.inputReader.commands[i] == "bruin":
+                    elif self.__inputReader.getCommands()[i] == "bruin":
                         user.addBrownChocolateShot()
-                    elif self.inputReader.commands[i] == "marshmallow":
+                    elif self.__inputReader.getCommands()[i] == "marshmallow":
                         user.addMarshmallow()
-                    elif self.inputReader.commands[i] == "chili":
+                    elif self.__inputReader.getCommands()[i] == "chili":
                         user.addChilipepper()
-                    elif self.inputReader.commands[i] == "honey":
+                    elif self.__inputReader.getCommands()[i] == "honey":
                         user.addHoney()
                     i += 1
-                year = self.inputReader.commands[i]
+                year = self.__inputReader.getCommands()[i]
                 i += 1
-                month = self.inputReader.commands[i]
+                month = self.__inputReader.getCommands()[i]
                 i += 1
-                day = self.inputReader.commands[i]
+                day = self.__inputReader.getCommands()[i]
                 i += 1
-                hour = self.inputReader.commands[i]
+                hour = self.__inputReader.getCommands()[i]
                 i += 1
-                minute = self.inputReader.commands[i]
+                minute = self.__inputReader.getCommands()[i]
                 i += 1
-                user.currentOrder.setTimeStamp(int(year+month+day+hour+minute))
-                self.store.cleanup(int(year+month+day))
-                if self.store.makeChocolateMilk(user.chocolateMilk):
-                    self.store.newOrders.insert(user.currentOrder.searchkey, user.currentOrder)
+                user.getCurrentOrder().setTimeStamp(int(year+month+day+hour+minute))
+                self.__store.cleanup(int(year+month+day))
+                if self.__store.addChocolateMilk(user.getChocolateMilk()):
+                    self.__store.addNewOrder(user.getCurrentOrder())
 
                     user.chocolateMilk = None
                     user.currentOrder = None
                 else:
                     print(user.chocolateMilk.ingredients)
-            if self.inputReader.commands[i] == "stock":
+            if self.__inputReader.getCommands()[i] == "stock":
                 i += 1
-                if self.inputReader.commands[i] == "shot":
+                if self.__inputReader.getCommands()[i] == "shot":
                     i += 1
-                    type = self.inputReader.commands[i]
+                    type = self.__inputReader.getCommands()[i]
                     i += 1
-                    amount = self.inputReader.commands[i]
+                    amount = self.__inputReader.getCommands()[i]
                     i += 1
-                    year = self.inputReader.commands[i]
+                    year = self.__inputReader.getCommands()[i]
                     i += 1
-                    month = self.inputReader.commands[i]
+                    month = self.__inputReader.getCommands()[i]
                     i += 1
-                    day = self.inputReader.commands[i]
+                    day = self.__inputReader.getCommands()[i]
                     i += 1
                     if type == "melk":
                         for j in range(0, int(amount)):
-                            milkChoocolateItem = ChocolateShot(int(year + month + day), ChocolateShotType.milk)
-                            self.store.milkChocolateStock.insert(milkChoocolateItem.expirationDate, milkChoocolateItem)
+                            self.__store.restockMilkChocolateShot(int(year+month+day))
                         continue
                     elif type == "wit":
                         for j in range(0, int(amount)):
-                            whiteChoocolateItem = ChocolateShot(int(year + month + day), ChocolateShotType.white)
-                            self.store.whiteChocolateStock.insert(whiteChoocolateItem.expirationDate,
-                                                                  whiteChoocolateItem)
+                            self.__store.restockWhiteChocolateShot(int(year+month+day))
                         continue
                     elif type == "zwart":
                         for j in range(0, int(amount)):
-                            darkChoocolateItem = ChocolateShot(int(year + month + day), ChocolateShotType.dark)
-                            self.store.darkChocolateStock.insert(darkChoocolateItem.expirationDate, darkChoocolateItem)
+                            self.__store.restockDarkChocolateShot(int(year+month+day))
                         continue
                     elif type == "bruin":
                         for j in range(0, int(amount)):
-                            brownChoocolateItem = ChocolateShot(int(year + month + day), ChocolateShotType.brown)
-                            self.store.brownChocolateStock.insert(brownChoocolateItem.expirationDate,
-                                                                  brownChoocolateItem)
+                            self.__store.restockBrownChocolateShot(int(year+month+day))
                         continue
                     return False
-                if self.inputReader.commands[i] == "honing":
+                if self.__inputReader.getCommands()[i] == "honing":
                     i += 1
-                    amount = self.inputReader.commands[i]
+                    amount = self.__inputReader.getCommands()[i]
                     i += 1
-                    year = self.inputReader.commands[i]
+                    year = self.__inputReader.getCommands()[i]
                     i += 1
-                    month = self.inputReader.commands[i]
+                    month = self.__inputReader.getCommands()[i]
                     i += 1
-                    day = self.inputReader.commands[i]
-                    i += 1
-                    for j in range(0, int(amount)):
-                        honeyItem = Honey(int(year + month + day))
-                        self.store.honeyStock.insert(honeyItem.expirationDate, honeyItem)
-                    continue
-                if self.inputReader.commands[i] == "marshmallow":
-                    i += 1
-                    amount = self.inputReader.commands[i]
-                    i += 1
-                    year = self.inputReader.commands[i]
-                    i += 1
-                    month = self.inputReader.commands[i]
-                    i += 1
-                    day = self.inputReader.commands[i]
+                    day = self.__inputReader.getCommands()[i]
                     i += 1
                     for j in range(0, int(amount)):
-                        marshmallowItem = Marshmallow(int(year + month + day))
-                        self.store.marshmallowStock.insert(marshmallowItem.expirationDate, marshmallowItem)
+                        self.__store.restockHoney(int(year+month+day))
                     continue
-                if self.inputReader.commands[i] == "chili":
+                if self.__inputReader.getCommands()[i] == "marshmallow":
                     i += 1
-                    amount = self.inputReader.commands[i]
+                    amount = self.__inputReader.getCommands()[i]
                     i += 1
-                    year = self.inputReader.commands[i]
+                    year = self.__inputReader.getCommands()[i]
                     i += 1
-                    month = self.inputReader.commands[i]
+                    month = self.__inputReader.getCommands()[i]
                     i += 1
-                    day = self.inputReader.commands[i]
+                    day = self.__inputReader.getCommands()[i]
                     i += 1
                     for j in range(0, int(amount)):
-                        chiliItem = Marshmallow(int(year + month + day))
-                        self.store.chiliStock.insert(chiliItem.expirationDate, chiliItem)
+                        self.__store.restockMarshmallow(int(year+month+day))
                     continue
-            if self.inputReader.commands[i] == "log":
-                self.logOut.addRow(self.store, self.currentTick)
-                self.logOut.writeHtml()
+                if self.__inputReader.getCommands()[i] == "chili":
+                    i += 1
+                    amount = self.__inputReader.getCommands()[i]
+                    i += 1
+                    year = self.__inputReader.getCommands()[i]
+                    i += 1
+                    month = self.__inputReader.getCommands()[i]
+                    i += 1
+                    day = self.__inputReader.getCommands()[i]
+                    i += 1
+                    for j in range(0, int(amount)):
+                        self.__store.restockChilipepper(int(year+month+day))
+                    continue
+            if self.__inputReader.getCommands()[i] == "log":
+                self.__logOut.addRow(self.__store, self.__currentTick)
+                self.__logOut.writeHtml()
                 return
         return
 
 
 a = StoreSimulator()
 a.simulate(a.initialise())
+'''
+b = ADTSimulator()
+b.runADTSimulation()
+'''

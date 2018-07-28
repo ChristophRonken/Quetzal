@@ -1,6 +1,6 @@
 from ADT_Christoph.Stack.Stack import Stack
 from ADT_Christoph.DoublyLinkedChain.DoublyLinkedChain import DoublyLinkedChain
-from ADT_Christoph.HashTable.HashTable import HashTable
+from ADT_Christoph.HashTable.HashTable import HashTable, HashTableType
 from ADT_Christoph.BinarySearchTree.BinarySearchTree import BinarySearchTree
 from ADT_Cedric.Queue import Queue
 from ADT_Cedric.CircularChain import CircularChain
@@ -10,123 +10,163 @@ from OutputGenerator import printStack, printQueue, printHashTable, printBST, pr
 class StackWrapper:
 
     def __init__(self):
-        self.ADT = Stack()
+        self.__ADT = Stack()
         return
 
     def create(self):
         return
 
     def isEmpty(self):
-        return self.ADT.isEmpty()
+        return self.__ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.push(newItem)
+        return self.__ADT.push(newItem)
 
     def delete(self, searchkey):
-        return self.ADT.pop()
+        return self.__ADT.pop()
 
     def retrieve(self):
-        return self.ADT.getTop()
+        return self.__ADT.getTop()
 
     def print(self):
-        return printStack(self.ADT)
+        return printStack(self.__ADT)
 
 
 class DLCWrapper:
 
     def __init__(self):
-        self.ADT = DoublyLinkedChain()
+        self.__ADT = DoublyLinkedChain()
 
     def create(self):
-        return self.ADT.createChain()
+        return self.__ADT.createChain()
 
     def isEmpty(self):
-        return self.ADT.isEmpty()
+        return self.__ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.add(searchkey, newItem)
+        return self.__ADT.add(searchkey, newItem)
 
     def delete(self, searchkey):
-        return self.ADT.remove(searchkey)
+        return self.__ADT.remove(searchkey)
 
     def retrieve(self, searchkey=None):
-        return self.ADT.searchkeyRetrieve(searchkey)
+        return self.__ADT.searchkeyRetrieve(searchkey)
 
     def print(self):
-        return printDLC(self.ADT)
+        return printDLC(self.__ADT)
 
 
 class CLCWrapper:
     def __init__(self):
-        self.ADT = CircularChain()
+        self.__ADT = CircularChain()
 
     def create(self):
-        return self.ADT.createChain()
+        return self.__ADT.createChain()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.addNode(newItem, searchkey)
+        return self.__ADT.addNode(newItem, searchkey)
 
     def delete(self, searchkey):
-        return self.ADT.delete(searchkey)
+        return self.__ADT.delete(searchkey)
 
     def print(self):
-        return printCLC(self.ADT)
+        return printCLC(self.__ADT)
 
 
 class QueueWrapper:
     def __init__(self):
-        self.ADT = Queue()
+        self.__ADT = Queue()
 
     def create(self):
-        return self.ADT.createQueue()
+        return self.__ADT.createQueue()
 
     def isEmpty(self):
-        return self.ADT.isEmpty()
+        return self.__ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.enQueue(newItem)
+        return self.__ADT.enQueue(newItem)
 
     def delete(self, searchkey):
-        return self.ADT.deQueue()
+        return self.__ADT.deQueue()
 
     def retrieve(self):
-        return self.ADT.getFront()
+        return self.__ADT.getFront()
 
     def print(self):
-        return printQueue(self.ADT)
+        return printQueue(self.__ADT)
 
 
 class BSTWrapper:
 
     def __init__(self):
-        self.ADT = BinarySearchTree()
+        self.__ADT = BinarySearchTree()
 
     def create(self):
-        return self.ADT.createSearchTree()
+        return self.__ADT.createSearchTree()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.insert(searchkey, newItem)
+        return self.__ADT.insert(searchkey, newItem)
 
     def delete(self, searchkey):
-        return self.ADT.delete(searchkey)
+        return self.__ADT.delete(searchkey)
 
     def print(self):
-        return printBST(self.ADT)
+        return printBST(self.__ADT)
 
 
-class HashWrapper:
+class HLinWrapper:
 
     def __init__(self):
-        self.ADT = HashTable()
+        self.__ADT = HashTable()
+        self.__ADT.type = HashTableType.Type1
 
     def create(self):
-        return self.ADT.createHashTable()
+        return self.__ADT.createHashTable()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.insert(searchkey, newItem)
+        return self.__ADT.insert(searchkey, newItem)
 
     def delete(self, searchkey):
-        return self.ADT.delete(searchkey)
+        return self.__ADT.delete(searchkey)
 
     def print(self):
-        return printHashTable(self.ADT)
+        return printHashTable(self.__ADT)
+
+
+class HQuadWrapper:
+
+    def __init__(self):
+        self.__ADT = HashTable()
+        self.__ADT.type = HashTableType.Type2
+
+    def create(self):
+        return self.__ADT.createHashTable()
+
+    def insert(self, searchkey, newItem):
+        return self.__ADT.insert(searchkey, newItem)
+
+    def delete(self, searchkey):
+        return self.__ADT.delete(searchkey)
+
+    def print(self):
+        return printHashTable(self.__ADT)
+
+
+class HSepWrapper:
+
+    def __init__(self):
+        self.__ADT = HashTable()
+        self.__ADT.type = HashTableType.Type3
+
+    def create(self):
+        return self.__ADT.createHashTable()
+
+    def insert(self, searchkey, newItem):
+        return self.__ADT.insert(searchkey, newItem)
+
+    def delete(self, searchkey):
+        return self.__ADT.delete(searchkey)
+
+    def print(self):
+        return printHashTable(self.__ADT)
+
