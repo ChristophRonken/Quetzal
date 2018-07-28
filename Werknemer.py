@@ -10,8 +10,10 @@ class Worker:
         self.lastName = lastName
         self.workLoad = workLoad
         self.order = None
-        WorkerIdCount += 1
+        self.busyTime = 0
         self.isBusy = False
+        self.chocolateMilk = None
+        WorkerIdCount += 1
 
     def actBusy(self, busy):
         self.isBusy = busy

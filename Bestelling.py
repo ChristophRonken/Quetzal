@@ -5,7 +5,6 @@ class Order:
         self.timeStamp = None
         self.chocolateMilkId = chocolateMilkId
         self.pickedUp = False
-        self.beingMade = False
 
     @property
     def searchkey(self):
@@ -22,6 +21,7 @@ class ChocolateMilk:
         self.credit = 1
         self.price = 2
         self.ingredients = []
+        chocolateMilkId += 1
 
     @property
     def searchkey(self):

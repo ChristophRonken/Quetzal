@@ -20,16 +20,19 @@ start
 
 # bestel op tijdstip 1 een chocolademelk gemaakt van een melkchocolade shot, chilipeper en een marshmallow
 # tijdstip 1 is 1 mei 2018 om 11.30u
-1 bestel tom.hofkens@uantwerpen.be melk zwart zwart zwart zwart zwart zwart chili marshmallow 2018 5 1 11 30
+1 bestel tom.hofkens@uantwerpen.be melk melk melk zwart zwart chili zwart chili marshmallow marshmallow melk 2018 5 1 11 30
 
 # bestel op tijdstip 2 een chocolademelk gemaakt van een twee zwarte chocolade shots, chilipeper en een marshmallow
-2 bestel john@doe.com zwart chili zwart marshmallow 2018 5 1 12 00
+2 bestel john@doe.com zwart chili melk melk melk melk melk melk melk melk melk melk melk melk melk zwart marshmallow 2018 5 1 12 00
 
 # bestel eveneens op tijdstip 2 een chocolademelk gemaakt van een melkchocolade shot en een marshmallow
-2 bestel tom.hofkens@uantwerpen.be melk marshmallow 2018 5 1 12 00
+2 bestel tom.hofkens@uantwerpen.be melk marshmallow melk 2018 5 1 12 00
 
 # voeg 4 keer melkchocolade toe aan de stock
 3 stock shot melk 4 2018 5 1
 
 # dit maakt een bestand log4.html
-4 log
+4 pass
+5 pass
+6 pass
+7 log

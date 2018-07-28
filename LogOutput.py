@@ -67,8 +67,8 @@ class LogOutput:
             workerCopy = copy.deepcopy(store.workers)
             while not workerCopy.isEmpty():
                 worker = workerCopy.retrieve()
-                if worker.order is not None:
-                    self.writecube(str(worker.order.credit))
+                if worker.isBusy:
+                    self.writecube(str(worker.busyTime))
                 else:
                     self.writecube(" ")
                 workerCopy.delete(None)
@@ -104,6 +104,8 @@ class LogOutput:
             for i in range(0, len(stockList)):
                 j = 0
                 stockCopy = copy.deepcopy(stockList[i])
+                if stockCopy.isEmpty():
+                    self.writecube(str(0))
                 while not stockCopy.isEmpty():
                     item = stockCopy.retrieve()
                     stockCopy.delete(item.searchkey)

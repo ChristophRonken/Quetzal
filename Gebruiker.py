@@ -22,9 +22,6 @@ class User:
         self.chocolateMilk = ChocolateMilk(chocolateMilkId)
         return
 
-    def pushOrder(self):
-        return
-
     def addHoney(self):
         honey = Honey(0)
         self.chocolateMilk.addIngredient(honey)

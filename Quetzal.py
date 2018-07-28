@@ -111,7 +111,7 @@ class StoreSimulator:
         self.inputReader.InputFileToCommands()
         self.currentTick = 0
 
-    def storeSimulation(self):
+    def initialise(self):
         print(self.inputReader.commands)
         i = 0
         while i != len(self.inputReader.commands):
@@ -123,8 +123,7 @@ class StoreSimulator:
 
             if self.inputReader.commands[i] == "start":
                 i += 1
-                self.getToWork(i)
-                return
+                return i
 
             if self.inputReader.commands[i] == "shot":
                 i += 1
@@ -225,11 +224,21 @@ class StoreSimulator:
                 continue
         return
 
-    def getToWork(self, i):
+    def simulate(self, i):
+        self.logOut.addRow(self.store, self.currentTick)
         while i != len(self.inputReader.commands):
             print("currentTick = ", self.currentTick)
+            if self.inputReader.commands[i] == "pass":
+                i += 1
+                continue
             if self.inputReader.commands[i] == str(self.currentTick + 1):
                 self.logOut.addRow(self.store, self.currentTick)
+                print("working at tick ", self.currentTick)
+                self.store.work()
+                workersCopy = copy.deepcopy(self.store.workers)
+                while not workersCopy.isEmpty():
+                    worker = workersCopy.retrieve()
+                    workersCopy.delete(None)
                 self.currentTick += 1
                 i += 1
                 continue
@@ -281,7 +290,6 @@ class StoreSimulator:
                     user.currentOrder = None
                 else:
                     print(user.chocolateMilk.ingredients)
-                    print("too little items in stock")
             if self.inputReader.commands[i] == "stock":
                 i += 1
                 if self.inputReader.commands[i] == "shot":
@@ -372,7 +380,7 @@ a = ADTSimulator()
 a.runADTSimulation()
 '''
 a = StoreSimulator()
-a.storeSimulation()
+a.simulate(a.initialise())
 '''
 printDLC(a.store.milkChocolateStock.ADT)
 printDLC(a.store.darkChocolateStock.ADT)

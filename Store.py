@@ -23,6 +23,7 @@ class Store:
 
         self.chocolateMilkCount = 0
         self.chocolateMilkToBeMade = DLCWrapper()
+        self.finishedChocolateMilks = DLCWrapper()
         self.newOrders = QueueWrapper()
         self.waitingOrders = QueueWrapper()
         self.finishedOrders = DLCWrapper()
@@ -45,6 +46,8 @@ class Store:
         self.orderlist.create()
 
         self.chocolateMilkToBeMade.create()
+        self.finishedChocolateMilks.create()
+        self.newOrders.create()
         self.waitingOrders.create()
         self.finishedOrders.create()
 
@@ -54,10 +57,44 @@ class Store:
             self.workload.insert(None, "credit")
 
     def work(self):
-        ordersCopy = copy.deepcopy(self.waitingOrders)
-        order = ordersCopy.retrieve()
-        if order is None:
-            return
+        workersCopy = copy.deepcopy(self.workers)
+        while not workersCopy.isEmpty():
+            worker = workersCopy.retrieve()
+            if not worker.isBusy:
+                order = None
+                if not self.waitingOrders.isEmpty():
+                    order = self.waitingOrders.retrieve()
+                    self.waitingOrders.delete(None)
+                elif not self.newOrders.isEmpty():
+                    order = self.newOrders.retrieve()
+                    self.newOrders.delete(None)
+                else:
+                    pass
+                if order is not None:
+                    worker.chocolatemilk = self.chocolateMilkToBeMade.retrieve()
+                    worker.busyTime = worker.chocolatemilk.credit
+                    worker.isBusy = True
+                    worker.order = order
+            if worker.isBusy:
+                print("busytime: ", worker.busyTime)
+                worker.busyTime -= worker.workLoad
+                print("maybefinished: ", worker.busyTime)
+                if worker.busyTime <= 0:
+                    self.finishedOrders.insert(worker.order.searchkey, worker.order)
+                    worker.busyTime = 0
+                    worker.order = None
+                    worker.isBusy = False
+                    worker.chocolatemilk = None
+            workersCopy.delete(None)
+            self.workers.delete(None)
+            self.workers.insert(None, worker)
+            if not workersCopy.isEmpty():
+                worker = workersCopy.retrieve()
+
+        while not self.newOrders.isEmpty():
+            order = self.newOrders.retrieve()
+            self.newOrders.delete(None)
+            self.waitingOrders.insert(order.searchkey, order)
 
     def cleanup(self, time):
         stocklist = [self.marshmallowStock, self.milkChocolateStock, self.whiteChocolateStock, self.darkChocolateStock,
@@ -66,7 +103,6 @@ class Store:
             if stocklist[i].isEmpty():
                 continue
             while stocklist[i].retrieve().expirationDate < time:
-                print("DELETEDDDDDDD")
                 stocklist[i].delete(stocklist[i].retrieve().searchkey)
                 if stocklist[i].isEmpty():
                     continue
@@ -82,85 +118,63 @@ class Store:
                         continue
                     ingredientList.append(self.whiteChocolateStock.retrieve())
                     self.whiteChocolateStock.delete(self.whiteChocolateStock.retrieve().searchkey)
-                    print("white")
                 if chocolateMilk.ingredients[i].type == ChocolateShotType.dark:
                     if self.darkChocolateStock.isEmpty():
                         sufficientStock = False
                         continue
                     ingredientList.append(self.darkChocolateStock.retrieve())
                     self.darkChocolateStock.delete(self.darkChocolateStock.retrieve().searchkey)
-                    print("dark")
                 if chocolateMilk.ingredients[i].type == ChocolateShotType.brown:
                     if self.brownChocolateStock.isEmpty():
                         sufficientStock = False
                         continue
                     ingredientList.append(self.brownChocolateStock.retrieve())
                     self.brownChocolateStock.delete(self.brownChocolateStock.retrieve().searchkey)
-                    print("brown")
                 if chocolateMilk.ingredients[i].type == ChocolateShotType.milk:
                     if self.milkChocolateStock.isEmpty():
                         sufficientStock = False
                         continue
                     ingredientList.append(self.milkChocolateStock.retrieve())
                     self.milkChocolateStock.delete(self.milkChocolateStock.retrieve().searchkey)
-                    print("milk")
             if isinstance(chocolateMilk.ingredients[i], Honey):
                 if self.honeyStock.isEmpty():
                     sufficientStock = False
                     continue
                 ingredientList.append(self.honeyStock.retrieve())
                 self.honeyStock.delete(self.honeyStock.retrieve().searchkey)
-                print("Honey")
             if isinstance(chocolateMilk.ingredients[i], Chilipepper):
                 if self.chiliStock.isEmpty():
                     sufficientStock = False
                     continue
                 ingredientList.append(self.chiliStock.retrieve())
                 self.chiliStock.delete(self.chiliStock.retrieve().searchkey)
-                print("Chilipepper")
             if isinstance(chocolateMilk.ingredients[i], Marshmallow):
                 if self.marshmallowStock.isEmpty():
                     sufficientStock = False
                     continue
                 ingredientList.append(self.marshmallowStock.retrieve())
                 self.marshmallowStock.delete(self.marshmallowStock.retrieve().searchkey)
-                print("Marshmallow")
         if sufficientStock:
             self.chocolateMilkToBeMade.insert(chocolateMilk.searchkey, chocolateMilk)
-            print("Chocolademelk is made")
             return True
         else:
-            print("TTTTTTTTTTYYYYYYYYYYYYYPPPPPPPPPPPPEEEEEEEEEEEEE")
-            print(ingredientList)
-            print(len(ingredientList))
             for i in range(0, len(ingredientList)):
-                print(ingredientList[i])
-            for i in range(0, len(ingredientList)):
-                print("list: ", ingredientList)
                 if isinstance(ingredientList[i], ChocolateShot):
                     if ingredientList[i].type == ChocolateShotType.white:
-                        print("white")
                         self.whiteChocolateStock.insert(ingredientList[i].searchkey, ingredientList[i])
                     if ingredientList[i].type == ChocolateShotType.dark:
-                        print("dark")
                         self.darkChocolateStock.insert(ingredientList[i].searchkey, ingredientList[i])
                     if ingredientList[i].type == ChocolateShotType.brown:
-                        print("brown")
                         self.brownChocolateStock.insert(ingredientList[i].searchkey, ingredientList[i])
                     if ingredientList[i].type == ChocolateShotType.milk:
-                        print("milk")
                         self.milkChocolateStock.insert(ingredientList[i].searchkey, ingredientList[i])
                 if isinstance(ingredientList[i], Honey):
-                    print("Honey")
                     self.honeyStock.insert(ingredientList[i].searchkey, ingredientList[i])
                 if isinstance(ingredientList[i], Chilipepper):
-                    print("Chilipepper")
                     self.chiliStock.insert(ingredientList[i].searchkey, ingredientList[i])
                 if isinstance(ingredientList[i], Marshmallow):
-                    print("Marshmallow")
                     self.marshmallowStock.insert(ingredientList[i].searchkey, ingredientList[i])
             return False
-
 
 
 
