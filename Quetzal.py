@@ -271,9 +271,8 @@ class StoreSimulator:
                 self.__store.cleanup(int(year+month+day))
                 if self.__store.addChocolateMilk(user.getChocolateMilk()):
                     self.__store.addNewOrder(user.getCurrentOrder())
-
-                    user.chocolateMilk = None
-                    user.currentOrder = None
+                    user.setChocolateMilk(None)
+                    user.setCurrentOrder(None)
                 else:
                     print(user.chocolateMilk.ingredients)
             if self.__inputReader.getCommands()[i] == "stock":

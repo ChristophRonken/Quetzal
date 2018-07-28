@@ -65,3 +65,11 @@ class User:
 
     def addWhiteChocolateShot(self):
         return self.__chocolateMilk.addIngredient(ChocolateShot(0, ChocolateShotType.white))
+
+    def setCurrentOrder(self, currentOrder):
+        self.__currentOrder = currentOrder
+        return True
+
+    def setChocolateMilk(self, chocolateMilk):
+        self.__chocolateMilk = chocolateMilk
+        return True
