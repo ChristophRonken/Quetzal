@@ -1,4 +1,4 @@
-from Bestelling import Order, ChocolateMilk
+from Order import Order, ChocolateMilk
 from Ingredient import *
 
 
@@ -15,27 +15,22 @@ class User:
         UserCount += 1
 
     def createOrder(self, chocolateMilkId):
+        if not isinstance(chocolateMilkId, int):
+            return False
         self.currentOrder = Order(self.userID, chocolateMilkId)
         self.chocolateMilk = ChocolateMilk(chocolateMilkId)
-        return
+        return True
 
     def addHoney(self):
-        honey = Honey(0)
-        self.chocolateMilk.addIngredient(honey)
-        return
+        return self.chocolateMilk.addIngredient(Honey(0))
 
     def addMarshmallow(self):
-        marshmallow = Marshmallow(0)
-        self.chocolateMilk.addIngredient(marshmallow)
-        return
+        return self.chocolateMilk.addIngredient(Marshmallow(0))
 
     def addChocolateShot(self, type):
-        chocoladeshot = ChocolateShot(0, type)
-        self.chocolateMilk.addIngredient(chocoladeshot)
-        return
+        return self.chocolateMilk.addIngredient(ChocolateShot(0, type))
 
     def addChilipepper(self):
-        chili = Chilipepper(0)
-        self.chocolateMilk.addIngredient(chili)
-        return
+        return self.chocolateMilk.addIngredient(Chilipepper(0))
+
 

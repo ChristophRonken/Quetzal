@@ -1,3 +1,6 @@
+from Ingredient import Ingredient
+
+
 class Order:
     # zoeksleutel timeStamp
     def __init__(self, userId, chocolateMilkId):
@@ -11,7 +14,10 @@ class Order:
         return self.timeStamp
 
     def setTimeStamp(self, timeStamp):
+        if not isinstance(timeStamp, int):
+            return False
         self.timeStamp = timeStamp
+        return True
 
 
 class ChocolateMilk:
@@ -28,7 +34,9 @@ class ChocolateMilk:
         return self.price
 
     def addIngredient(self, ingredient):
+        if not isinstance(ingredient, Ingredient):
+            return False
         self.price += ingredient.price
         self.credit += ingredient.credit
         self.ingredients.append(ingredient)
-        return
+        return True

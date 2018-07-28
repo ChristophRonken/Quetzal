@@ -3,8 +3,8 @@ from LogOutput import LogOutput
 from Wrapper import *
 from InputReader import InputReader
 from OutputGenerator import *
-from Gebruiker import *
-from Werknemer import Worker
+from User import *
+from Worker import Worker
 
 
 class ADTSimulator:
@@ -375,18 +375,6 @@ class StoreSimulator:
                 return
         return
 
-'''
-a = ADTSimulator()
-a.runADTSimulation()
-'''
+
 a = StoreSimulator()
 a.simulate(a.initialise())
-'''
-printDLC(a.store.milkChocolateStock.ADT)
-printDLC(a.store.darkChocolateStock.ADT)
-printDLC(a.store.brownChocolateStock.ADT)
-printDLC(a.store.whiteChocolateStock.ADT)
-printDLC(a.store.honeyStock.ADT)
-printDLC(a.store.marshmallowStock.ADT)
-printDLC(a.store.workers.ADT)
-'''
