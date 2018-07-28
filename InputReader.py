@@ -10,6 +10,7 @@ class InputReader:
         self.file = open("./vbn/"+self.fileName, "r")  # opens file with name of "ADT.txt"
         self.lines = self.file.readlines()
         self.file.close()
+        return True
 
     def InputFileToCommands(self):
         iterator = 0
@@ -24,3 +25,4 @@ class InputReader:
         for i in range(len(self.commands)):
             self.commands[i] = self.commands[i].split()
         self.commands = [item for sublist in self.commands for item in sublist]
+        return True

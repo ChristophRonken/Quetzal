@@ -112,6 +112,7 @@ class StoreSimulator:
         self.currentTick = 0
 
     def initialise(self):
+        print(self.inputReader.lines)
         print(self.inputReader.commands)
         i = 0
         while i != len(self.inputReader.commands):
@@ -257,13 +258,13 @@ class StoreSimulator:
                        self.inputReader.commands[i] == "marshmallow" or self.inputReader.commands[i] == "chili" or
                        self.inputReader.commands[i] == "honey"):
                     if self.inputReader.commands[i] == "melk":
-                        user.addChocolateShot(ChocolateShotType.milk)
+                        user.addMilkChocolateShot()
                     elif self.inputReader.commands[i] == "wit":
-                        user.addChocolateShot(ChocolateShotType.wit)
+                        user.addWhiteChocolateShot()
                     elif self.inputReader.commands[i] == "zwart":
-                        user.addChocolateShot(ChocolateShotType.dark)
+                        user.addDarkChocolateShot()
                     elif self.inputReader.commands[i] == "bruin":
-                        user.addChocolateShot(ChocolateShotType.brown)
+                        user.addBrownChocolateShot()
                     elif self.inputReader.commands[i] == "marshmallow":
                         user.addMarshmallow()
                     elif self.inputReader.commands[i] == "chili":

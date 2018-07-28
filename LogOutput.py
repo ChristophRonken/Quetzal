@@ -48,8 +48,8 @@ class LogOutput:
             <tbody>
             '''
         else:
-            self.startRow()
-            self.writecube(str(tick))
+            self.__startRow()
+            self.__writecube(str(tick))
             stackstring = ""
 
             workerCopy = copy.deepcopy(store.workers)
@@ -62,20 +62,20 @@ class LogOutput:
                     workerCopy.delete(None)
                 if not workerCopy.isEmpty():
                     stackstring += " | "
-            self.writecube(stackstring)
+            self.__writecube(stackstring)
 
             workerCopy = copy.deepcopy(store.workers)
             while not workerCopy.isEmpty():
                 worker = workerCopy.retrieve()
                 if worker.isBusy:
-                    self.writecube(str(worker.busyTime))
+                    self.__writecube(str(worker.busyTime))
                 else:
-                    self.writecube(" ")
+                    self.__writecube(" ")
                 workerCopy.delete(None)
 
             newOrderCopy = copy.deepcopy(store.newOrders)
             if newOrderCopy.isEmpty():
-                self.writecube(" ")
+                self.__writecube(" ")
             else:
                 orderstring = ""
                 while not newOrderCopy.isEmpty():
@@ -84,11 +84,11 @@ class LogOutput:
                     newOrderCopy.delete(None)
                     if not newOrderCopy.isEmpty():
                         orderstring += " | "
-                self.writecube(orderstring)
+                self.__writecube(orderstring)
 
             waitingOrderCopy = copy.deepcopy(store.waitingOrders)
             if waitingOrderCopy.isEmpty():
-                self.writecube(" ")
+                self.__writecube(" ")
             else:
                 orderstring = ""
                 while not waitingOrderCopy.isEmpty():
@@ -97,7 +97,7 @@ class LogOutput:
                     waitingOrderCopy.delete(None)
                     if not waitingOrderCopy.isEmpty():
                         orderstring += " | "
-                self.writecube(orderstring)
+                self.__writecube(orderstring)
 
             stockList = [store.whiteChocolateStock, store.milkChocolateStock, store.brownChocolateStock,
                          store.darkChocolateStock, store.honeyStock, store.marshmallowStock, store.chiliStock]
@@ -105,27 +105,27 @@ class LogOutput:
                 j = 0
                 stockCopy = copy.deepcopy(stockList[i])
                 if stockCopy.isEmpty():
-                    self.writecube(str(0))
+                    self.__writecube(str(0))
                 while not stockCopy.isEmpty():
-                    item = stockCopy.retrieve()
+                    item = stockCopy.retrieve(None)
                     stockCopy.delete(item.searchkey)
                     j += 1
                     if stockCopy.isEmpty():
-                        self.writecube(str(j))
+                        self.__writecube(str(j))
 
-            self.endRow()
+            self.__endRow()
         return
 
-    def writecube(self, string):
+    def __writecube(self, string):
         self.logString += '''    <td>''' + string + '''</td>
                 '''
         return
 
-    def startRow(self):
+    def __startRow(self):
         self.logString += '''    <tr>
                 '''
 
-    def endRow(self):
+    def __endRow(self):
         self.logString += '''</tr>
             '''
 

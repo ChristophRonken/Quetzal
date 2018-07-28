@@ -13,6 +13,7 @@ class Worker:
         self.busyTime = 0
         self.isBusy = False
         self.chocolateMilk = None
+        self.searchkey = None
         WorkerIdCount += 1
 
     def actBusy(self, busy):

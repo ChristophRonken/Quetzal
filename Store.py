@@ -108,6 +108,7 @@ class Store:
                 stocklist[i].delete(stocklist[i].retrieve().searchkey)
                 if stocklist[i].isEmpty():
                     continue
+        return True
 
     def makeChocolateMilk(self, chocolateMilk):
         sufficientStock = True
@@ -177,6 +178,7 @@ class Store:
                 if isinstance(ingredientList[i], Marshmallow):
                     self.marshmallowStock.insert(ingredientList[i].searchkey, ingredientList[i])
             return False
+
 
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
