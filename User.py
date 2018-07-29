@@ -11,7 +11,6 @@ class User:
         self.__email = email
         self.__currentOrder = None
         self.__chocolateMilk = None
-        self.__orders = []
 
     @property
     def searchkey(self):
@@ -34,9 +33,6 @@ class User:
 
     def getChocolateMilk(self):
         return self.__chocolateMilk
-
-    def getOrders(self):
-        return self.__orders
 
     def createOrder(self, chocolateMilkId):
         if not isinstance(chocolateMilkId, int):

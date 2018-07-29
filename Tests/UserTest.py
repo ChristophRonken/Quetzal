@@ -10,20 +10,32 @@ class UserTest(unittest.TestCase):
 
     def test_user(self):
         user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 5)
-        self.assertEqual(user.userID, 5)
-        self.assertEqual(user.firstName, "Christoph")
-        self.assertEqual(user.lastName, "Ronken")
-        self.assertEqual(user.email, "christoph.ronken@student.uantwerpen.be")
-        self.assertIsNone(user.currentOrder)
-        self.assertIsNone(user.chocolateMilk)
-        self.assertEqual(user.orders, [])
+        self.assertEqual(user.getUserId(), 5)
+        self.assertEqual(user.getFirstName(), "Christoph")
+        self.assertEqual(user.getLastName(), "Ronken")
+        self.assertEqual(user.getEmail(), "christoph.ronken@student.uantwerpen.be")
+        self.assertIsNone(user.getCurrentOrder())
+        self.assertIsNone(user.getChocolateMilk())
+        self.assertEqual(user.searchkey, user.getEmail())
 
     def test_createOrder(self):
         user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 7)
         self.assertFalse(user.createOrder("not an integer"))
         self.assertTrue(user.createOrder(5))
-        self.assertIsInstance(user.currentOrder, Order)
-        self.assertIsInstance(user.chocolateMilk, ChocolateMilk)
+        self.assertIsInstance(user.getCurrentOrder(), Order)
+        self.assertIsInstance(user.getChocolateMilk(), ChocolateMilk)
+
+    def test_setCurrentOrder(self):
+        user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 7)
+        self.assertTrue(user.createOrder(5))
+        self.assertTrue(user.setCurrentOrder(None))
+        self.assertIsNone(user.getCurrentOrder())
+        
+    def test_setChocolateMilk(self):
+        user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 7)
+        self.assertTrue(user.createOrder(5))
+        self.assertTrue(user.setChocolateMilk(None))
+        self.assertIsNone(user.getChocolateMilk())
 
     def test_addHoney(self):
         user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 7)

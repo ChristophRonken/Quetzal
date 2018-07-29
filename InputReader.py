@@ -32,3 +32,9 @@ class InputReader:
 
     def getCommands(self):
         return self.__commands
+
+    def getFile(self):
+        return self.__file
+
+    def getFileName(self):
+        return self.__fileName

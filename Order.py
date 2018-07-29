@@ -15,16 +15,22 @@ class Order:
         return self.__timeStamp
 
     def setTimeStamp(self, timeStamp):
-        if not isinstance(timeStamp, int):
-            return False
-        self.__timeStamp = timeStamp
-        return True
+        if isinstance(timeStamp, int):
+            self.__timeStamp = timeStamp
+            return True
+        return False
 
     def setPickedUp(self, pickedUp):
-        self.__pickedUp = pickedUp
+        if isinstance(pickedUp, bool):
+            self.__pickedUp = pickedUp
+            return True
+        return False
 
     def setFinishedTime(self, finishedTime):
-        self.__finishedTime = finishedTime
+        if isinstance(finishedTime, int):
+            self.__finishedTime = finishedTime
+            return True
+        return False
 
     def getUserId(self):
         return self.__userId
@@ -64,10 +70,13 @@ class ChocolateMilk:
         return self.__ingredients
 
     def addIngredient(self, ingredient):
-        self.__price += ingredient.getPrice()
-        self.__credit += ingredient.getCredit()
-        self.__ingredients.append(ingredient)
-        return True
+        if (isinstance(ingredient, ChocolateShot) or isinstance(ingredient, Honey) or
+                isinstance(ingredient, Chilipepper) or isinstance(ingredient, Marshmallow)):
+            self.__price += ingredient.getPrice()
+            self.__credit += ingredient.getCredit()
+            self.__ingredients.append(ingredient)
+            return True
+        return False
 
     def getChocolateMilkId(self):
         return self.__chocolateMilkId

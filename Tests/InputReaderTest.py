@@ -1,7 +1,5 @@
 import sys
 import unittest
-from User import User
-from Ingredient import *
 from InputReader import InputReader
 
 
@@ -11,10 +9,10 @@ class InputReaderTest(unittest.TestCase):
 
     def test_inputReader(self):
         inputReader = InputReader("InputReaderTest.txt")
-        self.assertIsNone(inputReader.file)
-        self.assertIsNone(inputReader.lines)
-        self.assertIsNone(inputReader.commands)
-        self.assertEqual(inputReader.fileName, "InputReaderTest.txt")
+        self.assertIsNone(inputReader.getFile())
+        self.assertIsNone(inputReader.getLines())
+        self.assertIsNone(inputReader.getCommands())
+        self.assertEqual(inputReader.getFileName(), "InputReaderTest.txt")
 
     def test_storeInputData(self):
         inputReader = InputReader("InputReaderTest.txt")
@@ -41,7 +39,7 @@ class InputReaderTest(unittest.TestCase):
                  '# dit maakt een bestand log4.html\n', '4 pass\n', '5 pass\n', '6 pass\n', '7 log\n']
 
         self.assertTrue(inputReader.StoreInputData())
-        self.assertEqual(inputReader.lines, lines)
+        self.assertEqual(inputReader.getLines(), lines)
 
     def test_inputFileToCommands(self):
         inputReader = InputReader("InputReaderTest.txt")
@@ -61,10 +59,7 @@ class InputReaderTest(unittest.TestCase):
 
         self.assertTrue(inputReader.StoreInputData())
         self.assertTrue(inputReader.InputFileToCommands())
-        self.assertEqual(inputReader.commands, commands)
-
-
-
+        self.assertEqual(inputReader.getCommands(), commands)
 
 
 if __name__ == '__main__':
