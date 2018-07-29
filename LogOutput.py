@@ -56,7 +56,7 @@ class LogOutput:
             workerCopy = copy.deepcopy(store.getWorkers())
             while not workerCopy.isEmpty():
                 if not workerCopy.retrieve(None).getIsBusy():
-                    stackstring += str(workerCopy.retrieve(None).getWorkLoad())
+                    stackstring += str(workerCopy.retrieve(None).getWorkload())
                     workerCopy.delete(None)
                 else:
                     stackstring += "_"

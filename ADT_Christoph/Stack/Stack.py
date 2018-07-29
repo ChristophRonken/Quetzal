@@ -10,7 +10,6 @@ class Stack:
     def __init__(self):
         self.top = None
         self.topItem = None
-        return
 
     def isEmpty(self):
         return self.top is None
@@ -19,13 +18,13 @@ class Stack:
         while not self.isEmpty():
             self.pop()
         self.topItem = None
-        return
+        return True
 
     def push(self, newItem):
         newNode = StackNode(newItem)
         newNode.next = self.top
         self.top = newNode
-        return
+        return True
 
     def pop(self):
         if self.isEmpty():

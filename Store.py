@@ -2,7 +2,8 @@ from Wrapper import *
 from Ingredient import *
 from Worker import *
 from User import *
-import binascii
+from bits import *
+
 import copy
 
 
@@ -16,7 +17,7 @@ class Store:
         self.__money = 0
         self.__currentTime = 0
 
-        # stack of queue
+        # stack or queue
         self.__marshmallowStock = StackWrapper()
         self.__milkChocolateStock = StackWrapper()
         self.__darkChocolateStock = StackWrapper()
@@ -28,17 +29,17 @@ class Store:
         # BST, DLC, Hlin, HQuad, Hsep
         self.__users = HSepWrapper()
 
-        self.__workers = QueueWrapper()
-        self.__finishedChocolateMilks = DLCWrapper()
-        self.__finishedOrders = DLCWrapper()
-
-        # verplicht Stack (werkt ook met queue)
+        # Stack (works with queue as well)
         self.__workload = StackWrapper()
 
-        # verplicht Queue:
+        # Queue:
         self.__chocolateMilkToBeMade = QueueWrapper()
         self.__newOrders = QueueWrapper()
         self.__waitingOrders = QueueWrapper()
+
+        self.__workers = QueueWrapper()
+        self.__finishedChocolateMilks = DLCWrapper()
+        self.__finishedOrders = DLCWrapper()
 
     def createStore(self):
         self.__marshmallowStock.create()
@@ -114,8 +115,17 @@ class Store:
     def getMoney(self):
         return self.__money
 
+    def getWorkerCount(self):
+        return self.__workerCount
+
+    def getTime(self):
+        return self.__currentTime
+
+    def getUser(self, searchkey):
+        return self.__users.retrieve(int(text_to_bits(searchkey)))
+
     def restockMarshmallow(self, expirationDate):
-        marshmallowItem = Honey(expirationDate)
+        marshmallowItem = Marshmallow(expirationDate)
         return self.__marshmallowStock.insert(marshmallowItem.searchkey, marshmallowItem)
 
     def restockHoney(self, expirationDate):
@@ -127,7 +137,6 @@ class Store:
         return self.__chilipepperStock.insert(chilipepperItem.searchkey, chilipepperItem)
 
     def restockMilkChocolateShot(self, expirationDate):
-
         chocolateType = ChocolateShotType.milk
         milkChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
         return self.__milkChocolateStock.insert(milkChocolateShotItem.searchkey, milkChocolateShotItem)
@@ -150,7 +159,7 @@ class Store:
     def addWorker(self, firstName, lastName, workLoad):
         worker = Worker(firstName, lastName, workLoad, self.__workerCount)
         if self.__workers.insert(worker.searchkey, worker):
-            for i in range(0, worker.getWorkLoad()):
+            for i in range(0, worker.getWorkload()):
                 self.addWorkload()
             self.__userCount += 1
             return True
@@ -162,9 +171,6 @@ class Store:
         if isinstance(user.searchkey, int):
             print("user.searchkey: ", user.searchkey)
         return self.__users.insert(user.searchkey, user)
-
-    def getUser(self, searchkey):
-        return self.__users.retrieve(int(text_to_bits(searchkey)))
 
     def addWorkload(self):
         return self.__workload.insert(None, "credit")
@@ -188,9 +194,6 @@ class Store:
         self.__currentTime += 1
         return True
 
-    def getTime(self):
-        return self.__currentTime
-
     def work(self):
         workersCopy = copy.deepcopy(self.__workers)
         while not workersCopy.isEmpty():
@@ -213,7 +216,7 @@ class Store:
                     worker.setOrder(order)
             if worker.getIsBusy():
                 print("busytime: ", worker.getBusyTime())
-                worker.setBusyTime(worker.getBusyTime() - worker.getWorkLoad())
+                worker.setBusyTime(worker.getBusyTime() - worker.getWorkload())
                 print("maybefinished: ", worker.getBusyTime())
                 if worker.getBusyTime() <= 0:
                     worker.getOrder().setFinishedTime(self.__currentTime)
@@ -329,24 +332,5 @@ class Store:
             return False
 
 
-def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
-    # This function was found online:
-    # https://stackoverflow.com/questions/7396849/convert-binary-to-ascii-and-vice-versa
-    bits = bin(int.from_bytes(text.encode(encoding, errors), 'big'))[2:]
-    return bits.zfill(8 * ((len(bits) + 7) // 8))
 
-
-def text_from_bits(bits, encoding='utf-8', errors='surrogatepass'):
-    # This function was found online:
-    # https://stackoverflow.com/questions/7396849/convert-binary-to-ascii-and-vice-versa
-    n = int(bits, 2)
-    return int2bytes(n).decode(encoding, errors)
-
-
-def int2bytes(i):
-    # This function was found online:
-    # https://stackoverflow.com/questions/7396849/convert-binary-to-ascii-and-vice-versa
-    hex_string = '%x' % i
-    n = len(hex_string)
-    return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 

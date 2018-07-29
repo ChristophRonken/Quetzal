@@ -1,5 +1,6 @@
 from Order import Order, ChocolateMilk
 from Ingredient import *
+from bits import text_from_bits
 
 
 class User:
@@ -26,7 +27,7 @@ class User:
         return self.__lastName
 
     def getEmail(self):
-        return self.__email
+        return text_from_bits(str(self.__email))
 
     def getCurrentOrder(self):
         return self.__currentOrder

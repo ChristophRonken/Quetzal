@@ -1,10 +1,10 @@
 class Worker:
 
-    def __init__(self, firstName, lastName, workLoad, workerIdCount):
+    def __init__(self, firstName, lastName, workload, workerIdCount):
         self.__workerId = workerIdCount
         self.__firstName = firstName
         self.__lastName = lastName
-        self.__workLoad = workLoad
+        self.__workload = workload
         self.__order = None
         self.__busyTime = 0
         self.__isBusy = False
@@ -23,8 +23,8 @@ class Worker:
     def getLastName(self):
         return self.__lastName
 
-    def getWorkLoad(self):
-        return self.__workLoad
+    def getWorkload(self):
+        return self.__workload
 
     def getOrder(self):
         return self.__order
