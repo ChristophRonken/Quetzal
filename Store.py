@@ -14,7 +14,7 @@ class Store:
         self.__chocolateMilkCount = 0
         self.__userCount = 0
         self.__workerCount = 0
-        self.__money = 0
+        self.__money = 2000
         self.__currentTime = 0
 
         # stack or queue
@@ -37,9 +37,11 @@ class Store:
         self.__newOrders = QueueWrapper()
         self.__waitingOrders = QueueWrapper()
 
+        self.__finishedChocolateMilks = QueueWrapper()
         self.__workers = QueueWrapper()
-        self.__finishedChocolateMilks = DLCWrapper()
-        self.__finishedOrders = DLCWrapper()
+        self.__finishedOrders = QueueWrapper()
+
+        self.__allOrders = BSTWrapper()
 
     def createStore(self):
         self.__marshmallowStock.create()
@@ -113,7 +115,7 @@ class Store:
         return self.__finishedOrders
 
     def getMoney(self):
-        return self.__money
+        return round(self.__money, 2)
 
     def getWorkerCount(self):
         return self.__workerCount
@@ -126,34 +128,41 @@ class Store:
 
     def restockMarshmallow(self, expirationDate):
         marshmallowItem = Marshmallow(expirationDate)
+        self.__money -= marshmallowItem.buyPrice
         return self.__marshmallowStock.insert(marshmallowItem.searchkey, marshmallowItem)
 
     def restockHoney(self, expirationDate):
         honeyItem = Honey(expirationDate)
+        self.__money -= honeyItem.buyPrice
         return self.__honeyStock.insert(honeyItem.searchkey, honeyItem)
 
     def restockChilipepper(self, expirationDate):
         chilipepperItem = Chilipepper(expirationDate)
+        self.__money -= chilipepperItem.buyPrice
         return self.__chilipepperStock.insert(chilipepperItem.searchkey, chilipepperItem)
 
     def restockMilkChocolateShot(self, expirationDate):
         chocolateType = ChocolateShotType.milk
         milkChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
+        self.__money -= milkChocolateShotItem.buyPrice
         return self.__milkChocolateStock.insert(milkChocolateShotItem.searchkey, milkChocolateShotItem)
 
     def restockBrownChocolateShot(self, expirationDate):
         chocolateType = ChocolateShotType.brown
         brownChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
+        self.__money -= brownChocolateShotItem.buyPrice
         return self.__brownChocolateStock.insert(brownChocolateShotItem.searchkey, brownChocolateShotItem)
 
     def restockDarkChocolateShot(self, expirationDate):
         chocolateType = ChocolateShotType.dark
         darkChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
+        self.__money -= darkChocolateShotItem.buyPrice
         return self.__darkChocolateStock.insert(darkChocolateShotItem.searchkey, darkChocolateShotItem)
 
     def restockWhiteChocolateShot(self, expirationDate):
         chocolateType = ChocolateShotType.white
         whiteChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
+        self.__money -= whiteChocolateShotItem.buyPrice
         return self.__whiteChocolateStock.insert(whiteChocolateShotItem.searchkey, whiteChocolateShotItem)
 
     def addWorker(self, firstName, lastName, workLoad):
@@ -168,8 +177,6 @@ class Store:
     def addUser(self, firstName, lastName, email):
         user = User(firstName, lastName, int(text_to_bits(email)), self.__userCount)
         self.__userCount += 1
-        if isinstance(user.searchkey, int):
-            print("user.searchkey: ", user.searchkey)
         return self.__users.insert(user.searchkey, user)
 
     def addWorkload(self):

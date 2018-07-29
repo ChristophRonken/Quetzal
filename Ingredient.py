@@ -20,6 +20,10 @@ class ChocolateShot:
     def searchkey(self):
         return self.__expirationDate
 
+    @property
+    def buyPrice(self):
+        return round(self.__price / 5, 2)
+
     def getType(self):
         return self.__type
 
@@ -44,6 +48,10 @@ class Honey:
     def searchkey(self):
         return self.__expirationDate
 
+    @property
+    def buyPrice(self):
+        return round(self.__price / 5, 2)
+
     def getExpirationDate(self):
         return self.__expirationDate
 
@@ -65,6 +73,10 @@ class Marshmallow:
     def searchkey(self):
         return self.__expirationDate
 
+    @property
+    def buyPrice(self):
+        return round(self.__price / 5, 2)
+
     def getExpirationDate(self):
         return self.__expirationDate
 
@@ -85,6 +97,10 @@ class Chilipepper:
     @property
     def searchkey(self):
         return self.__expirationDate
+
+    @property
+    def buyPrice(self):
+        return round(self.__price / 5, 2)
 
     def getExpirationDate(self):
         return self.__expirationDate

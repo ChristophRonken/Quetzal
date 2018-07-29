@@ -31,6 +31,7 @@ class Queue:
                 searchnode = searchnode.next
             searchnode.next = Node(newItem)
             self.size += 1
+        return True
 
     def deQueue(self):
         new_root = self.root.next
