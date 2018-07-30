@@ -181,9 +181,9 @@ class DoublyLinkedChain:
 
     def searchkeyRetrieve(self, searchkey):
         if not self.isInChain(searchkey):
-            return False
+            return False, None
         else:
             searchNode = self.head.next
             while searchNode.searchkey != searchkey:
                 searchNode = searchNode.next
-            return searchNode.item
+            return True, searchNode.item

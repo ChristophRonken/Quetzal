@@ -1,6 +1,6 @@
 import graphviz as gv
 import copy
-from ADT_Christoph.HashTable.HashTable import HashTableType, Bucket
+from Enums import HashTableType
 from ADT_Christoph.DoublyLinkedChain.DoublyLinkedChain import DoublyLinkedChain
 from ADT_Cedric.CircularChain import CircularChain
 bstCounter, hlinCounter, hquadCounter, hsepCounter, queueCounter, stackCounter, dlcCounter, clcCounter, hashdlcCounter, hashclcCounter = (1,)*10

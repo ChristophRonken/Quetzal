@@ -1,6 +1,7 @@
 import sys
 import unittest
 from ADT_Christoph.HashTable.HashTable import HashTable, Bucket, HashTableType
+from Wrappers import DLCWrapper
 
 
 class HashTableTest(unittest.TestCase):
@@ -30,9 +31,7 @@ class HashTableTest(unittest.TestCase):
         for i in range(0, len(self.hashTableType2.table)):
             self.assertEqual(self.hashTableType2.table[i], Bucket())
         for i in range(0, len(self.hashTableType3.table)):
-            '''
-            self.assertEqual(self.hashTableType3.table[i], Bucket())
-            '''
+            self.assertIsInstance(self.hashTableType3.table[i], DLCWrapper.DLCWrapper)
 
     def test_isEmpty(self):
         self.assertFalse(self.hashTableType1.isEmpty())
@@ -105,37 +104,41 @@ class HashTableTest(unittest.TestCase):
         self.assertEqual(self.hashTableType3.getLength(), self.hashTableType3.size)
 
     def test_retrieve(self):
-        self.assertFalse(self.hashTableType1.retrieve(0))
-        self.assertFalse(self.hashTableType2.retrieve(0))
-        self.assertFalse(self.hashTableType3.retrieve(0))
+        self.assertFalse(self.hashTableType1.retrieve(0)[0])
+        self.assertFalse(self.hashTableType2.retrieve(0)[0])
+        self.assertFalse(self.hashTableType3.retrieve(0)[0])
 
         self.assertTrue(self.hashTableType1.createHashTable())
         self.assertTrue(self.hashTableType2.createHashTable())
         self.assertTrue(self.hashTableType3.createHashTable())
 
+        self.assertFalse(self.hashTableType1.retrieve(0)[0])
+        self.assertFalse(self.hashTableType2.retrieve(0)[0])
+        self.assertFalse(self.hashTableType3.retrieve(0)[0])
+
         self.assertTrue(self.hashTableType1.insert(1, "filled"))
         self.assertTrue(self.hashTableType2.insert(1, "filled"))
         self.assertTrue(self.hashTableType3.insert(1, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(1))
-        self.assertTrue(self.hashTableType2.retrieve(1))
-        self.assertTrue(self.hashTableType3.retrieve(1))
+        self.assertTrue(self.hashTableType1.retrieve(1)[0])
+        self.assertTrue(self.hashTableType2.retrieve(1)[0])
+        self.assertTrue(self.hashTableType3.retrieve(1)[0])
 
         self.assertTrue(self.hashTableType1.insert(102, "filled"))
         self.assertTrue(self.hashTableType2.insert(102, "filled"))
         self.assertTrue(self.hashTableType3.insert(102, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(102))
-        self.assertTrue(self.hashTableType2.retrieve(102))
-        self.assertTrue(self.hashTableType3.retrieve(102))
+        self.assertTrue(self.hashTableType1.retrieve(102)[0])
+        self.assertTrue(self.hashTableType2.retrieve(102)[0])
+        self.assertTrue(self.hashTableType3.retrieve(102)[0])
 
         self.assertTrue(self.hashTableType1.delete(1))
         self.assertTrue(self.hashTableType2.delete(1))
         self.assertTrue(self.hashTableType3.delete(1))
 
-        self.assertFalse(self.hashTableType1.retrieve(1))
-        self.assertFalse(self.hashTableType2.retrieve(1))
-        self.assertFalse(self.hashTableType3.retrieve(1))
+        self.assertFalse(self.hashTableType1.retrieve(1)[0])
+        self.assertFalse(self.hashTableType2.retrieve(1)[0])
+        self.assertFalse(self.hashTableType3.retrieve(1)[0])
 
         self.assertTrue(self.hashTableType1.retrieve(102))
         self.assertTrue(self.hashTableType2.retrieve(102))
@@ -145,9 +148,9 @@ class HashTableTest(unittest.TestCase):
         self.assertTrue(self.hashTableType2.insert(203, "filled"))
         self.assertTrue(self.hashTableType3.insert(203, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(203))
-        self.assertTrue(self.hashTableType2.retrieve(203))
-        self.assertTrue(self.hashTableType3.retrieve(203))
+        self.assertTrue(self.hashTableType1.retrieve(203)[0])
+        self.assertTrue(self.hashTableType2.retrieve(203)[0])
+        self.assertTrue(self.hashTableType3.retrieve(203)[0])
 
     def test_delete(self):
         self.assertFalse(self.hashTableType1.delete(0))

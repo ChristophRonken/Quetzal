@@ -46,7 +46,7 @@ class Stack:
 
     def getTop(self):
         if self.isEmpty():
-            return False
+            return False, None
         else:
             self.topItem = self.top.item
-            return self.topItem
+            return True, self.topItem

@@ -1,13 +1,3 @@
-from enum import Enum, auto
-
-
-class ChocolateShotType(Enum):
-    milk = auto()
-    white = auto()
-    dark = auto()
-    brown = auto()
-
-
 class ChocolateShot:
 
     def __init__(self, expirationDate, chocolateShotType):

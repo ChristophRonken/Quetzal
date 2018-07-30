@@ -1,6 +1,7 @@
-from Order import Order, ChocolateMilk
-from Ingredient import *
+from Order import ChocolateMilk, Order
+from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
 from bits import text_from_bits
+from Enums import ChocolateShotType
 
 
 class User:

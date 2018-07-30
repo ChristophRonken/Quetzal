@@ -22,24 +22,26 @@ class CircularChain:
     def destroyChain(self):
         for i in range(self.size):
             self.delete()
+        return True
 
     def toLastNode(self, node):
         for i in range(self.size - 1):
             node = node.next
         return node
 
-    def addNode(self, newItem, searchkey, root = None):
+    def addNode(self, newItem, searchkey, root=None):
         if not root:
             root = self.root
         if not root.searchkey:
             root.item = newItem
             root.searchkey = searchkey
             self.size += 1
+            return True
         else:
             if root.next is self.root:
                 root.next = Node(newItem, self.root, searchkey)
                 self.size += 1
-
+                return True
             else:
                 return self.addNode(newItem, searchkey, root.next)
 
@@ -63,8 +65,6 @@ class CircularChain:
                 node = node.next
         return False
 
-
-
     def delete(self, searchkey=None):
         if not searchkey:
             node = self.root
@@ -75,10 +75,12 @@ class CircularChain:
                 self.root.searchkey = None
                 self.root.next = self.root
                 self.size = 0
+                return True
             else:
                 last_node = self.toLastNode(node)
                 last_node.next = node.next
                 self.size -= 1
+                return True
         else:
             removed_node = self.findNode(searchkey)
             if removed_node:
@@ -90,6 +92,7 @@ class CircularChain:
                 removed_node.searchkey = None
                 removed_node.item = None
                 self.size -= 1
+                return True
             else:
                 return False
 

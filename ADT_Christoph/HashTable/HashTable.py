@@ -1,11 +1,6 @@
-from enum import Enum, auto
-from ADT_Christoph.DoublyLinkedChain.DoublyLinkedChain import DoublyLinkedChain
-
-
-class HashTableType(Enum):
-    Type1 = auto()
-    Type2 = auto()
-    Type3 = auto()
+from Enums import HashTableType
+from Wrappers.DLCWrapper import DLCWrapper
+from Wrappers.CLCWrapper import CLCWrapper
 
 
 class Bucket:
@@ -34,8 +29,8 @@ class HashTable:
                 self.table[i] = Bucket()
         else:
             for i in range(0, len(self.table)):
-                self.table[i] = DoublyLinkedChain()
-                self.table[i].createChain()
+                self.table[i] = DLCWrapper()
+                self.table[i].create()
         return True
 
     def destroyHashTable(self):
@@ -57,7 +52,7 @@ class HashTable:
                 self.table[i] = None
         else:
             for i in range(0, len(self.table)):
-                self.table[i].destroyChain()
+                self.table[i].destroy()
                 self.table[i] = None
         return not self.__exists()
 
@@ -132,16 +127,15 @@ class HashTable:
             return True
 
         elif self.type == HashTableType.Type3:
-            self.table[index].add(searchkey, newItem)
-            return True
+            return self.table[index].insert(searchkey, newItem)
 
         return False
 
     def retrieve(self, searchkey):
         if not self.__exists():
-            return False
+            return False, None
         if self.isEmpty():
-            return False
+            return False, None
 
         index = self.__hash(searchkey)
         if self.type == HashTableType.Type1:
@@ -156,12 +150,12 @@ class HashTable:
                     continue
 
                 if self.table[(index + probeNumber) % self.getLength()].searchkey == searchkey:
-                    return self.table[(index + probeNumber) % self.getLength()].item
+                    return True, self.table[(index + probeNumber) % self.getLength()].item
 
                 probeNumber += 1
                 if probeNumber == self.getLength():
-                    return False
-            return False
+                    return False, None
+            return False, None
 
         elif self.type == HashTableType.Type2:
             probeNumber = 0
@@ -175,15 +169,17 @@ class HashTable:
                     continue
 
                 if self.table[(index + probeNumber ** 2) % self.getLength()].searchkey == searchkey:
-                    return self.table[(index + probeNumber ** 2) % self.getLength()].item
+                    return True, self.table[(index + probeNumber ** 2) % self.getLength()].item
 
                 probeNumber += 1
                 if probeNumber == self.getLength():
-                    return False
-            return False
+                    return False, None
+            return False, None
 
         elif self.type == HashTableType.Type3:
-            return self.table[index].searchkeyRetrieve(searchkey)
+            if not self.table[index].retrieve(searchkey) is False:
+                return True, self.table[index].retrieve(searchkey)
+            return False, None
 
     def delete(self, searchkey):
         if not self.__exists():
@@ -233,12 +229,12 @@ class HashTable:
             return False
 
         elif self.type == HashTableType.Type3:
-            return self.table[index].remove(searchkey)
+            return self.table[index].delete(searchkey)
 
     def print(self):
         for i in range(0, len(self.table)):
             if self.table[i] and self.table[i].item and self.type == HashTableType.Type3:
-                self.table[i].item.printChain()
+                self.table[i].print()
             else:
                 print(self.table[i].searchkey)
-        return
+        return True

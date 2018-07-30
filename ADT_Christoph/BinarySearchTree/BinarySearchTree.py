@@ -97,7 +97,10 @@ class BinarySearchTree:
         return False
 
     def retrieve(self, searchkey):
-        return self.findNode(searchkey).item
+        if not self.findNode(searchkey):
+            return False, None
+        else:
+            return True, self.findNode(searchkey).item
 
     def findNode(self, searchkey, root=None):
         if not self.exists():
