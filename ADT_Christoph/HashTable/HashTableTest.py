@@ -1,7 +1,8 @@
 import sys
 import unittest
 from ADT_Christoph.HashTable.HashTable import HashTable, Bucket, HashTableType
-from Wrappers import DLCWrapper
+from Wrappers.DLCWrapper import DLCWrapper
+from Wrappers.CLCWrapper import CLCWrapper
 
 
 class HashTableTest(unittest.TestCase):
@@ -31,7 +32,7 @@ class HashTableTest(unittest.TestCase):
         for i in range(0, len(self.hashTableType2.table)):
             self.assertEqual(self.hashTableType2.table[i], Bucket())
         for i in range(0, len(self.hashTableType3.table)):
-            self.assertIsInstance(self.hashTableType3.table[i], DLCWrapper.DLCWrapper)
+            self.assertIsInstance(self.hashTableType3.table[i], CLCWrapper)
 
     def test_isEmpty(self):
         self.assertFalse(self.hashTableType1.isEmpty())
@@ -89,14 +90,17 @@ class HashTableTest(unittest.TestCase):
             self.assertFalse(self.hashTableType1.isFull())
             self.assertTrue(self.hashTableType1.insert(i, "filled"))
         self.assertFalse(self.hashTableType1.insert(0, "filled"))
+        self.assertTrue(self.hashTableType1.isFull())
         for i in range(0, len(self.hashTableType2.table)):
             self.assertFalse(self.hashTableType2.isFull())
             self.assertTrue(self.hashTableType2.insert(i, "filled"))
         self.assertFalse(self.hashTableType2.insert(0, "filled"))
+        self.assertTrue(self.hashTableType2.isFull())
         for i in range(0, len(self.hashTableType3.table)):
             self.assertFalse(self.hashTableType3.isFull())
             self.assertTrue(self.hashTableType3.insert(i, "filled"))
         self.assertTrue(self.hashTableType3.insert(0, "filled"))
+        self.assertFalse(self.hashTableType3.isFull())
 
     def test_getLength(self):
         self.assertEqual(self.hashTableType1.getLength(), self.hashTableType1.size)
