@@ -16,7 +16,7 @@ class CLCWrapper:
         return self.ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        return self.ADT.addNode(newItem, searchkey)
+        return self.ADT.addNode(searchkey, newItem)
 
     def delete(self, searchkey):
         return self.ADT.delete(searchkey)
