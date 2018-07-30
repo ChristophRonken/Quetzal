@@ -1,5 +1,5 @@
 from ADT_Christoph.BinarySearchTree.BinarySearchTree import BinarySearchTree
-from OutputGenerator import printBST
+from OutputGenerators.BSTOG import printBST
 
 
 class BSTWrapper:

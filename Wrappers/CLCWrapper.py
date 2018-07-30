@@ -1,28 +1,28 @@
 from ADT_Cedric.CircularChain import CircularChain
-from OutputGenerator import printCLC
+from OutputGenerators.CLCOG import printCLC
 
 
 class CLCWrapper:
     def __init__(self):
-        self.__ADT = CircularChain()
+        self.ADT = CircularChain()
 
     def create(self):
-        return self.__ADT.createChain()
+        return self.ADT.createChain()
 
     def destroy(self):
-        return self.__ADT.destroyChain()
+        return self.ADT.destroyChain()
 
     def isEmpty(self):
-        return self.__ADT.isEmpty()
+        return self.ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
-        return self.__ADT.addNode(newItem, searchkey)
+        return self.ADT.addNode(newItem, searchkey)
 
     def delete(self, searchkey):
-        return self.__ADT.delete(searchkey)
+        return self.ADT.delete(searchkey)
 
     def retrieve(self, searchkey):
-        return self.__ADT.retrieve(searchkey)
+        return self.ADT.retrieve(searchkey)
 
     def print(self):
-        return printCLC(self.__ADT)
+        return printCLC(self.ADT)

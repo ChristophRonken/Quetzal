@@ -12,3 +12,12 @@ class HashTableType(Enum):
     Type1 = auto()
     Type2 = auto()
     Type3 = auto()
+
+
+class OrderStates(Enum):
+    NotOrdered = auto()
+    NewOrder = auto()
+    WaitingOrder = auto()
+    Finished = auto()
+    PickedUp = auto()
+

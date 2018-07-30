@@ -1,6 +1,6 @@
 from ADT_Christoph.HashTable.HashTable import HashTable
 from Enums import HashTableType
-from OutputGenerator import printHashTable
+from OutputGenerators.HashOG import printHashTable
 
 
 class HLinWrapper:

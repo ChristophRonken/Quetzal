@@ -265,7 +265,7 @@ class StoreSimulator:
                 minute = self.__inputReader.getCommands()[i]
                 i += 1
                 user.getCurrentOrder().setTimeStamp(int(year+month+day+hour+minute))
-                if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder(), int(year+month+day)):
+                if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder(), int(year+month+day), int(year+month+day+hour+minute)):
                     user.setChocolateMilk(None)
                     user.setCurrentOrder(None)
                 else:
@@ -349,7 +349,7 @@ class StoreSimulator:
 
 a = StoreSimulator()
 a.simulate(a.initialise())
-'''
+
 b = ADTSimulator()
 b.runADTSimulation()
-'''
+

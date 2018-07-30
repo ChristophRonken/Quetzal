@@ -6,7 +6,7 @@ from Wrappers.QueueWrapper import QueueWrapper
 from Wrappers.StackWrapper import StackWrapper
 from Worker import Worker
 from User import User
-from Enums import ChocolateShotType
+from Enums import ChocolateShotType, OrderStates
 from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
 from bits import text_to_bits
 from OutputGenerator import *
@@ -49,6 +49,7 @@ class Store:
         self.__finishedOrders = QueueWrapper()
 
         self.__allOrders = BSTWrapper()
+        self.__makeTimes = QueueWrapper()
 
     def createStore(self):
         self.__marshmallowStock.create()
@@ -68,6 +69,9 @@ class Store:
         self.__newOrders.create()
         self.__waitingOrders.create()
         self.__finishedOrders.create()
+
+        self.__allOrders.create()
+        self.__makeTimes.create()
         return True
 
     def getMarshmallowStock(self):
@@ -216,6 +220,7 @@ class Store:
                 order = None
                 if not self.__waitingOrders.isEmpty():
                     order = self.__waitingOrders.retrieve(None)
+                    order = self.__allOrders.retrieve(self.__makeTimes.retrieve(None)).retrieve(None)
                     self.__waitingOrders.delete(None)
                 elif not self.__newOrders.isEmpty():
                     order = self.__newOrders.retrieve(None)
@@ -250,6 +255,7 @@ class Store:
         while not self.__newOrders.isEmpty():
             order = self.__newOrders.retrieve(None)
             self.__newOrders.delete(None)
+            order.setState(OrderStates.WaitingOrder)
             self.__waitingOrders.insert(order.searchkey, order)
 
     def cleanup(self, time):
@@ -272,7 +278,7 @@ class Store:
                 newStock.delete(None)
         return True
 
-    def addChocolateMilk(self, chocolateMilk, order, time):
+    def addChocolateMilk(self, chocolateMilk, order, time, timeStamp):
         sufficientStock = True
         ingredientList = []
         for i in range(0, len(chocolateMilk.getIngredients())):
@@ -321,7 +327,14 @@ class Store:
                 ingredientList.append(self.__marshmallowStock.retrieve(None))
                 self.__marshmallowStock.delete(self.__marshmallowStock.retrieve(None).searchkey)
         if sufficientStock:
+            order.setState(OrderStates.NewOrder)
             self.__newOrders.insert(order.searchkey, order)
+            if not self.__allOrders.retrieve(order.searchkey):
+                newQueue = QueueWrapper()
+                newQueue.create()
+                self.__allOrders.insert(order.searchkey, newQueue)
+            self.__allOrders.retrieve(order.searchkey).insert(order.searchkey, order)
+            self.__makeTimes.insert(None, order.searchkey)
             self.__chocolateMilkToBeMade.insert(chocolateMilk.searchkey, chocolateMilk)
             self.__chocolateMilkCount += 1
             print("toegevoegd")

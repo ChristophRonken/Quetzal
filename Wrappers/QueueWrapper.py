@@ -1,5 +1,5 @@
 from ADT_Cedric.Queue import Queue
-from OutputGenerator import printQueue
+from OutputGenerators.QueueOG import printQueue
 
 
 class QueueWrapper:

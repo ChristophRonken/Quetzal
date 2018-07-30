@@ -1,5 +1,5 @@
 from ADT_Christoph.Stack.Stack import Stack
-from OutputGenerator import printStack
+from OutputGenerators.StackOG import printStack
 
 
 class StackWrapper:

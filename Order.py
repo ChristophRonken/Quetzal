@@ -1,4 +1,5 @@
 from Ingredient import *
+from Enums import OrderStates
 
 
 class Order:
@@ -9,6 +10,7 @@ class Order:
         self.__chocolateMilkId = chocolateMilkId
         self.__pickedUp = False
         self.__finishedTime = None
+        self.__state = OrderStates.NotOrdered
 
     @property
     def searchkey(self):
@@ -46,6 +48,13 @@ class Order:
 
     def getFinishedTime(self):
         return self.__finishedTime
+
+    def setState(self, state):
+        self.__state = state
+        return True
+
+    def getState(self):
+        return self.__state
 
 
 class ChocolateMilk:

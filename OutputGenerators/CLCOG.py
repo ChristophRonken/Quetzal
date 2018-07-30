@@ -1,10 +1,6 @@
 import graphviz as gv
 import copy
-from Enums import HashTableType
-from Wrappers.CLCWrapper import CLCWrapper
-from Wrappers.DLCWrapper import DLCWrapper
-bstCounter, hlinCounter, hquadCounter, hsepCounter, queueCounter, stackCounter, dlcCounter, clcCounter, hashdlcCounter, hashclcCounter = (1,)*10
-
+clcCounter, hashclcCounter = (1,)*2
 
 
 def printCLC(clc, customName=None):
