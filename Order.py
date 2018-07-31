@@ -61,7 +61,7 @@ class ChocolateMilk:
     # zoeksleutel price
     def __init__(self, chocolateMilkId):
         self.__chocolateMilkId = chocolateMilkId
-        self.__credit = 1
+        self.__credit = 5
         self.__price = 2
         self.__ingredients = []
 

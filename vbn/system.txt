@@ -27,7 +27,8 @@ start
 6 pass
 7 pass
 8 pass
-9 bestel tom.hofkens@uantwerpen.be melk marshmallow melk zwart zwart 2018 05 01 12 00
+9 bestel john@doe.com chili zwart 2018 05 01 15 00
+9 bestel tom.hofkens@uantwerpen.be melk marshmallow melk 2018 05 01 15 00
 10 pass
 11 pass
 12 pass
