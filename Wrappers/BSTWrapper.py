@@ -10,6 +10,9 @@ class BSTWrapper:
     def create(self):
         return self.__ADT.createSearchTree()
 
+    def isEmpty(self):
+        return self.__ADT.isEmpty()
+
     def insert(self, searchkey, newItem):
         return self.__ADT.insert(searchkey, newItem)
 
@@ -23,4 +26,5 @@ class BSTWrapper:
 
     def print(self):
         return printBST(self.__ADT)
+
 

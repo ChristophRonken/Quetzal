@@ -9,7 +9,6 @@ from User import User
 from Enums import ChocolateShotType, OrderStates
 from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
 from bits import text_to_bits
-from OutputGenerator import *
 
 import copy
 
@@ -34,7 +33,7 @@ class Store:
         self.__chilipepperStock = StackWrapper()
 
         # BST, DLC, Hlin, HQuad, Hsep
-        self.__users = HSepWrapper()
+        self.__users = BSTWrapper()
 
         # Stack (works with queue as well)
         self.__workload = StackWrapper()
@@ -48,8 +47,9 @@ class Store:
         self.__workers = QueueWrapper()
         self.__finishedOrders = QueueWrapper()
 
-        self.__allOrders = BSTWrapper()
+        self.__allOrders = HLinWrapper()
         self.__makeTimes = QueueWrapper()
+        self.__allTimes = QueueWrapper()
 
     def createStore(self):
         self.__marshmallowStock.create()
@@ -72,7 +72,14 @@ class Store:
 
         self.__allOrders.create()
         self.__makeTimes.create()
+        self.__allTimes.create()
         return True
+
+    def getAllTimes(self):
+        return self.__allTimes
+
+    def getAllOrders(self):
+        return self.__allOrders
 
     def getMarshmallowStock(self):
         return self.__marshmallowStock
@@ -213,50 +220,89 @@ class Store:
         return True
 
     def work(self):
+        self.newToWaiting()
+        print("start work")
         workersCopy = copy.deepcopy(self.__workers)
         while not workersCopy.isEmpty():
             worker = workersCopy.retrieve(None)
-            if not worker.getIsBusy():
-                order = None
-                if not self.__waitingOrders.isEmpty():
-                    order = self.__waitingOrders.retrieve(None)
-                    order = self.__allOrders.retrieve(self.__makeTimes.retrieve(None)).retrieve(None)
-                    self.__waitingOrders.delete(None)
-                elif not self.__newOrders.isEmpty():
-                    order = self.__newOrders.retrieve(None)
-                    self.__newOrders.delete(None)
-                else:
-                    pass
-                if order is not None:
-                    worker.setChocolateMilk(self.__chocolateMilkToBeMade.retrieve(None))
-                    self.__chocolateMilkToBeMade.delete(None)
-                    worker.setBusyTime(worker.getChocolateMilk().getCredit())
-                    worker.setIsBusy(True)
-                    worker.setOrder(order)
+            if not worker.getIsBusy() and not self.__makeTimes.isEmpty():
+                time = self.__makeTimes.retrieve(None)
+                print("time to make a new chocolatemilk: ", time)
+
+                order = self.__allOrders.retrieve(time).retrieve(None)
+                self.__allOrders.retrieve(time).delete(None)
+                order.setState(OrderStates.BeingMade)
+                self.__allOrders.retrieve(time).insert(None, order)
+                print("count")
+                print("chocolatemilkcount: ", self.__chocolateMilkCount)
+                print(self.__chocolateMilkToBeMade.printsize())
+                worker.setChocolateMilk(self.__chocolateMilkToBeMade.retrieve(None))
+                self.__chocolateMilkToBeMade.delete(None)
+                worker.setBusyTime(worker.getChocolateMilk().getCredit())
+                worker.setIsBusy(True)
+                worker.setOrder(order)
+
+                if self.__allOrders.retrieve(time).retrieve(None).getState() == OrderStates.BeingMade:
+                    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                    self.__makeTimes.delete(None)
+
             if worker.getIsBusy():
                 print("busytime: ", worker.getBusyTime())
                 worker.setBusyTime(worker.getBusyTime() - worker.getWorkload())
                 print("maybefinished: ", worker.getBusyTime())
                 if worker.getBusyTime() <= 0:
                     worker.getOrder().setFinishedTime(self.__currentTime)
-                    self.__finishedOrders.insert(worker.getOrder().searchkey, worker.getOrder())
                     self.__finishedChocolateMilks.insert(worker.getChocolateMilk().searchkey, worker.getChocolateMilk())
+                    order = self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).retrieve(None)
+                    newQueue = QueueWrapper()
+                    newQueue.create()
+                    while not self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).isEmpty():
+                        order = self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).retrieve(None)
+                        if order.searchkey == worker.getOrder().searchkey:
+                            order.setState(OrderStates.Finished)
+                        self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).delete(None)
+                        newQueue.insert(None, order)
+                    self.__allOrders.delete(worker.getOrder().getTimeStamp())
+                    self.__allOrders.insert(worker.getOrder().getTimeStamp(), newQueue)
+
                     self.__money += worker.getChocolateMilk().getPrice()
                     worker.setBusyTime(0)
                     worker.setOrder(None)
                     worker.setIsBusy(False)
                     worker.setChocolateMilk(None)
+
             workersCopy.delete(None)
             self.__workers.delete(None)
             self.__workers.insert(None, worker)
             if not workersCopy.isEmpty():
                 worker = workersCopy.retrieve(None)
 
-        while not self.__newOrders.isEmpty():
-            order = self.__newOrders.retrieve(None)
-            self.__newOrders.delete(None)
-            order.setState(OrderStates.WaitingOrder)
-            self.__waitingOrders.insert(order.searchkey, order)
+        print("end work")
+
+    def newToWaiting(self):
+        print("start newtowaiting")
+        if self.__allTimes.isEmpty():
+            return True
+        else:
+            alltimesCopy = copy.deepcopy(self.__allTimes)
+
+            while not alltimesCopy.isEmpty():
+                time = alltimesCopy.retrieve(None)
+                orderQueue = QueueWrapper()
+                orderQueue.create()
+                print(time)
+                print(self.__allOrders.retrieve(time).isEmpty())
+                while not self.__allOrders.retrieve(time).isEmpty():
+                    order = self.__allOrders.retrieve(time).retrieve(None)
+                    if order.getState() == OrderStates.NewOrder:
+                        order.setState(OrderStates.WaitingOrder)
+                    orderQueue.insert(None, order)
+                    self.__allOrders.retrieve(time).delete(None)
+                self.__allOrders.delete(time)
+                self.__allOrders.insert(time, orderQueue)
+                alltimesCopy.delete(None)
+        print("end newtowaiting")
+
 
     def cleanup(self, time):
         stocklist = [self.__marshmallowStock, self.__milkChocolateStock, self.__whiteChocolateStock,
@@ -332,10 +378,19 @@ class Store:
             if not self.__allOrders.retrieve(order.searchkey):
                 newQueue = QueueWrapper()
                 newQueue.create()
-                self.__allOrders.insert(order.searchkey, newQueue)
-            self.__allOrders.retrieve(order.searchkey).insert(order.searchkey, order)
-            self.__makeTimes.insert(None, order.searchkey)
+                print("allorders insert: ", timeStamp, newQueue)
+                self.__allOrders.insert(timeStamp, newQueue)
+            self.__allOrders.retrieve(timeStamp).insert(None, order)
+            allTimesCopy = copy.deepcopy(self.__allTimes)
+            times = []
+            while not allTimesCopy.isEmpty():
+                times.append(allTimesCopy.retrieve(None))
+                allTimesCopy.delete(None)
+            if timeStamp not in times:
+                self.__makeTimes.insert(None, timeStamp)
+                self.__allTimes.insert(None, timeStamp)
             self.__chocolateMilkToBeMade.insert(chocolateMilk.searchkey, chocolateMilk)
+            print("retrieve: ", self.__chocolateMilkToBeMade.retrieve(None))
             self.__chocolateMilkCount += 1
             print("toegevoegd")
             return True

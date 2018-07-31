@@ -1,6 +1,7 @@
 from Store import *
 from LogOutput import LogOutput
 from InputReader import InputReader
+from OutputGenerators.BSTOG import printBST
 
 
 class ADTSimulator:
@@ -350,6 +351,7 @@ class StoreSimulator:
 a = StoreSimulator()
 a.simulate(a.initialise())
 
+'''
 b = ADTSimulator()
 b.runADTSimulation()
-
+'''

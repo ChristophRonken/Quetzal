@@ -26,3 +26,6 @@ class QueueWrapper:
 
     def print(self):
         return printQueue(self.__ADT)
+
+    def printsize(self):
+        return print(self.__ADT.size)

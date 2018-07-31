@@ -1,6 +1,7 @@
 from Enums import HashTableType
 from Wrappers.DLCWrapper import DLCWrapper
 from Wrappers.CLCWrapper import CLCWrapper
+from OutputGenerators.HashOG import printHashTable
 
 
 class Bucket:
@@ -12,14 +13,14 @@ class Bucket:
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, Bucket):
-            return self.deleted is other.deleted and self.item is other.item and self.searchkey is other.searchkey
+            return self.deleted is other.deleted and self.item == other.item and self.searchkey == other.searchkey
         return False
 
 
 class HashTable:
 
     def __init__(self):
-        self.type = HashTableType.Seperate
+        self.type = None
         self.size = 101
         self.table = [None] * self.size
 
@@ -39,7 +40,7 @@ class HashTable:
 
         if self.type != HashTableType.Seperate:
             for i in range(0, len(self.table)):
-                if self.type == HashTableType.Type3 and not self.table[i].deleted:
+                if self.type == HashTableType.Seperate and not self.table[i].deleted:
                     if not self.table[i].item:
                         continue
                     while not self.table[i].item.isEmpty():
@@ -108,7 +109,7 @@ class HashTable:
         index = self.__hash(searchkey)
         if self.type == HashTableType.Linear:
             probeNumber = 0
-            while self.table[(index + probeNumber) % self.getLength()] != Bucket() and self.table[(index + probeNumber) % self.getLength()] != Bucket(None, True):
+            while self.table[(index + probeNumber) % self.getLength()] != Bucket() and self.table[(index + probeNumber) % self.getLength()] != Bucket(None, None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
                     return False
@@ -118,7 +119,7 @@ class HashTable:
 
         elif self.type == HashTableType.Quadratic:
             probeNumber = 0
-            while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket() and self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket(None, True):
+            while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket() and self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket(None, None, True):
                 probeNumber += 1
                 if probeNumber == self.getLength():
                     return False
@@ -183,11 +184,9 @@ class HashTable:
 
     def delete(self, searchkey):
         if not self.__exists():
-            print("notexist")
             return False
 
         if self.isEmpty():
-            print("isempty")
             return False
 
         index = self.__hash(searchkey)
@@ -238,3 +237,4 @@ class HashTable:
             else:
                 print(self.table[i].searchkey)
         return True
+

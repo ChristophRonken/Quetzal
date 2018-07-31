@@ -1,6 +1,7 @@
 import sys
 import unittest
-from ADT_Christoph.HashTable.HashTable import HashTable, Bucket, HashTableType
+from ADT_Christoph.HashTable.HashTable import HashTable, Bucket
+from Enums import HashTableType
 from Wrappers.DLCWrapper import DLCWrapper
 from Wrappers.CLCWrapper import CLCWrapper
 
@@ -8,215 +9,215 @@ from Wrappers.CLCWrapper import CLCWrapper
 class HashTableTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(HashTableTest, self).__init__(*args, **kwargs)
-        self.hashTableType1 = HashTable()
-        self.hashTableType1.type = HashTableType.Type1
-        self.hashTableType2 = HashTable()
-        self.hashTableType2.type = HashTableType.Type2
-        self.hashTableType3 = HashTable()
-        self.hashTableType3.type = HashTableType.Type3
+        self.hashTableLinear = HashTable()
+        self.hashTableLinear.type = HashTableType.Linear
+        self.hashTableQuadratic = HashTable()
+        self.hashTableQuadratic.type = HashTableType.Quadratic
+        self.hashTableSeperate = HashTable()
+        self.hashTableSeperate.type = HashTableType.Seperate
 
     def test_createHashTable(self):
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertEqual(self.hashTableType1.table[i], None)
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertEqual(self.hashTableType2.table[i], None)
-        for i in range(0, len(self.hashTableType3.table)):
-            self.assertEqual(self.hashTableType3.table[i], None)
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertEqual(self.hashTableLinear.table[i], None)
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertEqual(self.hashTableQuadratic.table[i], None)
+        for i in range(0, len(self.hashTableSeperate.table)):
+            self.assertEqual(self.hashTableSeperate.table[i], None)
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertEqual(self.hashTableType1.table[i], Bucket())
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertEqual(self.hashTableType2.table[i], Bucket())
-        for i in range(0, len(self.hashTableType3.table)):
-            self.assertIsInstance(self.hashTableType3.table[i], CLCWrapper)
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertEqual(self.hashTableLinear.table[i], Bucket())
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertEqual(self.hashTableQuadratic.table[i], Bucket())
+        for i in range(0, len(self.hashTableSeperate.table)):
+            self.assertIsInstance(self.hashTableSeperate.table[i], CLCWrapper)
 
     def test_isEmpty(self):
-        self.assertFalse(self.hashTableType1.isEmpty())
-        self.assertFalse(self.hashTableType2.isEmpty())
-        self.assertFalse(self.hashTableType3.isEmpty())
+        self.assertFalse(self.hashTableLinear.isEmpty())
+        self.assertFalse(self.hashTableQuadratic.isEmpty())
+        self.assertFalse(self.hashTableSeperate.isEmpty())
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        self.assertTrue(self.hashTableType1.isEmpty())
-        self.assertTrue(self.hashTableType2.isEmpty())
-        self.assertTrue(self.hashTableType3.isEmpty())
+        self.assertTrue(self.hashTableLinear.isEmpty())
+        self.assertTrue(self.hashTableQuadratic.isEmpty())
+        self.assertTrue(self.hashTableSeperate.isEmpty())
 
-        self.assertTrue(self.hashTableType1.insert(1, "filled"))
-        self.assertTrue(self.hashTableType2.insert(1, "filled"))
-        self.assertTrue(self.hashTableType3.insert(1, "filled"))
+        self.assertTrue(self.hashTableLinear.insert(1, "filled"))
+        self.assertTrue(self.hashTableQuadratic.insert(1, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(1, "filled"))
 
-        self.assertFalse(self.hashTableType1.isEmpty())
-        self.assertFalse(self.hashTableType2.isEmpty())
-        self.assertFalse(self.hashTableType3.isEmpty())
+        self.assertFalse(self.hashTableLinear.isEmpty())
+        self.assertFalse(self.hashTableQuadratic.isEmpty())
+        self.assertFalse(self.hashTableSeperate.isEmpty())
 
     def test_isFull(self):
-        self.assertFalse(self.hashTableType1.isFull())
-        self.assertFalse(self.hashTableType2.isFull())
-        self.assertFalse(self.hashTableType3.isFull())
+        self.assertFalse(self.hashTableLinear.isFull())
+        self.assertFalse(self.hashTableQuadratic.isFull())
+        self.assertFalse(self.hashTableSeperate.isFull())
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertFalse(self.hashTableType1.isFull())
-            self.assertTrue(self.hashTableType1.insert(i, "filled"))
-        self.assertTrue(self.hashTableType1.isFull())
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertFalse(self.hashTableType2.isFull())
-            self.assertTrue(self.hashTableType2.insert(i, "filled"))
-        self.assertTrue(self.hashTableType2.isFull())
-        for i in range(0, len(self.hashTableType3.table)):
-            self.assertFalse(self.hashTableType3.isFull())
-            self.assertTrue(self.hashTableType3.insert(i, "filled"))
-        self.assertFalse(self.hashTableType3.isFull())
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertFalse(self.hashTableLinear.isFull())
+            self.assertTrue(self.hashTableLinear.insert(i, "filled"))
+        self.assertTrue(self.hashTableLinear.isFull())
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertFalse(self.hashTableQuadratic.isFull())
+            self.assertTrue(self.hashTableQuadratic.insert(i, "filled"))
+        self.assertTrue(self.hashTableQuadratic.isFull())
+        for i in range(0, len(self.hashTableSeperate.table)):
+            self.assertFalse(self.hashTableSeperate.isFull())
+            self.assertTrue(self.hashTableSeperate.insert(i, "filled"))
+        self.assertFalse(self.hashTableSeperate.isFull())
 
     def test_insert(self):
-        self.assertFalse(self.hashTableType1.insert(0, "failed"))
-        self.assertFalse(self.hashTableType2.insert(0, "failed"))
-        self.assertFalse(self.hashTableType3.insert(0, "failed"))
+        self.assertFalse(self.hashTableLinear.insert(0, "failed"))
+        self.assertFalse(self.hashTableQuadratic.insert(0, "failed"))
+        self.assertFalse(self.hashTableSeperate.insert(0, "failed"))
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertFalse(self.hashTableType1.isFull())
-            self.assertTrue(self.hashTableType1.insert(i, "filled"))
-        self.assertFalse(self.hashTableType1.insert(0, "filled"))
-        self.assertTrue(self.hashTableType1.isFull())
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertFalse(self.hashTableType2.isFull())
-            self.assertTrue(self.hashTableType2.insert(i, "filled"))
-        self.assertFalse(self.hashTableType2.insert(0, "filled"))
-        self.assertTrue(self.hashTableType2.isFull())
-        for i in range(0, len(self.hashTableType3.table)):
-            self.assertFalse(self.hashTableType3.isFull())
-            self.assertTrue(self.hashTableType3.insert(i, "filled"))
-        self.assertTrue(self.hashTableType3.insert(0, "filled"))
-        self.assertFalse(self.hashTableType3.isFull())
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertFalse(self.hashTableLinear.isFull())
+            self.assertTrue(self.hashTableLinear.insert(i, "filled"))
+        self.assertFalse(self.hashTableLinear.insert(0, "filled"))
+        self.assertTrue(self.hashTableLinear.isFull())
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertFalse(self.hashTableQuadratic.isFull())
+            self.assertTrue(self.hashTableQuadratic.insert(i, "filled"))
+        self.assertFalse(self.hashTableQuadratic.insert(0, "filled"))
+        self.assertTrue(self.hashTableQuadratic.isFull())
+        for i in range(0, len(self.hashTableSeperate.table)):
+            self.assertFalse(self.hashTableSeperate.isFull())
+            self.assertTrue(self.hashTableSeperate.insert(i, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(0, "filled"))
+        self.assertFalse(self.hashTableSeperate.isFull())
 
     def test_getLength(self):
-        self.assertEqual(self.hashTableType1.getLength(), self.hashTableType1.size)
-        self.assertEqual(self.hashTableType2.getLength(), self.hashTableType2.size)
-        self.assertEqual(self.hashTableType3.getLength(), self.hashTableType3.size)
+        self.assertEqual(self.hashTableLinear.getLength(), self.hashTableLinear.size)
+        self.assertEqual(self.hashTableQuadratic.getLength(), self.hashTableQuadratic.size)
+        self.assertEqual(self.hashTableSeperate.getLength(), self.hashTableSeperate.size)
 
     def test_retrieve(self):
-        self.assertFalse(self.hashTableType1.retrieve(0)[0])
-        self.assertFalse(self.hashTableType2.retrieve(0)[0])
-        self.assertFalse(self.hashTableType3.retrieve(0)[0])
+        self.assertFalse(self.hashTableLinear.retrieve(0)[0])
+        self.assertFalse(self.hashTableQuadratic.retrieve(0)[0])
+        self.assertFalse(self.hashTableSeperate.retrieve(0)[0])
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        self.assertFalse(self.hashTableType1.retrieve(0)[0])
-        self.assertFalse(self.hashTableType2.retrieve(0)[0])
-        self.assertFalse(self.hashTableType3.retrieve(0)[0])
+        self.assertFalse(self.hashTableLinear.retrieve(0)[0])
+        self.assertFalse(self.hashTableQuadratic.retrieve(0)[0])
+        self.assertFalse(self.hashTableSeperate.retrieve(0)[0])
 
-        self.assertTrue(self.hashTableType1.insert(1, "filled"))
-        self.assertTrue(self.hashTableType2.insert(1, "filled"))
-        self.assertTrue(self.hashTableType3.insert(1, "filled"))
+        self.assertTrue(self.hashTableLinear.insert(1, "filled"))
+        self.assertTrue(self.hashTableQuadratic.insert(1, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(1, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(1)[0])
-        self.assertTrue(self.hashTableType2.retrieve(1)[0])
-        self.assertTrue(self.hashTableType3.retrieve(1)[0])
+        self.assertTrue(self.hashTableLinear.retrieve(1)[0])
+        self.assertTrue(self.hashTableQuadratic.retrieve(1)[0])
+        self.assertTrue(self.hashTableSeperate.retrieve(1)[0])
 
-        self.assertTrue(self.hashTableType1.insert(102, "filled"))
-        self.assertTrue(self.hashTableType2.insert(102, "filled"))
-        self.assertTrue(self.hashTableType3.insert(102, "filled"))
+        self.assertTrue(self.hashTableLinear.insert(102, "filled"))
+        self.assertTrue(self.hashTableQuadratic.insert(102, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(102, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(102)[0])
-        self.assertTrue(self.hashTableType2.retrieve(102)[0])
-        self.assertTrue(self.hashTableType3.retrieve(102)[0])
+        self.assertTrue(self.hashTableLinear.retrieve(102)[0])
+        self.assertTrue(self.hashTableQuadratic.retrieve(102)[0])
+        self.assertTrue(self.hashTableSeperate.retrieve(102)[0])
 
-        self.assertTrue(self.hashTableType1.delete(1))
-        self.assertTrue(self.hashTableType2.delete(1))
-        self.assertTrue(self.hashTableType3.delete(1))
+        self.assertTrue(self.hashTableLinear.delete(1))
+        self.assertTrue(self.hashTableQuadratic.delete(1))
+        self.assertTrue(self.hashTableSeperate.delete(1))
 
-        self.assertFalse(self.hashTableType1.retrieve(1)[0])
-        self.assertFalse(self.hashTableType2.retrieve(1)[0])
-        self.assertFalse(self.hashTableType3.retrieve(1)[0])
+        self.assertFalse(self.hashTableLinear.retrieve(1)[0])
+        self.assertFalse(self.hashTableQuadratic.retrieve(1)[0])
+        self.assertFalse(self.hashTableSeperate.retrieve(1)[0])
 
-        self.assertTrue(self.hashTableType1.retrieve(102))
-        self.assertTrue(self.hashTableType2.retrieve(102))
-        self.assertTrue(self.hashTableType3.retrieve(102))
+        self.assertTrue(self.hashTableLinear.retrieve(102))
+        self.assertTrue(self.hashTableQuadratic.retrieve(102))
+        self.assertTrue(self.hashTableSeperate.retrieve(102))
 
-        self.assertTrue(self.hashTableType1.insert(203, "filled"))
-        self.assertTrue(self.hashTableType2.insert(203, "filled"))
-        self.assertTrue(self.hashTableType3.insert(203, "filled"))
+        self.assertTrue(self.hashTableLinear.insert(203, "filled"))
+        self.assertTrue(self.hashTableQuadratic.insert(203, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(203, "filled"))
 
-        self.assertTrue(self.hashTableType1.retrieve(203)[0])
-        self.assertTrue(self.hashTableType2.retrieve(203)[0])
-        self.assertTrue(self.hashTableType3.retrieve(203)[0])
+        self.assertTrue(self.hashTableLinear.retrieve(203)[0])
+        self.assertTrue(self.hashTableQuadratic.retrieve(203)[0])
+        self.assertTrue(self.hashTableSeperate.retrieve(203)[0])
 
     def test_delete(self):
-        self.assertFalse(self.hashTableType1.delete(0))
-        self.assertFalse(self.hashTableType2.delete(0))
-        self.assertFalse(self.hashTableType3.delete(0))
+        self.assertFalse(self.hashTableLinear.delete(0))
+        self.assertFalse(self.hashTableQuadratic.delete(0))
+        self.assertFalse(self.hashTableSeperate.delete(0))
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        self.assertFalse(self.hashTableType1.delete(0))
-        self.assertFalse(self.hashTableType2.delete(0))
-        self.assertFalse(self.hashTableType3.delete(0))
+        self.assertFalse(self.hashTableLinear.delete(0))
+        self.assertFalse(self.hashTableQuadratic.delete(0))
+        self.assertFalse(self.hashTableSeperate.delete(0))
 
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertFalse(self.hashTableType1.isFull())
-            self.assertTrue(self.hashTableType1.insert(i, "filled"))
-        self.assertFalse(self.hashTableType1.insert(0, "filled"))
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertFalse(self.hashTableType2.isFull())
-            self.assertTrue(self.hashTableType2.insert(i, "filled"))
-        self.assertFalse(self.hashTableType2.insert(0, "filled"))
-        for i in range(0, len(self.hashTableType3.table)):
-            self.assertFalse(self.hashTableType3.isFull())
-            self.assertTrue(self.hashTableType3.insert(i, "filled"))
-        self.assertTrue(self.hashTableType3.insert(0, "filled"))
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertFalse(self.hashTableLinear.isFull())
+            self.assertTrue(self.hashTableLinear.insert(i, "filled"))
+        self.assertFalse(self.hashTableLinear.insert(0, "filled"))
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertFalse(self.hashTableQuadratic.isFull())
+            self.assertTrue(self.hashTableQuadratic.insert(i, "filled"))
+        self.assertFalse(self.hashTableQuadratic.insert(0, "filled"))
+        for i in range(0, len(self.hashTableSeperate.table)):
+            self.assertFalse(self.hashTableSeperate.isFull())
+            self.assertTrue(self.hashTableSeperate.insert(i, "filled"))
+        self.assertTrue(self.hashTableSeperate.insert(0, "filled"))
 
-        self.assertTrue(self.hashTableType1.delete(0))
-        self.assertFalse(self.hashTableType1.delete(0))
-        self.assertTrue(self.hashTableType2.delete(0))
-        self.assertFalse(self.hashTableType2.delete(0))
-        self.assertTrue(self.hashTableType3.delete(0))
-        self.assertTrue(self.hashTableType3.delete(0))
-        self.assertFalse(self.hashTableType3.delete(0))
+        self.assertTrue(self.hashTableLinear.delete(0))
+        self.assertFalse(self.hashTableLinear.delete(0))
+        self.assertTrue(self.hashTableQuadratic.delete(0))
+        self.assertFalse(self.hashTableQuadratic.delete(0))
+        self.assertTrue(self.hashTableSeperate.delete(0))
+        self.assertTrue(self.hashTableSeperate.delete(0))
+        self.assertFalse(self.hashTableSeperate.delete(0))
 
     def test_destroyHashTable(self):
-        self.assertFalse(self.hashTableType1.destroyHashTable())
-        self.assertFalse(self.hashTableType2.destroyHashTable())
-        self.assertFalse(self.hashTableType3.destroyHashTable())
+        self.assertFalse(self.hashTableLinear.destroyHashTable())
+        self.assertFalse(self.hashTableQuadratic.destroyHashTable())
+        self.assertFalse(self.hashTableSeperate.destroyHashTable())
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        self.assertTrue(self.hashTableType1.destroyHashTable())
-        self.assertTrue(self.hashTableType2.destroyHashTable())
-        self.assertTrue(self.hashTableType3.destroyHashTable())
+        self.assertTrue(self.hashTableLinear.destroyHashTable())
+        self.assertTrue(self.hashTableQuadratic.destroyHashTable())
+        self.assertTrue(self.hashTableSeperate.destroyHashTable())
 
-        self.assertTrue(self.hashTableType1.createHashTable())
-        self.assertTrue(self.hashTableType2.createHashTable())
-        self.assertTrue(self.hashTableType3.createHashTable())
+        self.assertTrue(self.hashTableLinear.createHashTable())
+        self.assertTrue(self.hashTableQuadratic.createHashTable())
+        self.assertTrue(self.hashTableSeperate.createHashTable())
 
-        for i in range(0, len(self.hashTableType1.table)):
-            self.assertTrue(self.hashTableType1.insert(i, "filled"))
-        for i in range(0, len(self.hashTableType2.table)):
-            self.assertTrue(self.hashTableType2.insert(i, "filled"))
-        for i in range(0, len(self.hashTableType3.table) + 20):
-            self.assertTrue(self.hashTableType3.insert(i, "filled"))
+        for i in range(0, len(self.hashTableLinear.table)):
+            self.assertTrue(self.hashTableLinear.insert(i, "filled"))
+        for i in range(0, len(self.hashTableQuadratic.table)):
+            self.assertTrue(self.hashTableQuadratic.insert(i, "filled"))
+        for i in range(0, len(self.hashTableSeperate.table) + 20):
+            self.assertTrue(self.hashTableSeperate.insert(i, "filled"))
 
-        self.assertTrue(self.hashTableType1.destroyHashTable())
-        self.assertTrue(self.hashTableType2.destroyHashTable())
-        self.assertTrue(self.hashTableType3.destroyHashTable())
+        self.assertTrue(self.hashTableLinear.destroyHashTable())
+        self.assertTrue(self.hashTableQuadratic.destroyHashTable())
+        self.assertTrue(self.hashTableSeperate.destroyHashTable())
 
 
 if __name__ == '__main__':

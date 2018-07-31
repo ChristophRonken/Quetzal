@@ -1,4 +1,6 @@
 import copy
+from Enums import OrderStates
+from Wrappers.QueueWrapper import QueueWrapper
 
 
 class LogOutput:
@@ -74,30 +76,48 @@ class LogOutput:
                     self.__writecube(" ")
                 workerCopy.delete(None)
 
-            newOrderCopy = copy.deepcopy(store.getNewOrders())
-            if newOrderCopy.isEmpty():
+            allTimesCopy = copy.deepcopy(store.getAllTimes())
+            if allTimesCopy.isEmpty():
                 self.__writecube(" ")
             else:
                 orderstring = ""
-                while not newOrderCopy.isEmpty():
-                    order = newOrderCopy.retrieve(None)
-                    orderstring += str(order.getChocolateMilkId())
-                    newOrderCopy.delete(None)
-                    if not newOrderCopy.isEmpty():
-                        orderstring += " | "
+                while not allTimesCopy.isEmpty():
+                    newQueue = QueueWrapper()
+                    newQueue.create()
+                    while not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty():
+                        order = store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None)
+                        if order.getState() == OrderStates.NewOrder:
+                            orderstring += str(order.getChocolateMilkId())
+                        newQueue.insert(None, order)
+                        store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).delete(None)
+                        if not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty() and order.getState() == OrderStates.NewOrder and store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None).getState() == OrderStates.NewOrder:
+                            orderstring += " | "
+                    store.getAllOrders().delete(allTimesCopy.retrieve(None))
+                    print("1 inserting at: ", allTimesCopy.retrieve(None))
+                    store.getAllOrders().insert(allTimesCopy.retrieve(None), newQueue)
+                    allTimesCopy.delete(None)
                 self.__writecube(orderstring)
 
-            waitingOrderCopy = copy.deepcopy(store.getWaitingOrders())
-            if waitingOrderCopy.isEmpty():
+            allTimesCopy = copy.deepcopy(store.getAllTimes())
+            if allTimesCopy.isEmpty():
                 self.__writecube(" ")
             else:
                 orderstring = ""
-                while not waitingOrderCopy.isEmpty():
-                    order = waitingOrderCopy.retrieve(None)
-                    orderstring += str(order.getChocolateMilkId())
-                    waitingOrderCopy.delete(None)
-                    if not waitingOrderCopy.isEmpty():
-                        orderstring += " | "
+                while not allTimesCopy.isEmpty():
+                    newQueue = QueueWrapper()
+                    newQueue.create()
+                    while not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty():
+                        order = store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None)
+                        if order.getState() == OrderStates.WaitingOrder:
+                            orderstring += str(order.getChocolateMilkId())
+                        newQueue.insert(None, order)
+                        store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).delete(None)
+                        if not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty() and order.getState() == OrderStates.WaitingOrder and store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None).getState() == OrderStates.WaitingOrder:
+                            orderstring += " | "
+                    store.getAllOrders().delete(allTimesCopy.retrieve(None))
+                    print("2 inserting at: ", allTimesCopy.retrieve(None))
+                    store.getAllOrders().insert(allTimesCopy.retrieve(None), newQueue)
+                    allTimesCopy.delete(None)
                 self.__writecube(orderstring)
 
             stockList = [store.getWhiteChocolateStock(), store.getMilkChocolateStock(),

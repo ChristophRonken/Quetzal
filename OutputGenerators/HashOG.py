@@ -18,7 +18,7 @@ def printHashTable(hashtable):
 
     if hashtableCopy.type == HashTableType.Linear:
         for i in range(0, len(hashtableCopy.table)):
-            figuur.node(str(i), label=str(hashtable.table[i].searchkey), style="solid", shape="box")
+            figuur.node(str(i), label=str(hashtable.table[i].searchkey) + " " + str(i), style="solid", shape="box")
             if i == 0:
                 figuur.edge("Zero", str(i))
             if i > 0:

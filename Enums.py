@@ -18,6 +18,7 @@ class OrderStates(Enum):
     NotOrdered = auto()
     NewOrder = auto()
     WaitingOrder = auto()
+    BeingMade = auto()
     Finished = auto()
     PickedUp = auto()
 
