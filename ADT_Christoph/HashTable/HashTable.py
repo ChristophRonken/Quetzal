@@ -142,7 +142,7 @@ class HashTable:
         if self.type == HashTableType.Linear:
             probeNumber = 0
             while self.table[(index + probeNumber) % self.getLength()].deleted or self.table[(index + probeNumber) % self.getLength()].item:
-                if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
+                if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, None, True):
                     probeNumber += 1
                     continue
 
@@ -161,7 +161,7 @@ class HashTable:
         elif self.type == HashTableType.Quadratic:
             probeNumber = 0
             while self.table[(index + probeNumber ** 2) % self.getLength()].item or self.table[(index + probeNumber) % self.getLength()].deleted:
-                if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
+                if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, None, True):
                     probeNumber += 1
                     continue
 
@@ -193,7 +193,7 @@ class HashTable:
         if self.type == HashTableType.Linear:
             probeNumber = 0
             while self.table[(index + probeNumber) % self.getLength()].searchkey is not None or self.table[(index + probeNumber) % self.getLength()].deleted:
-                if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
+                if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, None, True):
                     probeNumber += 1
                     continue
 
@@ -212,7 +212,7 @@ class HashTable:
             probeNumber = 0
             while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey is not None or self.table[
                 (index + probeNumber) % self.getLength()].deleted:
-                if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
+                if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, None, True):
                     probeNumber += 1
                     continue
 
