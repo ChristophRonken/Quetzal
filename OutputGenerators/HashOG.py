@@ -16,7 +16,7 @@ def printHashTable(hashtable):
     figuur.node("Zero", label="Zero", style="solid", shape="circle")
     figuur.node("Length", label="Length", style="solid", shape="circle")
 
-    if hashtableCopy.type == HashTableType.Type1:
+    if hashtableCopy.type == HashTableType.Linear:
         for i in range(0, len(hashtableCopy.table)):
             figuur.node(str(i), label=str(hashtable.table[i].searchkey), style="solid", shape="box")
             if i == 0:
@@ -29,7 +29,7 @@ def printHashTable(hashtable):
         figuur.render(filename='DotFiles/hlin-' + str(hlinCounter) + '.dot')
         hlinCounter += 1
 
-    if hashtableCopy.type == HashTableType.Type2:
+    if hashtableCopy.type == HashTableType.Quadratic:
         for i in range(0, len(hashtableCopy.table)):
             figuur.node(str(i), label=str(hashtable.table[i].searchkey), style="solid", shape="box")
             if i == 0:
@@ -42,7 +42,7 @@ def printHashTable(hashtable):
         figuur.render(filename='DotFiles/hquad-' + str(hquadCounter) + '.dot')
         hquadCounter += 1
 
-    if hashtableCopy.type == HashTableType.Type3:
+    if hashtableCopy.type == HashTableType.Seperate:
         for i in range(0, len(hashtableCopy.table)):
             if isinstance(hashtableCopy.table[i], CLCWrapper):
                 figuur.node("CLC" + str(i), label="hashtableCLL" + str(i), style="solid", shape="box")

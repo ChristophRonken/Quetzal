@@ -7,7 +7,7 @@ class HLinWrapper:
 
     def __init__(self):
         self.__ADT = HashTable()
-        self.__ADT.type = HashTableType.Type1
+        self.__ADT.type = HashTableType.Linear
 
     def create(self):
         return self.__ADT.createHashTable()
@@ -34,7 +34,7 @@ class HQuadWrapper:
 
     def __init__(self):
         self.__ADT = HashTable()
-        self.__ADT.type = HashTableType.Type2
+        self.__ADT.type = HashTableType.Quadratic
 
     def create(self):
         return self.__ADT.createHashTable()
@@ -61,7 +61,7 @@ class HSepWrapper:
 
     def __init__(self):
         self.__ADT = HashTable()
-        self.__ADT.type = HashTableType.Type3
+        self.__ADT.type = HashTableType.Seperate
 
     def create(self):
         return self.__ADT.createHashTable()

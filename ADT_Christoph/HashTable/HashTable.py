@@ -19,17 +19,17 @@ class Bucket:
 class HashTable:
 
     def __init__(self):
-        self.type = HashTableType.Type3
+        self.type = HashTableType.Seperate
         self.size = 101
         self.table = [None] * self.size
 
     def createHashTable(self):
-        if self.type != HashTableType.Type3:
+        if self.type != HashTableType.Seperate:
             for i in range(0, len(self.table)):
                 self.table[i] = Bucket()
         else:
             for i in range(0, len(self.table)):
-                self.table[i] = DLCWrapper()
+                self.table[i] = CLCWrapper()
                 self.table[i].create()
         return True
 
@@ -37,7 +37,7 @@ class HashTable:
         if not self.__exists():
             return False
 
-        if self.type != HashTableType.Type3:
+        if self.type != HashTableType.Seperate:
             for i in range(0, len(self.table)):
                 if self.type == HashTableType.Type3 and not self.table[i].deleted:
                     if not self.table[i].item:
@@ -69,7 +69,7 @@ class HashTable:
         if not self.__exists():
             return False
 
-        elif self.type != HashTableType.Type3:
+        elif self.type != HashTableType.Seperate:
             for i in range(0, len(self.table)):
                 if self.table[i].searchkey:
                     return False
@@ -86,7 +86,7 @@ class HashTable:
         if not self.__exists():
             return False
 
-        elif self.type != HashTableType.Type3:
+        elif self.type != HashTableType.Seperate:
             for i in range(0, len(self.table)):
                 if self.table[i].searchkey is None:
                     return False
@@ -106,7 +106,7 @@ class HashTable:
             return False
 
         index = self.__hash(searchkey)
-        if self.type == HashTableType.Type1:
+        if self.type == HashTableType.Linear:
             probeNumber = 0
             while self.table[(index + probeNumber) % self.getLength()] != Bucket() and self.table[(index + probeNumber) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
@@ -116,7 +116,7 @@ class HashTable:
             self.table[(index + probeNumber) % self.getLength()].searchkey = searchkey
             return True
 
-        elif self.type == HashTableType.Type2:
+        elif self.type == HashTableType.Quadratic:
             probeNumber = 0
             while self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket() and self.table[(index + probeNumber ** 2) % self.getLength()] != Bucket(None, True):
                 probeNumber += 1
@@ -126,7 +126,7 @@ class HashTable:
             self.table[(index + probeNumber ** 2) % self.getLength()].searchkey = searchkey
             return True
 
-        elif self.type == HashTableType.Type3:
+        elif self.type == HashTableType.Seperate:
             return self.table[index].insert(searchkey, newItem)
 
         return False
@@ -138,7 +138,7 @@ class HashTable:
             return False, None
 
         index = self.__hash(searchkey)
-        if self.type == HashTableType.Type1:
+        if self.type == HashTableType.Linear:
             probeNumber = 0
             while self.table[(index + probeNumber) % self.getLength()].deleted or self.table[(index + probeNumber) % self.getLength()].item:
                 if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
@@ -157,7 +157,7 @@ class HashTable:
                     return False, None
             return False, None
 
-        elif self.type == HashTableType.Type2:
+        elif self.type == HashTableType.Quadratic:
             probeNumber = 0
             while self.table[(index + probeNumber ** 2) % self.getLength()].item or self.table[(index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber ** 2) % self.getLength()] == Bucket(None, True):
@@ -176,7 +176,7 @@ class HashTable:
                     return False, None
             return False, None
 
-        elif self.type == HashTableType.Type3:
+        elif self.type == HashTableType.Seperate:
             if not self.table[index].retrieve(searchkey) is False:
                 return True, self.table[index].retrieve(searchkey)
             return False, None
@@ -191,7 +191,7 @@ class HashTable:
             return False
 
         index = self.__hash(searchkey)
-        if self.type == HashTableType.Type1:
+        if self.type == HashTableType.Linear:
             probeNumber = 0
             while self.table[(index + probeNumber) % self.getLength()].searchkey is not None or self.table[(index + probeNumber) % self.getLength()].deleted:
                 if self.table[(index + probeNumber) % self.getLength()] == Bucket(None, True):
@@ -209,7 +209,7 @@ class HashTable:
                     return False
             return False
 
-        elif self.type == HashTableType.Type2:
+        elif self.type == HashTableType.Quadratic:
             probeNumber = 0
             while self.table[(index + probeNumber ** 2) % self.getLength()].searchkey is not None or self.table[
                 (index + probeNumber) % self.getLength()].deleted:
@@ -228,7 +228,7 @@ class HashTable:
                     return False
             return False
 
-        elif self.type == HashTableType.Type3:
+        elif self.type == HashTableType.Seperate:
             return self.table[index].delete(searchkey)
 
     def print(self):

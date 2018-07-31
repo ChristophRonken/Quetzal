@@ -9,9 +9,9 @@ class ChocolateShotType(Enum):
 
 
 class HashTableType(Enum):
-    Type1 = auto()
-    Type2 = auto()
-    Type3 = auto()
+    Linear = auto()
+    Quadratic = auto()
+    Seperate = auto()
 
 
 class OrderStates(Enum):
