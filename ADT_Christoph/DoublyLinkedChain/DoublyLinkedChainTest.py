@@ -107,6 +107,25 @@ class DoublyLinkedChainTest(unittest.TestCase):
         self.assertTrue(self.doublyLinkedChain.add(5, "test3"))
         self.assertTrue(self.doublyLinkedChain.searchkeyRetrieve(4))
 
+    def test_bubbleSort(self):
+        self.doublyLinkedChain.createChain()
+        integers = [5, 4, 7, 6]
+        for i in integers:
+            self.assertTrue(self.doublyLinkedChain.addFirst(i, i))
+        searchNode = self.doublyLinkedChain.head
+        i = len(integers) - 1
+        while searchNode.next != self.doublyLinkedChain.tail:
+            searchNode = searchNode.next
+            self.assertEqual(integers[i], searchNode.searchkey)
+            i -= 1
+        self.doublyLinkedChain.bubbleSort()
+        integers.sort()
+        i = len(integers)
+        while searchNode.next != self.doublyLinkedChain.tail:
+            searchNode = searchNode.next
+            self.assertEqual(integers[i], searchNode.searchkey)
+            i -= 1
+
 
 if __name__ == '__main__':
     unittest.main()

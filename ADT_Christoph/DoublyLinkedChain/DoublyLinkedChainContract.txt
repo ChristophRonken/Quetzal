@@ -76,3 +76,8 @@ printChain():
 // Prints whole DLC
 // precondition:
 // postcondition:
+
+bubbleSort():
+// Sorts whole DLC with bubblesort
+// precondition:
+// postcondition:

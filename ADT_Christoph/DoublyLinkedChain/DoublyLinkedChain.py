@@ -187,3 +187,42 @@ class DoublyLinkedChain:
             while searchNode.searchkey != searchkey:
                 searchNode = searchNode.next
             return True, searchNode.item
+
+    def bubbleSort(self):
+        if self.exists():
+            if self.isEmpty():
+                return True
+
+            if self.head.next.next == self.tail:
+                return True
+
+            i = 0
+            node = self.head
+            while node.next.next != self.tail:
+                node = node.next
+                i += 1
+            for j in range(0, i):
+                startNode = self.head
+                this = 0
+                moved = False
+                self.printChain()
+                while this < i-j:
+                    if startNode.next.searchkey > startNode.next.next.searchkey:
+                        item = startNode.next.next.item
+                        searchkey = startNode.next.next.searchkey
+                        startNode.next.next.item = startNode.next.item
+                        startNode.next.next.searchkey = startNode.next.searchkey
+                        startNode.next.item = item
+                        startNode.next.searchkey = searchkey
+                        moved = True
+                    startNode = startNode.next
+                    this += 1
+                    if this == i-j:
+                        if moved is False:
+                            return
+            return
+        return
+
+
+
+
