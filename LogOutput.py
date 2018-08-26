@@ -93,7 +93,6 @@ class LogOutput:
                         if not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty() and order.getState() == OrderStates.NewOrder and store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None).getState() == OrderStates.NewOrder:
                             orderstring += " | "
                     store.getAllOrders().delete(allTimesCopy.retrieve(None))
-                    print("1 inserting at: ", allTimesCopy.retrieve(None))
                     store.getAllOrders().insert(allTimesCopy.retrieve(None), newQueue)
                     allTimesCopy.delete(None)
                 self.__writecube(orderstring)
@@ -115,7 +114,6 @@ class LogOutput:
                         if not store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).isEmpty() and order.getState() == OrderStates.WaitingOrder and store.getAllOrders().retrieve(allTimesCopy.retrieve(None)).retrieve(None).getState() == OrderStates.WaitingOrder:
                             orderstring += " | "
                     store.getAllOrders().delete(allTimesCopy.retrieve(None))
-                    print("2 inserting at: ", allTimesCopy.retrieve(None))
                     store.getAllOrders().insert(allTimesCopy.retrieve(None), newQueue)
                     allTimesCopy.delete(None)
                 self.__writecube(orderstring)

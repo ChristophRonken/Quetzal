@@ -212,13 +212,8 @@ class StoreSimulator:
     def simulate(self, i):
         self.__logOut.addRow(self.__store, self.__store.getTime())
         while i != len(self.__inputReader.getCommands()):
-            print("currentTick = ", self.__store.getTime())
-            if self.__inputReader.getCommands()[i] == "pass":
-                i += 1
-                continue
             if self.__inputReader.getCommands()[i] == str(self.__store.getTime() + 1):
                 self.__logOut.addRow(self.__store, self.__store.getTime())
-                print("working at tick ", self.__store.getTime())
                 self.__store.work()
                 workersCopy = copy.deepcopy(self.__store.getWorkers())
                 while not workersCopy.isEmpty():
@@ -227,6 +222,7 @@ class StoreSimulator:
                 self.__store.tick()
                 i += 1
                 continue
+            print("currentTick = ", self.__store.getTime())
             if self.__inputReader.getCommands()[i] == str(self.__store.getTime()):
                 i += 1
                 continue
@@ -270,7 +266,7 @@ class StoreSimulator:
                     user.setChocolateMilk(None)
                     user.setCurrentOrder(None)
                 else:
-                    print(user.getChocolateMilk().getIngredients())
+                    print("could not make an order because of ingredients", user.getChocolateMilk().getIngredients())
             if self.__inputReader.getCommands()[i] == "stock":
                 i += 1
                 if self.__inputReader.getCommands()[i] == "shot":
@@ -345,11 +341,18 @@ class StoreSimulator:
                 self.__logOut.addRow(self.__store, self.__store.getTime())
                 self.__logOut.writeHtml()
                 return
+            if self.__inputReader.getCommands()[i] == "pass":
+                i += 1
+                continue
         return
+
+    def printStore(self):
+        self.__store.getAllOrders().print()
 
 
 a = StoreSimulator()
 a.simulate(a.initialise())
+a.printStore()
 
 '''
 b = ADTSimulator()
