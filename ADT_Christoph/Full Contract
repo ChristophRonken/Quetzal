@@ -1,4 +1,3 @@
-
 Simulator:
 
 runADTSimulation()
@@ -19,39 +18,38 @@ runStoreSimulation()
 
 
 
+
 Store: 
+	# integers
+	chocolateMilkCount
+	userCount
+	workerCount
+	money
+	currentTime
 
-# integers
-chocolateMilkCount
-userCount
-workerCount
-money
-currentTime
+	# stack or queue
+	marshmallowStock
+	milkChocolateStock
+	darkChocolateStock
+	whiteChocolateStock
+	brownChocolateStock
+	honeyStock
+	chilipepperStock
 
-# stack or queue
-marshmallowStock
-milkChocolateStock
-darkChocolateStock
-whiteChocolateStock
-brownChocolateStock
-honeyStock
-chilipepperStock
+	# BST, DLC, Hlin, HQuad, Hsep
+	users
+	allOrders
 
-# BST, DLC, Hlin, HQuad, Hsep
-users
-allOrders
+	# Stack (works with queue as well)
+	workload
 
-# Stack (works with queue as well)
-workload
-
-# Queue:
-chocolateMilkToBeMade
-newOrders
-waitingOrders
-
-workers
-makeTimes
-allTimes
+	# Queue:
+	chocolateMilkToBeMade
+	newOrders
+	waitingOrders
+	workers
+	makeTimes
+	allTimes
 
 
 createStore()
@@ -153,3 +151,165 @@ addChocolateMilk(chocolateMilk, order, time, timeStamp) Succes: boolean
 // adds a ChocolateMilk correctly for a simulation to work
 // precondition: 
 // postcondition: 
+
+
+
+
+
+Ingredient: 
+	# integers
+	price
+	expiration date
+	credit
+	buyprice
+
+	ChocolateShot
+		type (milk, dark, white, brown)
+	Honey
+	Marshmallow
+	Chili
+
+
+
+
+
+InputReader:
+	filedata
+
+StoreInputData()
+// opens and reads file
+// precondition: 
+// postcondition: 
+
+InputFileToCommands()
+// converts the input data into a useful list of commands 
+// precondition: 
+// postcondition: 
+
+
+
+
+
+LogOutput:
+	# string
+	logstring
+
+	# integer
+	rowlength
+
+addRow()
+// adds a row to the log file
+// precondition: 
+// postcondition: 
+
+writeHtml()
+// writes the logfile in .html format
+// precondition: 
+// postcondition: 
+
+
+
+
+
+Order:
+	# integer
+	userId
+    timeStamp
+    chocolateMilkId
+
+    # state
+    state
+
+
+
+
+ChocolateMilk: 
+	# integer
+	chocolateMilkId
+	credit
+	price
+
+	# list 
+	ingredients
+
+addIngredient() Success: boolean
+// adds an ingredient to the ingredients list
+// precondition: the ingredient is an existing ingredient
+// postcondition: 
+
+
+
+
+
+User:
+	# integer
+	userId
+
+	# string
+	firstName
+	lastName
+	email
+
+	# Order 
+	currentOrder
+
+	#chocolatemilk
+	chocolatemilk
+
+addMarshmallow() Success: boolean
+// adds a Marshmallow to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addChilipepper() Success: boolean
+// adds a Chilipepper to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addHoney() Success: boolean
+// adds a Honey to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addMilkChocolateShot() Success: boolean
+// adds a MilkChocolateShot to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addBrownChocolateShot() Success: boolean
+// adds a BrownChocolateShot to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addDarkChocolateShot() Success: boolean
+// adds a DarkChocolateShot to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+addWhiteChocolateShot() Success: boolean
+// adds a WhiteChocolateShot to the chocolatemilk
+// precondition: order is created
+// postcondition: 
+
+
+
+
+
+Worker: 
+	# integer
+	workerId
+	workload
+	busyTime
+
+	#string
+	firstName
+	lastName
+
+	# boolean
+	isBusy
+
+	# order
+	order
+
+	#chocolatemilk
+	chocolatemilk

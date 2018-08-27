@@ -8,8 +8,6 @@ class Order:
         self.__userId = userId
         self.__timeStamp = None
         self.__chocolateMilkId = chocolateMilkId
-        self.__pickedUp = False
-        self.__finishedTime = None
         self.__state = OrderStates.NotOrdered
 
     @property

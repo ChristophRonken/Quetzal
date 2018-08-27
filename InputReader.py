@@ -10,7 +10,7 @@ class InputReader:
         self.__file = open("./InputFiles/"+self.__fileName, "r")  # opens file with fileName
         self.__lines = self.__file.readlines()
         self.__file.close()
-        return True
+        return
 
     def InputFileToCommands(self):
         iterator = 0
@@ -25,7 +25,7 @@ class InputReader:
         for i in range(len(self.__commands)):
             self.__commands[i] = self.__commands[i].split()
         self.__commands = [item for sublist in self.__commands for item in sublist]
-        return True
+        return
 
     def getLines(self):
         return self.__lines

@@ -38,7 +38,7 @@ class InputReaderTest(unittest.TestCase):
                  '# voeg 4 keer melkchocolade toe aan de stock\n', '3 stock shot melk 4 2018 5 1\n', '\n',
                  '# dit maakt een bestand log4.html\n', '4 pass\n', '5 pass\n', '6 pass\n', '7 log\n']
 
-        self.assertTrue(inputReader.StoreInputData())
+        inputReader.StoreInputData()
         self.assertEqual(inputReader.getLines(), lines)
 
     def test_inputFileToCommands(self):
@@ -57,8 +57,8 @@ class InputReaderTest(unittest.TestCase):
                     'tom.hofkens@uantwerpen.be', 'melk', 'marshmallow', 'melk', '2018', '5', '1', '12', '00', '3',
                     'stock', 'shot', 'melk', '4', '2018', '5', '1', '4', 'pass', '5', 'pass', '6', 'pass', '7', 'log']
 
-        self.assertTrue(inputReader.StoreInputData())
-        self.assertTrue(inputReader.InputFileToCommands())
+        inputReader.StoreInputData()
+        inputReader.InputFileToCommands()
         self.assertEqual(inputReader.getCommands(), commands)
 
 

@@ -345,11 +345,11 @@ class StoreSimulator:
                 i += 1
                 continue
         return
-'''
+
 a = StoreSimulator()
 a.simulate(a.initialise())
 
 '''
 b = ADTSimulator()
 b.runADTSimulation()
-
+'''
