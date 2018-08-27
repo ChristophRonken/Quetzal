@@ -31,8 +31,7 @@ class TwoThreeTest(unittest.TestCase):
         self.assertFalse(self.Tree.treeRetrieve(4))
         self.assertTrue(self.Tree.treeInsert(5, 'item'))
         self.assertTrue(self.Tree.treeInsert(4, 'item'))
-        self.assertFalse(self.Tree.treeRetrieve(6))
-        self.assertTrue(self.Tree.treeRetrieve(5))
+        self.assertEqual(self.Tree.treeRetrieve(5),(5, 'item'))
 
 
 
