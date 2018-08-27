@@ -33,7 +33,7 @@ class HashTableTest(unittest.TestCase):
         for i in range(0, len(self.hashTableQuadratic.table)):
             self.assertEqual(self.hashTableQuadratic.table[i], Bucket())
         for i in range(0, len(self.hashTableSeperate.table)):
-            self.assertIsInstance(self.hashTableSeperate.table[i], CLCWrapper)
+            self.assertIsInstance(self.hashTableSeperate.table[i], DLCWrapper)
 
     def test_isEmpty(self):
         self.assertFalse(self.hashTableLinear.isEmpty())

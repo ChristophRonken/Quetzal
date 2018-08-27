@@ -2,6 +2,7 @@ import sys
 import unittest
 from User import User
 from Order import ChocolateMilk, Order
+from bits import *
 
 
 class UserTest(unittest.TestCase):
@@ -16,7 +17,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.getEmail(), "christoph.ronken@student.uantwerpen.be")
         self.assertIsNone(user.getCurrentOrder())
         self.assertIsNone(user.getChocolateMilk())
-        self.assertEqual(user.searchkey, user.getEmail())
+        self.assertEqual(user.searchkey, int(text_to_bits(user.getEmail())))
 
     def test_createOrder(self):
         user = User("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be", 7)

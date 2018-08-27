@@ -13,22 +13,14 @@ class OrderTest(unittest.TestCase):
         self.assertEqual(order.getUserId(), 5)
         self.assertEqual(order.getChocolateMilkId(), 7)
         self.assertIsNone(order.getTimeStamp())
-        self.assertFalse(order.getPickedUp())
         self.assertIsNone(order.getFinishedTime())
         self.assertEqual(order.searchkey, order.getTimeStamp())
-
 
     def test_setTimeStamp(self):
         order = Order(5, 7)
         self.assertFalse(order.setTimeStamp("not an integer"))
         self.assertTrue(order.setTimeStamp(20180728))
         self.assertEqual(order.getTimeStamp(), 20180728)
-
-    def test_setPickedUp(self):
-        order = Order(5, 7)
-        self.assertFalse(order.setPickedUp("not a bool"))
-        self.assertTrue(order.setPickedUp(True))
-        self.assertTrue(order.getPickedUp())
 
     def test_setFinishedTime(self):
         order = Order(5, 7)
@@ -44,7 +36,7 @@ class ChocolateMilkTest(unittest.TestCase):
     def test_chocolateMilk(self):
         chocolateMilk = ChocolateMilk(3)
         self.assertEqual(chocolateMilk.getChocolateMilkId(), 3)
-        self.assertEqual(chocolateMilk.getCredit(), 1)
+        self.assertEqual(chocolateMilk.getCredit(), 5)
         self.assertEqual(chocolateMilk.getPrice(), 2)
         self.assertEqual(chocolateMilk.getIngredients(), [])
         self.assertEqual(chocolateMilk.searchkey, chocolateMilk.getPrice())
@@ -54,7 +46,7 @@ class ChocolateMilkTest(unittest.TestCase):
         ingredient = Honey(0)
         self.assertFalse(chocolateMilk.addIngredient("not an ingredient"))
         self.assertTrue(chocolateMilk.addIngredient(ingredient))
-        self.assertEqual(chocolateMilk.getCredit(), 1 + ingredient.getCredit())
+        self.assertEqual(chocolateMilk.getCredit(), 5 + ingredient.getCredit())
         self.assertEqual(chocolateMilk.getPrice(), 2 + ingredient.getPrice())
 
 

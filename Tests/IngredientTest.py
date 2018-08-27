@@ -1,6 +1,7 @@
 import sys
 import unittest
 from Ingredient import *
+from Enums import *
 
 
 class IngredientTest(unittest.TestCase):
