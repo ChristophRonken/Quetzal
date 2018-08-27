@@ -1,8 +1,6 @@
 from Store import *
 from LogOutput import LogOutput
 from InputReader import InputReader
-from OutputGenerators.BSTOG import printBST
-
 
 class ADTSimulator:
 
@@ -75,6 +73,13 @@ class ADTSimulator:
                 searchkey = True
                 i += 1
 
+            elif self.__inputReader.getCommands()[i] == "type=23":
+                self.__Wrapper = TwoThreeWrapper()
+                self.__Wrapper.create()
+                newItem = False
+                searchkey = True
+                i += 1
+
             elif self.__inputReader.getCommands()[i] == "insert":
                 i += 1
                 if not newItem:
@@ -105,11 +110,8 @@ class StoreSimulator:
         self.__inputReader.InputFileToCommands()
 
     def initialise(self):
-        print(self.__inputReader.getLines())
-        print(self.__inputReader.getCommands())
         i = 0
         while i != len(self.__inputReader.getCommands()):
-            print(self.__inputReader.getCommands()[i])
             if self.__inputReader.getCommands()[i] == "init":
                 i += 1
                 self.__store.createStore()
@@ -222,7 +224,6 @@ class StoreSimulator:
                 self.__store.tick()
                 i += 1
                 continue
-            print("currentTick = ", self.__store.getTime())
             if self.__inputReader.getCommands()[i] == str(self.__store.getTime()):
                 i += 1
                 continue
@@ -265,8 +266,6 @@ class StoreSimulator:
                 if self.__store.addChocolateMilk(user.getChocolateMilk(), user.getCurrentOrder(), int(year+month+day), int(year+month+day+hour+minute)):
                     user.setChocolateMilk(None)
                     user.setCurrentOrder(None)
-                else:
-                    print("could not make an order because of ingredients", user.getChocolateMilk().getIngredients())
             if self.__inputReader.getCommands()[i] == "stock":
                 i += 1
                 if self.__inputReader.getCommands()[i] == "shot":
@@ -346,10 +345,11 @@ class StoreSimulator:
                 continue
         return
 
+'''
 a = StoreSimulator()
 a.simulate(a.initialise())
 
 '''
 b = ADTSimulator()
 b.runADTSimulation()
-'''
+

@@ -1,7 +1,8 @@
 import copy
 
+
 class Node:
-    def __init__(self, searchkey, item, parent = None):
+    def __init__(self, searchkey, item, parent=None):
         self.searchkeys = [(searchkey, item)]
         self.left_child = None
         self.middle_child = None
@@ -175,8 +176,8 @@ class Tree:
             return False
         else:
             node = self.findNode(searchkey)
-            for i in range(len(node.searchkeys)):
-                if node.searchkeys[i] == searchkey:
+            for i in range(len(node[1].searchkeys)):
+                if node[1].searchkeys[i] == searchkey:
                     self.__findSuccessor(node, searchkey)
 
     def __trickleUp(self, root):
@@ -335,15 +336,6 @@ class Tree:
         if root.right_child is not None:
             self.in_order(root.right_child)
 
-T = Tree()
-T.createTree()
-T.treeInsert(5, 4)
-T.treeInsert(4, 4)
-T.treeInsert(6, 4)
-T.treeInsert(3, 4)
-T.treeInsert(2, 4)
-
-T.pre_order()
 
 
 

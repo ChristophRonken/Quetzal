@@ -2,12 +2,12 @@ from Wrappers.BSTWrapper import BSTWrapper
 from Wrappers.CLCWrapper import CLCWrapper
 from Wrappers.DLCWrapper import DLCWrapper
 from Wrappers.HashWrapper import HLinWrapper, HQuadWrapper, HSepWrapper
+from Wrappers.TwoThreeWrapper import TwoThreeWrapper
 from Wrappers.QueueWrapper import QueueWrapper
 from Wrappers.StackWrapper import StackWrapper
 from Worker import Worker
 from User import User
-from Enums import ChocolateShotType, OrderStates
-from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
+from Enums import ChocolateShotType
 from bits import text_to_bits
 from Order import *
 
@@ -33,7 +33,7 @@ class Store:
         self.__honeyStock = StackWrapper()
         self.__chilipepperStock = StackWrapper()
 
-        # BST, DLC, Hlin, HQuad, Hsep
+        # BST, DLC, HLin, HQuad, HSep
         self.__users = BSTWrapper()
         self.__allOrders = HLinWrapper()
 
@@ -229,7 +229,6 @@ class Store:
 
     def work(self):
         self.newToWaiting()
-        print("start work")
         workersCopy = copy.deepcopy(self.__workers)
 
         # while there are workers which haven't been checked:
@@ -291,8 +290,6 @@ class Store:
             self.__workers.insert(None, worker)
             if not workersCopy.isEmpty():
                 worker = workersCopy.retrieve(None)
-
-        print("end work")
         return
 
     def newToWaiting(self):
@@ -404,11 +401,9 @@ class Store:
             if not self.__allOrders.retrieve(order.searchkey):
                 newQueue = QueueWrapper()
                 newQueue.create()
-                print("allorders time added: ", timeStamp)
                 self.__allOrders.insert(timeStamp, newQueue)
 
             # the order is inserted in the queue for a certain timestamp
-            print("order added to allorders with time: ", order.getChocolateMilkId())
             self.__allOrders.retrieve(timeStamp).insert(None, order)
 
             # adds the current timestamp to maketimes and allTimes if not already in there
@@ -423,7 +418,6 @@ class Store:
 
             # adds a chocolatemilk to chocolateMilkToBeMade and increases the chocolatemilk count
             self.__chocolateMilkToBeMade.insert(chocolateMilk.searchkey, chocolateMilk)
-            print("added to ToBeMade: ", chocolateMilk, " with ingredients: ", chocolateMilk.getIngredients())
             self.__chocolateMilkCount += 1
             return True
         else:

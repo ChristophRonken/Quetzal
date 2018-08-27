@@ -1,6 +1,5 @@
 import graphviz as gv
 import copy
-from ADT_Cedric.TwoThree import Tree, Node
 TreeCounter = 1
 
 
@@ -18,7 +17,7 @@ def print23(tree):
     rootstring = ""
     i = 0
     while i < len(treeCopy.root.searchkeys):
-        rootstring += str(treeCopy.root.searchkeys[i])
+        rootstring += str(treeCopy.root.searchkeys[i][0])
         rootstring += ", "
         i += 1
     rootstring = rootstring[:-2]
@@ -40,28 +39,28 @@ def make23(root, figuur):
 
         i = 0
         while i < len(root.searchkeys):
-            string += str(root.searchkeys[i])
+            string += str(root.searchkeys[i][0])
             string += ", "
             i += 1
 
         if root.left_child is not None:
             i = 0
             while i < len(root.left_child.searchkeys):
-                leftstring += str(root.left_child.searchkeys[i])
+                leftstring += str(root.left_child.searchkeys[i][0])
                 leftstring += ", "
                 i += 1
 
         if root.middle_child:
             i = 0
             while i < len(root.middle_child.searchkeys):
-                middlestring += str(root.middle_child.searchkeys[i])
+                middlestring += str(root.middle_child.searchkeys[i][0])
                 middlestring += ", "
                 i += 1
 
         if root.right_child:
             i = 0
             while i < len(root.right_child.searchkeys):
-                rightstring += str(root.right_child.searchkeys[i])
+                rightstring += str(root.right_child.searchkeys[i][0])
                 rightstring += ", "
                 i += 1
 

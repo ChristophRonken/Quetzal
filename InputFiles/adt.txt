@@ -123,3 +123,17 @@ delete 7
 # dit maakt een bestand stack-1.dot
 print
 
+type=23
+insert 5
+insert 6
+insert 7
+insert 8
+insert 9
+insert 106
+insert 10
+insert 107
+insert 108
+delete 7
+# dit maakt een bestand stack-1.dot
+print
+

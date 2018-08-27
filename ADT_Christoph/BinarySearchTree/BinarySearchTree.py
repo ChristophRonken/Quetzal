@@ -257,7 +257,6 @@ class BinarySearchTree:
                             self.root.searchkey = successorNode.searchkey
                             self.delete(successorNode.searchkey, self.root.rchild)
                         return True
-        print("goes through")
         return False
 
     def destroySearchTree(self):
