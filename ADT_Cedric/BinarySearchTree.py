@@ -13,19 +13,23 @@ class BinarySearchTree:
     def create_search_tree(self, root):
         self.root = root
         self.size = 1
+        return True
 
     def destroy_search_tree(self):
         self.root = None
         self.size = 0
 
-    def search_tree_insert(self, root, node):
+    def search_tree_insert(self, node, root = None):
+        if not root:
+            root = self.root
+
         if root.item < node.item:
             if root.right_child is None:
                 root.right_child = node
                 self.size += 1
                 return True
             else:
-                return self.search_tree_insert(root.right_child, node)
+                return self.search_tree_insert(node, root.right_child)
 
         if root.item > node.item:
             if root.left_child is None:
@@ -33,26 +37,27 @@ class BinarySearchTree:
                 self.size += 1
                 return True
             else:
-                return self.search_tree_insert(root.left_child, node)
+                return self.search_tree_insert(node, root.left_child)
         else:
             return False
 
     def search_tree_delete(self, key):
         pass
 
-    def search_tree_retrieve(self, root, key):
+    def search_tree_retrieve(self, key, root = None):
+        if not root:
+            root = self.root
+
         if root.item == key:
             return True
         else:
             if root.item < key:
                 if root.right_child is not None:
-                    print("right")
-                    return self.search_tree_retrieve(root.right_child, key)
+                    return self.search_tree_retrieve(key, root.right_child)
 
             if root.item > key:
                 if root.left_child is not None:
-                    print("left")
-                    return self.search_tree_retrieve(root.left_child, key)
+                    return self.search_tree_retrieve(key, root.left_child)
         return False
 
     def is_empty(self):
@@ -85,17 +90,6 @@ class BinarySearchTree:
             self.post_order(root.right_child)
         print(root.item)
 
-N = Node(4)
-BST = BinarySearchTree()
-BST.create_search_tree(N)
-print(BST.search_tree_insert(N, Node(6)))
-print(BST.search_tree_insert(N, Node(2)))
-print(BST.search_tree_insert(N, Node(1)))
-print(BST.search_tree_insert(N, Node(3)))
-print(BST.search_tree_insert(N, Node(5)))
-print(BST.search_tree_insert(N, Node(7)))
-print(BST.search_tree_retrieve(N, 7))
-BST.post_order(N)
 
 
 

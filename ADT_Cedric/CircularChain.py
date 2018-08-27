@@ -105,3 +105,11 @@ class CircularChain:
     def get_size(self):
         return self.size
 
+
+a = CircularChain()
+a.createChain()
+print(a.addNode(0, "filled"))
+print(a.addNode(0, "filled"))
+print(a.delete(0))
+print(a.delete(0))
+print(a.delete(0))

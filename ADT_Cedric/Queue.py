@@ -20,7 +20,6 @@ class Queue:
             self.deQueue()
         self.root.item = None
         self.root.next = None
-        return True
 
     def enQueue(self, newItem):
         if self.size == 0:
@@ -38,7 +37,6 @@ class Queue:
         new_root = self.root.next
         self.root = new_root
         self.size -= 1
-        return True
 
     def getFront(self):
         return self.root.item
