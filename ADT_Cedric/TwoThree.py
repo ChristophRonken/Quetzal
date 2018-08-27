@@ -68,7 +68,7 @@ class Tree:
         if not root:
             root = self.root
 
-        if self.treeRetrieve(searchkey) is not False:
+        if self.treeRetrieve(searchkey)[0] is not False:
             return False
 
         if self.root.searchkeys == [(None, None)]:
@@ -129,11 +129,11 @@ class Tree:
             root = self.root
 
         node = self.findNode(searchkey)
-        if node is not False:
-            for i in range(len(node.searchkeys)):
-                if node.searchkeys[i][0] == searchkey:
-                    return node.searchkeys[i]
-        return False
+        if node[0] is not False:
+            for i in range(len(node[1].searchkeys)):
+                if node[1].searchkeys[i][0] == searchkey:
+                    return (True, node[1].searchkeys[i][1])
+        return (False, None)
 
     def findNode(self, searchkey, root = None):
         if not root:
@@ -141,13 +141,13 @@ class Tree:
 
         for i in range(len(root.searchkeys)):
             if root.searchkeys[i][0] == searchkey:
-                return root
+                return (True, root)
 
         if not self.hasChildren(root):
             for i in range(len(root.searchkeys)):
                 if root.searchkeys[i][0] == searchkey:
-                    return root
-            return False
+                    return (True, root)
+            return (False, None)
 
         else:
             if searchkey < root.searchkeys[0][0]:
@@ -156,7 +156,7 @@ class Tree:
                 if root.middle_child is not None:
                     self.findNode(searchkey, root.middle_child)
                 else:
-                    return False
+                    return (False, None)
             if root.searchkeys[-1][0] < searchkey:
                 return self.findNode(searchkey, root.right_child)
 

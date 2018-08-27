@@ -28,10 +28,10 @@ class TwoThreeTest(unittest.TestCase):
 
     def test_treeRetrieve(self):
         self.assertTrue(self.Tree.createTree())
-        self.assertFalse(self.Tree.treeRetrieve(4))
+        self.assertEqual(self.Tree.treeRetrieve(4), (False, None))
         self.assertTrue(self.Tree.treeInsert(5, 'item'))
         self.assertTrue(self.Tree.treeInsert(4, 'item'))
-        self.assertEqual(self.Tree.treeRetrieve(5),(5, 'item'))
+        self.assertEqual(self.Tree.treeRetrieve(5),(True, 'item'))
 
 
 
