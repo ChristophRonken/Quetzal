@@ -201,7 +201,7 @@ class Store:
     def addUser(self, firstName, lastName, email):
         if not (isinstance(firstName, str) and isinstance(lastName, str) and isinstance(email, str)):
             return False
-        user = User(firstName, lastName, int(text_to_bits(email)), self.__userCount)
+        user = User(firstName, lastName, email, self.__userCount)
         self.__userCount += 1
         return self.__users.insert(user.searchkey, user)
 

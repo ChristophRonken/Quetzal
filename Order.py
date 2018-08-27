@@ -9,6 +9,7 @@ class Order:
         self.__timeStamp = None
         self.__chocolateMilkId = chocolateMilkId
         self.__state = OrderStates.NotOrdered
+        self.__finishedTime = None
 
     @property
     def searchkey(self):
@@ -17,12 +18,6 @@ class Order:
     def setTimeStamp(self, timeStamp):
         if isinstance(timeStamp, int):
             self.__timeStamp = timeStamp
-            return True
-        return False
-
-    def setPickedUp(self, pickedUp):
-        if isinstance(pickedUp, bool):
-            self.__pickedUp = pickedUp
             return True
         return False
 
@@ -40,9 +35,6 @@ class Order:
 
     def getChocolateMilkId(self):
         return self.__chocolateMilkId
-
-    def getPickedUp(self):
-        return self.__pickedUp
 
     def getFinishedTime(self):
         return self.__finishedTime

@@ -1,6 +1,6 @@
 from Order import ChocolateMilk, Order
 from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
-from bits import text_from_bits
+from bits import text_from_bits, text_to_bits
 from Enums import ChocolateShotType
 
 
@@ -10,7 +10,7 @@ class User:
         self.__userId = UserCount
         self.__firstName = firstName
         self.__lastName = lastName
-        self.__email = email
+        self.__email = int(text_to_bits(email))
         self.__currentOrder = None
         self.__chocolateMilk = None
 

@@ -132,7 +132,7 @@ class BinarySearchTree:
         else:
             if searchkey > root.searchkey:
                 if root.rchild.searchkey != searchkey:
-                    self.delete(searchkey, root.rchild)
+                    return self.delete(searchkey, root.rchild)
 
                 else:
                     # enkel element in rchild
@@ -178,7 +178,7 @@ class BinarySearchTree:
 
             elif searchkey < root.searchkey:
                 if root.lchild.searchkey != searchkey:
-                    self.delete(searchkey, root.lchild)
+                    return self.delete(searchkey, root.lchild)
 
                 else:
                     # enkel element in lchild
@@ -223,6 +223,7 @@ class BinarySearchTree:
                         return True
 
             else:
+
                 # enkel element in root
                 if not root.rchild and not root.lchild:
                     if self.root == root:
@@ -256,9 +257,12 @@ class BinarySearchTree:
                             self.root.searchkey = successorNode.searchkey
                             self.delete(successorNode.searchkey, self.root.rchild)
                         return True
+        print("goes through")
         return False
 
     def destroySearchTree(self):
+        if not self.exists():
+            return
         while self.root != Node(None, None):
             if self.root.rchild:
                 self.delete(self.root.rchild.searchkey)
