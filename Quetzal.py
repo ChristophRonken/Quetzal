@@ -345,16 +345,11 @@ class StoreSimulator:
                 i += 1
                 continue
         return
-
-    def printStore(self):
-        self.__store.getAllOrders().print()
-
-
+'''
 a = StoreSimulator()
 a.simulate(a.initialise())
-a.printStore()
 
 '''
 b = ADTSimulator()
 b.runADTSimulation()
-'''
+

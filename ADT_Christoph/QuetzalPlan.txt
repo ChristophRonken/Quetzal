@@ -39,3 +39,6 @@ Classes
     - achternaam    (string)
     - e-mailadres   (string) -> integer ascii codes
 
+- Wrappers
+    - eentje per ADT
+

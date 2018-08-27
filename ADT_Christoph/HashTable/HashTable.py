@@ -30,7 +30,7 @@ class HashTable:
                 self.table[i] = Bucket()
         else:
             for i in range(0, len(self.table)):
-                self.table[i] = CLCWrapper()
+                self.table[i] = DLCWrapper()
                 self.table[i].create()
         return True
 
@@ -232,7 +232,7 @@ class HashTable:
 
     def print(self):
         for i in range(0, len(self.table)):
-            if self.table[i] and self.table[i].item and self.type == HashTableType.Type3:
+            if self.table[i] and self.table[i].item and self.type == HashTableType.Seperate:
                 self.table[i].print()
             else:
                 print(self.table[i].searchkey)

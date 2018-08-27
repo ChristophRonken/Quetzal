@@ -9,6 +9,7 @@ from User import User
 from Enums import ChocolateShotType, OrderStates
 from Ingredient import ChocolateShot, Honey, Marshmallow, Chilipepper
 from bits import text_to_bits
+from Order import *
 
 import copy
 
@@ -34,6 +35,7 @@ class Store:
 
         # BST, DLC, Hlin, HQuad, Hsep
         self.__users = BSTWrapper()
+        self.__allOrders = HLinWrapper()
 
         # Stack (works with queue as well)
         self.__workload = StackWrapper()
@@ -42,12 +44,8 @@ class Store:
         self.__chocolateMilkToBeMade = QueueWrapper()
         self.__newOrders = QueueWrapper()
         self.__waitingOrders = QueueWrapper()
-
-        self.__finishedChocolateMilks = QueueWrapper()
         self.__workers = QueueWrapper()
-        self.__finishedOrders = QueueWrapper()
 
-        self.__allOrders = HLinWrapper()
         self.__makeTimes = QueueWrapper()
         self.__allTimes = QueueWrapper()
 
@@ -65,10 +63,8 @@ class Store:
         self.__workload.create()
 
         self.__chocolateMilkToBeMade.create()
-        self.__finishedChocolateMilks.create()
         self.__newOrders.create()
         self.__waitingOrders.create()
-        self.__finishedOrders.create()
 
         self.__allOrders.create()
         self.__makeTimes.create()
@@ -120,17 +116,11 @@ class Store:
     def getChocolateMilkToBeMade(self):
         return self.__chocolateMilkToBeMade
 
-    def getFinishedChocolateMilks(self):
-        return self.__finishedChocolateMilks
-
     def getNewOrders(self):
         return self.__newOrders
 
     def getWaitingOrders(self):
         return self.__waitingOrders
-
-    def getFinishedOrders(self):
-        return self.__finishedOrders
 
     def getMoney(self):
         return round(self.__money, 2)
@@ -145,45 +135,61 @@ class Store:
         return self.__users.retrieve(int(text_to_bits(searchkey)))
 
     def restockMarshmallow(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         marshmallowItem = Marshmallow(expirationDate)
         self.__money -= marshmallowItem.buyPrice
         return self.__marshmallowStock.insert(marshmallowItem.searchkey, marshmallowItem)
 
     def restockHoney(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         honeyItem = Honey(expirationDate)
         self.__money -= honeyItem.buyPrice
         return self.__honeyStock.insert(honeyItem.searchkey, honeyItem)
 
     def restockChilipepper(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         chilipepperItem = Chilipepper(expirationDate)
         self.__money -= chilipepperItem.buyPrice
         return self.__chilipepperStock.insert(chilipepperItem.searchkey, chilipepperItem)
 
     def restockMilkChocolateShot(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         chocolateType = ChocolateShotType.milk
         milkChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
         self.__money -= milkChocolateShotItem.buyPrice
         return self.__milkChocolateStock.insert(milkChocolateShotItem.searchkey, milkChocolateShotItem)
 
     def restockBrownChocolateShot(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         chocolateType = ChocolateShotType.brown
         brownChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
         self.__money -= brownChocolateShotItem.buyPrice
         return self.__brownChocolateStock.insert(brownChocolateShotItem.searchkey, brownChocolateShotItem)
 
     def restockDarkChocolateShot(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         chocolateType = ChocolateShotType.dark
         darkChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
         self.__money -= darkChocolateShotItem.buyPrice
         return self.__darkChocolateStock.insert(darkChocolateShotItem.searchkey, darkChocolateShotItem)
 
     def restockWhiteChocolateShot(self, expirationDate):
+        if not isinstance(expirationDate, int):
+            return False
         chocolateType = ChocolateShotType.white
         whiteChocolateShotItem = ChocolateShot(expirationDate, chocolateType)
         self.__money -= whiteChocolateShotItem.buyPrice
         return self.__whiteChocolateStock.insert(whiteChocolateShotItem.searchkey, whiteChocolateShotItem)
 
     def addWorker(self, firstName, lastName, workLoad):
+        if not (isinstance(firstName, str) and isinstance(lastName, str) and isinstance(workLoad, int)):
+            return False
         worker = Worker(firstName, lastName, workLoad, self.__workerCount)
         if self.__workers.insert(worker.searchkey, worker):
             for i in range(0, worker.getWorkload()):
@@ -193,6 +199,8 @@ class Store:
         return False
 
     def addUser(self, firstName, lastName, email):
+        if not (isinstance(firstName, str) and isinstance(lastName, str) and isinstance(email, str)):
+            return False
         user = User(firstName, lastName, int(text_to_bits(email)), self.__userCount)
         self.__userCount += 1
         return self.__users.insert(user.searchkey, user)
@@ -201,53 +209,66 @@ class Store:
         return self.__workload.insert(None, "credit")
 
     def addChocolateMilkToBeMade(self, chocolatemilk):
+        if not isinstance(chocolatemilk, ChocolateMilk):
+            return False
         return self.__chocolateMilkToBeMade.insert(chocolatemilk.searchkey, chocolatemilk)
 
-    def addFinishedChocolateMilks(self, finishedChocolateMilk):
-        return self.__finishedChocolateMilks.insert(finishedChocolateMilk.searchkey, finishedChocolateMilk)
-
     def addNewOrder(self, order):
+        if not isinstance(order, Order):
+            return False
         return self.__newOrders.insert(order.searchkey, order)
 
     def addWaitingOrder(self, order):
+        if not isinstance(order, Order):
+            return False
         return self.__waitingOrders.insert(order.searchkey, order)
-
-    def addFinishedOrder(self, order):
-        return self.__finishedOrders.insert(order.searchkey, order)
 
     def tick(self):
         self.__currentTime += 1
-        return True
+        return
 
     def work(self):
         self.newToWaiting()
         print("start work")
         workersCopy = copy.deepcopy(self.__workers)
+
+        # while there are workers which haven't been checked:
         while not workersCopy.isEmpty():
             worker = workersCopy.retrieve(None)
+            # if the worker is not busy and there is a time in maketimes:
             if not worker.getIsBusy() and not self.__makeTimes.isEmpty():
+                # time is the first time in the queue
+                # order is the first order at that time, this order is deleted from allOrders
+                # order state is set to beingmade and the order is added back to allOrders
+                # worker takes first chocolatemilk from queue and this gets deleted
+                # worker's busytime and order is set
                 time = self.__makeTimes.retrieve(None)
-
                 order = self.__allOrders.retrieve(time).retrieve(None)
                 self.__allOrders.retrieve(time).delete(None)
                 order.setState(OrderStates.BeingMade)
                 self.__allOrders.retrieve(time).insert(None, order)
-                print(self.__chocolateMilkToBeMade.printsize())
                 worker.setChocolateMilk(self.__chocolateMilkToBeMade.retrieve(None))
                 self.__chocolateMilkToBeMade.delete(None)
                 worker.setBusyTime(worker.getChocolateMilk().getCredit())
                 worker.setIsBusy(True)
                 worker.setOrder(order)
 
+                # if the first order in the orderqueue is being made then that time has no more orders
                 if self.__allOrders.retrieve(time).retrieve(None).getState() == OrderStates.BeingMade:
                     self.__makeTimes.delete(None)
+
+            # if the worker appears to be busy, the busytime decreases
+            # if the worker finishes his order, the finishedtime is set for the order
+            # while there are orders for the order searchkey, if the order searchkeys match state is set to finished
+            # newqueue becomes a orderqueue with one order set to finished
+            # allorders gets updated with newqueue
+            # worker's busytime and order is unset
+            # next worker is selected
 
             if worker.getIsBusy():
                 worker.setBusyTime(worker.getBusyTime() - worker.getWorkload())
                 if worker.getBusyTime() <= 0:
                     worker.getOrder().setFinishedTime(self.__currentTime)
-                    self.__finishedChocolateMilks.insert(worker.getChocolateMilk().searchkey, worker.getChocolateMilk())
-                    order = self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).retrieve(None)
                     newQueue = QueueWrapper()
                     newQueue.create()
                     while not self.__allOrders.retrieve(worker.getOrder().getTimeStamp()).isEmpty():
@@ -272,17 +293,21 @@ class Store:
                 worker = workersCopy.retrieve(None)
 
         print("end work")
+        return
 
     def newToWaiting(self):
         if self.__allTimes.isEmpty():
-            return True
+            return
         else:
             alltimesCopy = copy.deepcopy(self.__allTimes)
             while not alltimesCopy.isEmpty():
                 time = alltimesCopy.retrieve(None)
                 orderQueue = QueueWrapper()
                 orderQueue.create()
+                # while the orderqueue with a time from alltimes is not empty:
                 while not self.__allOrders.retrieve(time).isEmpty():
+                    # if the order state is new, then it gets set to waiting
+                    # this order is added to a new queue which later replaces the original orderqueue
                     order = self.__allOrders.retrieve(time).retrieve(None)
                     if order.getState() == OrderStates.NewOrder:
                         order.setState(OrderStates.WaitingOrder)
@@ -291,8 +316,11 @@ class Store:
                 self.__allOrders.delete(time)
                 self.__allOrders.insert(time, orderQueue)
                 alltimesCopy.delete(None)
+        return
 
     def cleanup(self, time):
+        if not isinstance(time, int):
+            return False
         stocklist = [self.__marshmallowStock, self.__milkChocolateStock, self.__whiteChocolateStock,
                      self.__darkChocolateStock, self.__brownChocolateStock, self.__honeyStock, self.__chilipepperStock]
         for i in range(0, len(stocklist)):
@@ -313,8 +341,13 @@ class Store:
         return True
 
     def addChocolateMilk(self, chocolateMilk, order, time, timeStamp):
+        if not (isinstance(chocolateMilk, ChocolateMilk) and isinstance(order, Order) and isinstance(time, int) and isinstance(timeStamp, int)):
+            return False
         sufficientStock = True
         ingredientList = []
+
+        # checks if there are plenty of ingredients
+        # adds ingredient to ingredientlist (and removes from stock) if used
         for i in range(0, len(chocolateMilk.getIngredients())):
             self.cleanup(time)
             if isinstance(chocolateMilk.getIngredients()[i], ChocolateShot):
@@ -360,15 +393,25 @@ class Store:
                     continue
                 ingredientList.append(self.__marshmallowStock.retrieve(None))
                 self.__marshmallowStock.delete(self.__marshmallowStock.retrieve(None).searchkey)
+
         if sufficientStock:
+            # a new order is created
             order.setState(OrderStates.NewOrder)
             self.__newOrders.insert(order.searchkey, order)
+
+            # if the time on which the order is made is not yet used, a queue is inserted
+            # the queue is used to hold a queue of orders for that timestamp
             if not self.__allOrders.retrieve(order.searchkey):
                 newQueue = QueueWrapper()
                 newQueue.create()
-                print("allorders insert: ", timeStamp, newQueue)
+                print("allorders time added: ", timeStamp)
                 self.__allOrders.insert(timeStamp, newQueue)
+
+            # the order is inserted in the queue for a certain timestamp
+            print("order added to allorders with time: ", order.getChocolateMilkId())
             self.__allOrders.retrieve(timeStamp).insert(None, order)
+
+            # adds the current timestamp to maketimes and allTimes if not already in there
             allTimesCopy = copy.deepcopy(self.__allTimes)
             times = []
             while not allTimesCopy.isEmpty():
@@ -377,11 +420,14 @@ class Store:
             if timeStamp not in times:
                 self.__makeTimes.insert(None, timeStamp)
                 self.__allTimes.insert(None, timeStamp)
+
+            # adds a chocolatemilk to chocolateMilkToBeMade and increases the chocolatemilk count
             self.__chocolateMilkToBeMade.insert(chocolateMilk.searchkey, chocolateMilk)
-            print("added to ToBeMade: ", self.__chocolateMilkToBeMade.retrieve(None))
+            print("added to ToBeMade: ", chocolateMilk, " with ingredients: ", chocolateMilk.getIngredients())
             self.__chocolateMilkCount += 1
             return True
         else:
+            # returns ingredients to the stock if there is not sufficient stock
             for i in range(0, len(ingredientList)):
                 if isinstance(ingredientList[i], ChocolateShot):
                     if ingredientList[i].getType() == ChocolateShotType.white:

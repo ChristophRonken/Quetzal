@@ -4,6 +4,7 @@ from User import User
 from Store import Store, text_to_bits
 from Worker import Worker
 from Order import *
+from Enums import *
 
 
 class StoreTest(unittest.TestCase):
@@ -21,6 +22,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockMarshmallow(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockMarshmallow("20180500"))
         self.assertTrue(self.store.restockMarshmallow(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - Marshmallow(0).buyPrice)
         self.assertIsInstance(self.store.getMarshmallowStock().retrieve(None), Marshmallow)
@@ -28,6 +30,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockChilipepper(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockChilipepper("20180500"))
         self.assertTrue(self.store.restockChilipepper(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - Chilipepper(0).buyPrice)
         self.assertIsInstance(self.store.getChilipepperStock().retrieve(None), Chilipepper)
@@ -35,6 +38,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockHoney(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockChilipepper("20180500"))
         self.assertTrue(self.store.restockHoney(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - Honey(0).buyPrice)
         self.assertIsInstance(self.store.getHoneyStock().retrieve(None), Honey)
@@ -42,6 +46,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockMilkChocolateShot(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockMilkChocolateShot("20180500"))
         self.assertTrue(self.store.restockMilkChocolateShot(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - ChocolateShot(0, ChocolateShotType.milk).buyPrice)
         self.assertIsInstance(self.store.getMilkChocolateStock().retrieve(None), ChocolateShot)
@@ -50,6 +55,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockBrownChocolateShot(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockBrownChocolateShot("20180500"))
         self.assertTrue(self.store.restockBrownChocolateShot(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - ChocolateShot(0, ChocolateShotType.brown).buyPrice)
         self.assertIsInstance(self.store.getBrownChocolateStock().retrieve(None), ChocolateShot)
@@ -58,6 +64,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockDarkChocolateShot(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockDarkChocolateShot("20180500"))
         self.assertTrue(self.store.restockDarkChocolateShot(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - ChocolateShot(0, ChocolateShotType.dark).buyPrice)
         self.assertIsInstance(self.store.getDarkChocolateStock().retrieve(None), ChocolateShot)
@@ -66,6 +73,7 @@ class StoreTest(unittest.TestCase):
 
     def test_restockWhiteChocolateShot(self):
         moneyBefore = self.store.getMoney()
+        self.assertFalse(self.store.restockWhiteChocolateShot("20180500"))
         self.assertTrue(self.store.restockWhiteChocolateShot(20180500))
         self.assertEqual(self.store.getMoney(), moneyBefore - ChocolateShot(0, ChocolateShotType.white).buyPrice)
         self.assertIsInstance(self.store.getWhiteChocolateStock().retrieve(None), ChocolateShot)
@@ -73,6 +81,7 @@ class StoreTest(unittest.TestCase):
         self.assertEqual(self.store.getWhiteChocolateStock().retrieve(None).getExpirationDate(), 20180500)
 
     def test_addWorker(self):
+        self.assertFalse(self.store.addWorker("Christoph", "Ronken", "5"))
         self.assertTrue(self.store.addWorker("Christoph", "Ronken", 5))
         workloadCount = 0
         while not self.store.getWorkload().isEmpty():
@@ -86,6 +95,7 @@ class StoreTest(unittest.TestCase):
         self.assertEqual(self.store.getWorkers().retrieve(None).getWorkload(), 5)
 
     def test_addUser(self):
+        self.assertFalse(self.store.addUser("Christoph", 5, "christoph.ronken@student.uantwerpen.be"))
         self.assertTrue(self.store.addUser("Christoph", "Ronken", "christoph.ronken@student.uantwerpen.be"))
         self.assertEqual(self.store.getUserCount(), 1)
 
@@ -105,32 +115,25 @@ class StoreTest(unittest.TestCase):
 
     def test_addChocolateMilkToBeMade(self):
         chocolatemilk = ChocolateMilk(5)
+        self.assertFalse(self.store.addChocolateMilkToBeMade(5))
         self.assertTrue(self.store.addChocolateMilkToBeMade(chocolatemilk))
         self.assertEqual(self.store.getChocolateMilkToBeMade().retrieve(None), chocolatemilk)
 
-    def test_addFinishedChocolateMilks(self):
-        chocolatemilk = ChocolateMilk(5)
-        self.assertTrue(self.store.addFinishedChocolateMilks(chocolatemilk))
-        self.assertEqual(self.store.getFinishedChocolateMilks().retrieve(None), chocolatemilk)
-
     def test_addNewOrder(self):
         order = Order(5, 7)
+        self.assertFalse(self.store.addNewOrder(5))
         self.assertTrue(self.store.addNewOrder(order))
         self.assertEqual(self.store.getNewOrders().retrieve(None), order)
 
     def test_addWaitingOrder(self):
         order = Order(5, 7)
+        self.assertFalse(self.store.addWaitingOrder(5))
         self.assertTrue(self.store.addWaitingOrder(order))
         self.assertEqual(self.store.getWaitingOrders().retrieve(None), order)
 
-    def test_addFinishedOrder(self):
-        order = Order(5, 7)
-        self.assertTrue(self.store.addFinishedOrder(order))
-        self.assertEqual(self.store.getFinishedOrders().retrieve(None), order)
-
     def test_tick(self):
         timeBefore = self.store.getTime()
-        self.assertTrue(self.store.tick())
+        self.store.tick()
         self.assertEqual(timeBefore + 1, self.store.getTime())
 
     def test_cleanup(self):
@@ -142,6 +145,7 @@ class StoreTest(unittest.TestCase):
         self.store.restockHoney(5)
         self.store.restockBrownChocolateShot(9)
         self.store.restockBrownChocolateShot(8)
+        self.assertFalse(self.store.cleanup("tijd"))
         self.assertTrue(self.store.cleanup(10))
         marshmallowCount = 0
         while not self.store.getMarshmallowStock().isEmpty():
@@ -159,8 +163,6 @@ class StoreTest(unittest.TestCase):
             honeyCount += 1
         self.assertEqual(honeyCount, 1)
         self.assertTrue(self.store.getBrownChocolateStock().isEmpty())
-
-
 
 
 if __name__ == '__main__':

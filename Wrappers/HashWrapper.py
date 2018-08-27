@@ -12,6 +12,9 @@ class HLinWrapper:
     def create(self):
         return self.__ADT.createHashTable()
 
+    def isEmpty(self):
+        return self.__ADT.isEmpty()
+
     def insert(self, searchkey, newItem):
         return self.__ADT.insert(searchkey, newItem)
 
@@ -39,6 +42,9 @@ class HQuadWrapper:
     def create(self):
         return self.__ADT.createHashTable()
 
+    def isEmpty(self):
+        return self.__ADT.isEmpty()
+
     def insert(self, searchkey, newItem):
         return self.__ADT.insert(searchkey, newItem)
 
@@ -65,6 +71,9 @@ class HSepWrapper:
 
     def create(self):
         return self.__ADT.createHashTable()
+
+    def isEmpty(self):
+        return self.__ADT.isEmpty()
 
     def insert(self, searchkey, newItem):
         return self.__ADT.insert(searchkey, newItem)

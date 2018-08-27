@@ -1,0 +1,155 @@
+
+Simulator:
+
+runADTSimulation()
+// simulates ADT operations based on a given input file
+// precondition:
+// postcondition:
+
+initialise()
+// fully initialises the store for a simulation to be done (based on input file)
+// precondition:
+// postcondition:store is initialised
+
+runStoreSimulation()
+// runs a store simulation based on a given input file
+// precondition:
+// postcondition: simulation is finished
+
+
+
+
+Store: 
+
+# integers
+chocolateMilkCount
+userCount
+workerCount
+money
+currentTime
+
+# stack or queue
+marshmallowStock
+milkChocolateStock
+darkChocolateStock
+whiteChocolateStock
+brownChocolateStock
+honeyStock
+chilipepperStock
+
+# BST, DLC, Hlin, HQuad, Hsep
+users
+allOrders
+
+# Stack (works with queue as well)
+workload
+
+# Queue:
+chocolateMilkToBeMade
+newOrders
+waitingOrders
+
+workers
+makeTimes
+allTimes
+
+
+createStore()
+// Creates a ChocolateMilk Store
+// precondition:
+// postcondition: Store exists
+
+restockMarshmallow(expirationDate: integer) Succes: boolean
+// Adds Marshmallow with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockChilipepper(expirationDate: integer) Succes: boolean
+// Adds Chilipepper with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockHoney(expirationDate: integer) Succes: boolean
+// Adds Honey with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockMilkChocolateShot(expirationDate: integer) Succes: boolean
+// Adds MilkChocolateShot with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockDarkChocolateShot(expirationDate: integer) Succes: boolean
+// Adds DarkChocolateShot with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockWhiteChocolateShot(expirationDate: integer) Succes: boolean
+// Adds WhiteChocolateShot with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+restockBrownChocolateShot(expirationDate: integer) Succes: boolean
+// Adds marshmallow with given expirationDate to stock
+// precondition: expirationDate is an integer
+// postcondition: 
+
+addWorker(firstName: string, lastName: string, workLoad: integer) Succes: boolean
+// Registers a new employee
+// precondition: firstname and lastname are strings, workload is an integer
+// postcondition: worker is added
+
+addUser(firstName: string, lastName: string, email: string) Succes: boolean
+// Registers a new employee
+// precondition: firstname, lastname and email are strings
+// postcondition: user is added
+
+addWorkload() Succes: boolean
+// Adds a credit to the stack
+// precondition: 
+// postcondition: credit is added
+
+addChocolateMilkToBeMade(chocolatemilk: ChocolateMilk) Succes: boolean
+// Adds a chocolatemilk to the ChocolateMilkToBeMade
+// precondition: chocolatemilk is a ChocolateMilk
+// postcondition: chocolatemilk is added
+
+addFinishedChocolateMilkToBeMade(finishedchocolatemilk: ChocolateMilk) Succes: boolean
+// Adds a finishedchocolatemilk to the FinishedChocolateMilk
+// precondition: finishedchocolatemilk is a ChocolateMilk
+// postcondition: finishedchocolatemilk is added
+
+addNewOrder(order: Order) Success: boolean
+// Adds an order to NewOrders
+// precondition: order is an Order
+// postcondition: order is added
+
+addWaitingOrder(order: Order) Success: boolean
+// Adds an order to NewOrders
+// precondition: order is an WaitingOrders
+// postcondition: order is added
+
+tick()
+// increases time by 1
+// precondition:
+// postcondition:
+
+work() 
+// makes everyone work
+// precondition: store is created
+// postcondition:
+
+newToWaiting()
+// transfers all new orders to the waitinglist
+// precondition:
+// postcondition:
+
+cleanup(time: integer) Succes: boolean
+// goes through all stocks and removes the bad ones
+// precondition: time is an integer
+// postcondition:
+
+addChocolateMilk(chocolateMilk, order, time, timeStamp) Succes: boolean
+// adds a ChocolateMilk correctly for a simulation to work
+// precondition: 
+// postcondition: 
