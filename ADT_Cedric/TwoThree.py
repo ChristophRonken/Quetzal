@@ -11,19 +11,21 @@ class Node:
         if parent:
             self.parent = parent
 
+
 class Tree:
     def init(self):
         self.root = None
 
     def createTree(self):
         self.root = Node(None, None)
+        return True
 
     def destroyTree(self):
         pass
 
     def isEmpty(self):
-        if self.root is None:
-            return False
+        if self.root .searchkeys == [(None, None)]:
+            return True
         elif len(self.root.searchkeys) == 0:
             return True
         else:
@@ -62,11 +64,12 @@ class Tree:
                 node.searchkeys.insert(1, temp)
         return node
 
-
-
     def treeInsert(self, searchkey, item, root = None):
         if not root:
             root = self.root
+
+        if self.treeRetrieve(searchkey) is True:
+            return False
 
         if self.root.searchkeys == [(None, None)]:
             self.root.searchkeys = [(searchkey, item)]
@@ -76,22 +79,25 @@ class Tree:
             root.searchkeys.append((searchkey, item))
             root = self.sort(root)
             if len(root.searchkeys) == 3:
-                self.trickleUp(root)
+                self.__trickleUp(root)
+            return True
         else:
             if searchkey < root.searchkeys[0][0]:
                 if root.left_child:
-                    self.treeInsert(searchkey, item, root.left_child)
+                    return self.treeInsert(searchkey, item, root.left_child)
                 else:
                     root.searchkeys.append((searchkey, item))
                     root = self.sort(root)
                     if len(root.searchkeys) == 3:
-                        self.trickleUp(root)
+                        self.__trickleUp(root)
+                    return True
             if searchkey > root.searchkeys[-1][0]:
                 if root.right_child:
-                    self.treeInsert(searchkey, item, root.right_child)
+                    return self.treeInsert(searchkey, item, root.right_child)
             if root.searchkeys[0][0] < searchkey < root.searchkeys[-1][0]:
                 if root.middle_child:
-                    self.treeInsert(searchkey, item, root.middle_child)
+                    return self.treeInsert(searchkey, item, root.middle_child)
+        return False
 
     def treeSearch(self, searchkey, root = None):
         if not root:
@@ -116,15 +122,18 @@ class Tree:
                     return False
             if root.searchkeys[-1][0] < searchkey:
                 return self.treeSearch(searchkey, root.right_child)
+        return False
 
     def treeRetrieve(self, searchkey, root = None):
         if not root:
             root = self.root
 
         node = self.findNode(searchkey)
-        for i in range(len(node.searchkeys)):
-            if node.searchkeys[i] == searchkey:
-                node.searchkeys.pop[i]
+        if node is not False:
+            for i in range(len(node.searchkeys)):
+                if node.searchkeys[i][0] == searchkey:
+                    return True
+        return False
 
     def findNode(self, searchkey, root = None):
         if not root:
@@ -151,7 +160,7 @@ class Tree:
             if root.searchkeys[-1][0] < searchkey:
                 return self.findNode(searchkey, root.right_child)
 
-    def findSuccessor(self, node, searchkey, root = None):
+    def __findSuccessor(self, node, searchkey, root = None):
         if len(node.searchkeys) == 1:
             node.searchkeys[0] = node.right_child.searchkeys[0]
             node.right_child.searchkeys[0][0] = searchkey
@@ -159,7 +168,7 @@ class Tree:
                 node.right_child = None
                 return True
             else:
-                return self.findSuccessor(node.right_child, node.right_child.searchkeys[0][0])
+                return self.__findSuccessor(node.right_child, node.right_child.searchkeys[0][0])
 
     def treeDelete(self, searchkey):
         if self.findNode(searchkey) is False:
@@ -168,9 +177,9 @@ class Tree:
             node = self.findNode(searchkey)
             for i in range(len(node.searchkeys)):
                 if node.searchkeys[i] == searchkey:
-                    self.findSuccessor(node, searchkey)
+                    self.__findSuccessor(node, searchkey)
 
-    def trickleUp(self, root):
+    def __trickleUp(self, root):
         if not self.hasChildren(root):
             if not root.parent:
                 searchkeyList = copy.deepcopy(root.searchkeys)
@@ -188,7 +197,7 @@ class Tree:
                             root.parent.temp_child = Node(searchkeyList[0][0], searchkeyList[0][1])
                             root.searchkeys.remove(searchkeyList[0])
                         else:
-                            root.parent.middle_child.searchkeys.append(itemList[0])
+                            root.parent.middle_child.searchkeys.append(searchkeyList[0])
                             root.parent.middle_child.searchkeys.sort()
                             root.searchkeys.remove(searchkeyList[0])
 
@@ -210,7 +219,7 @@ class Tree:
                         root.parent.middle_child = Node(searchkeyList[2][0], searchkeyList[2][1], root.parent)
                         root.searchkeys.remove(searchkeyList[2])
                 if len(root.parent.searchkeys) == 3:
-                    self.trickleUp(root.parent)
+                    self.__trickleUp(root.parent)
 
         if self.hasAllChildren(root):
             if root.parent is None:
@@ -325,16 +334,14 @@ class Tree:
 
         if root.right_child is not None:
             self.in_order(root.right_child)
+
 T = Tree()
 T.createTree()
 T.treeInsert(5, 4)
 T.treeInsert(4, 4)
 T.treeInsert(6, 4)
+T.treeInsert(3, 4)
 T.treeInsert(2, 4)
-T.treeInsert(1, 4)
-T.treeInsert(10, 4)
-T.treeInsert(9, 4)
-T.treeInsert(11, 4)
 
 T.pre_order()
 
